@@ -66,9 +66,9 @@ My code talk to the database via the methods listed bellow:
 
 * `_getUsers()`
 * `_getEvents()`
-*`_saveEvent(event)`
-*`_registerToEvent(guest)`
-*`_updateGuestStatus(action, eid, gid)`
+* `_saveEvent(event)`
+* `_registerToEvent(guest)`
+* `_updateGuestStatus(action, eid, gid)`
 <!-- TODO: _addUser(user) -->
 
 1) `_getUsers()` Method
