@@ -1,4 +1,4 @@
-<!-- <p align="center"><a href="https://marinafroes.github.io/RDND-project2-WouldYouRather/#/login" target="_blank"><img src="./src/icons/mylogo.svg" alt="logo" title="logo" width="80"></a></p> -->
+<p align="center"><a href="https://github.com/MarinaFroes/Event_Planner" target="_blank"><img src="./src/assets/icons/noun_event_1004866.svg" alt="logo" title="logo" width="80"></a></p>
 <h1 align="center">Event Planner Web App</h1>
 
 This app aims to provide an easy way to plan events and invite friends sharing the costs with them.
@@ -152,3 +152,5 @@ $ npm start
 - [React Documentation](https://reactjs.org)
 - [Redux Documentation](https://redux.js.org/)
 - [MDN Documentation](https://developer.mozilla.org)
+
+<!-- TODO: Add reference to images and icons -->
