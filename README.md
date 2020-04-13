@@ -17,18 +17,16 @@ IN PROGRESS
  
 ## Frontend
 
-- The `_DATA.js` file represents a fake database and has methods that let me access the data.
-
 - I built a React/Redux front end for the application using the [Create React App](https://github.com/facebook/create-react-app) to bootstrap the project.
 
-## Available data
+### Available data
 
 There are 2 types of objects stored in the database:
 
 * Users
 * Events
 
-### Users
+#### Users
 
 - Users include:
 
@@ -41,7 +39,7 @@ There are 2 types of objects stored in the database:
 | user_email      | String         |  The user’s e-email address |
 | user_phone  | String | The user’s phone number (optional) |
 
-### Events
+#### Events
 
 - Events include:
 
@@ -62,7 +60,7 @@ There are 2 types of objects stored in the database:
 | timestamp | String | The time when the event was created |
 
 
-## Services
+### Services
 
 My code talk to the database via the methods listed bellow:
 
