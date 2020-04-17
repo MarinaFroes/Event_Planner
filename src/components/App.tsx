@@ -5,7 +5,7 @@ import CreateEvent from './CreateEvent'
 import NavBar from './NavBar'
 import Footer from './Footer'
 
-function App() {
+const App: React.FC = () => {
   return (
     <div className="App">
       <NavBar />
