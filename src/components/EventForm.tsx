@@ -116,7 +116,7 @@ const EventForm: React.FC<Props> = ({ handleChange }) => {
             id="event-date"
             type="date"
             min="2020-04-17"
-            max="2020-12-31"
+            max="2999-12-31"
             required
           />
         </Label>
@@ -147,7 +147,7 @@ const EventForm: React.FC<Props> = ({ handleChange }) => {
             type="number"
             id="max-guests"
             min="1"
-            max="1000"
+            max="99999"
             required
           />
         </Label>
