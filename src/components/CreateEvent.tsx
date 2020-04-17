@@ -1,11 +1,15 @@
 import React from 'react'
 
 import Btn from './Btn'
+import Header from './Header'
 import EventForm from './EventForm'
+import MainImg from '../assets/images/spencer-davis-vJsj-hgOEG0-unsplash.jpg'
 
 const CreateEvent: React.FC = () => {
+  const subtitle = "Event planner is an easy way to create events and invite friends, sharing the costs and the tasks."
   return (
     <div>
+      <Header title="Event Planner" subtitle={subtitle} imageUrl={MainImg}/>
       <EventForm handleChange={e => console.log(e.target.value)}/>
       <Btn primary={true} text="Create Event" widthSize="300px"/>
       <Btn primary={false} text="Edit Event" widthSize="300px"/>
