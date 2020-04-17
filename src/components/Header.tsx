@@ -38,7 +38,7 @@ const Header: React.FC<Props> = ({title, subtitle, imageUrl, eventText}) => {
     <StyledHeader>
       <Heading1>{title}</Heading1>
       <Heading2>{subtitle}</Heading2>
-      <Image src={imageUrl} alt="" />
+      <Image src={imageUrl} alt={`image for ${title}`} />
       {eventText && <p>`${eventText}`</p>}
     </StyledHeader>
   )
