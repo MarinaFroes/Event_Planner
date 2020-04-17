@@ -1,8 +1,12 @@
 import React from 'react'
 
-function CreateEvent() {
+import Btn from './Btn'
+
+const CreateEvent: React.FC = () => {
   return (
     <div>
+      <Btn primary={true} text="Create Event" widthSize="300px"/>
+      <Btn primary={false} text="Edit Event" widthSize="300px"/>
       <h1 style={{ color: "var(--main-color-orange, #f07422)" }}>Create Event</h1>
       <h2 style={{ color: "var(--main-color-blue, #0c598a)"}}>This is the second heading</h2>
       <h3 style={{ color: "var(--main-color-red, #bd0b2b)" }}>This is the third heading</h3>
