@@ -1,10 +1,12 @@
 import React from 'react'
 
 import Btn from './Btn'
+import EventForm from './EventForm'
 
 const CreateEvent: React.FC = () => {
   return (
     <div>
+      <EventForm handleChange={e => console.log(e.target.value)}/>
       <Btn primary={true} text="Create Event" widthSize="300px"/>
       <Btn primary={false} text="Edit Event" widthSize="300px"/>
       <h1 style={{ color: "var(--main-color-orange, #f07422)" }}>Create Event</h1>
