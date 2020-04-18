@@ -30,16 +30,14 @@ interface Props {
   title: string;
   subtitle: string;
   imageUrl: string;
-  eventText?: string;
 }
 
-const Header: React.FC<Props> = ({title, subtitle, imageUrl, eventText}) => {
+const Header: React.FC<Props> = ({title, subtitle, imageUrl}) => {
   return (
     <StyledHeader>
       <Heading1>{title}</Heading1>
       <Heading2>{subtitle}</Heading2>
       <Image src={imageUrl} alt={`image for ${title}`} />
-      {eventText && <p>`${eventText}`</p>}
     </StyledHeader>
   )
 }
