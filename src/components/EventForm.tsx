@@ -3,6 +3,7 @@ import React, { useRef} from 'react'
 import styled from 'styled-components'
 
 interface Props {
+  showImage: boolean;
   handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -13,7 +14,7 @@ interface TextNode {
 const Form = styled.form`
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   font-size: 16px;
   color: var(--main-color-orange, #f07422);
 `
@@ -34,10 +35,11 @@ const Image = styled.img`
   width: 300px;
   align-self: center;
 `
+
 const Input = styled.input`
   font-size: 16px;
   color: var(--main-color-black, #000);
-  background-color: #eee;
+  background-color: var(--main-color-grey, #eee);
   border: none;
   padding: 5px;
   border-radius: 5px;
@@ -64,22 +66,26 @@ const StyledDiv = styled.div`
   width: 100%;
 `
 
-const EventForm: React.FC<Props> = ({ handleChange }) => {
+const EventForm: React.FC<Props> = ({ handleChange, showImage }) => {
   // const [name, useName] = useState<TextNode>({name: ""});
   const inputRef = useRef<HTMLInputElement>(null);
 
   return (
     <Form>
-      <Image src="https://dummyimage.com/300x300/c4c4c4/ffffff.png&text=Add+an+image" alt=""/>
-      <Label>
-        Select an image
-         <Input
-          id="event-image"
-          type="file"
-          accept="image/png, image/jpeg"
-          required
-        />
-      </Label>
+      { showImage &&
+        (<div>
+          <Image src="https://dummyimage.com/300x300/c4c4c4/ffffff.png&text=Add+an+image" alt="" />
+          <Label>
+            Select an image
+          <Input
+              id="event-image"
+              type="file"
+              accept="image/png, image/jpeg"
+              required
+            />
+          </Label>
+        </div>)
+      }
       <Label>
         <Input
           id="event-title"
