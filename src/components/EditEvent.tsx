@@ -81,8 +81,8 @@ const EditEvent: React.FC = () => {
       <Header title="My Birthday Details" subtitle={subtitle} imageUrl={EventImg} />
       <TextBox heading1={heading1} heading2={heading2} />
       <EventForm showImage={false} handleChange={e => console.log(e.target.value)} />
-      <Btn primary={true} text="Get invite link" widthSize="300px" />
-      <Btn primary={false} text="Notify updates" widthSize="300px" />
+      <Btn primary={true} text="Get invite link" widthSize="90%" />
+      <Btn primary={false} text="Notify updates" widthSize="90%" />
       <AlertLink>
         Cancel event
       </AlertLink>
