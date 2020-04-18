@@ -49,7 +49,18 @@ const Hamburger = styled.button`
   background-color: transparent;
 `
 
-const NavBar: React.FC = () => {
+const Greeting = styled.p`
+  font-size: 14px;
+  color: var(--main-color-blue, #0c598a);
+  padding-right: 10px;
+`
+
+interface Props {
+  isLogged: boolean;
+  user?: string;
+}
+
+const NavBar: React.FC<Props> = ({isLogged, user}) => {
   return (
     <StyledNav>
       <LogoLink href="/">
@@ -57,6 +68,9 @@ const NavBar: React.FC = () => {
         <Title>Event Planner</Title>
       </LogoLink>
       <Hamburger>
+        {
+          isLogged && <Greeting>Hello, {user}</Greeting>
+        }
         <FaBars/>
       </Hamburger>
     </StyledNav>
