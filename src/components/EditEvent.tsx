@@ -1,4 +1,5 @@
 import React from 'react'
+import styled from 'styled-components'
 
 import Btn from './Btn'
 import Header from './Header'
@@ -6,6 +7,24 @@ import EventForm from './EventForm'
 import EventImg from '../assets/images/kyle-head-WE-N1KDqEno-unsplash.jpg'
 import GuestsInfo from './GuestsInfo'
 import TextBox from './TextBox'
+
+const EditEventContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--main-color-white, #fff);
+  width: 100%;
+`
+
+const AlertLink = styled.a`
+  text-decoration: none;
+  color: var(--main-color-red, #bd0b2b);
+  margin-bottom: 20px;
+
+  :hover {
+     cursor: pointer;
+  }
+`
 
 const EditEvent: React.FC = () => {
   const subtitle = "Here you can check your event details, edit them, get the link to share with your friends, see who accepted the invite."
@@ -55,19 +74,20 @@ const EditEvent: React.FC = () => {
       phone: "+00 000 000",
       status: "pending"
     },
-
   ]
 
   return (
-    <div>
+    <EditEventContainer>
       <Header title="My Birthday Details" subtitle={subtitle} imageUrl={EventImg} />
       <TextBox heading1={heading1} heading2={heading2} />
       <EventForm showImage={false} handleChange={e => console.log(e.target.value)} />
       <Btn primary={true} text="Get invite link" widthSize="300px" />
       <Btn primary={false} text="Notify updates" widthSize="300px" />
-      <Btn primary={true} text="Cancel event and notify guests" widthSize="300px" />
+      <AlertLink>
+        Cancel event
+      </AlertLink>
       <GuestsInfo guests={guests}/>
-    </div>
+    </EditEventContainer>
   )
 }
 
