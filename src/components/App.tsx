@@ -9,7 +9,7 @@ import Footer from './Footer'
 const App: React.FC = () => {
   return (
     <div className="App">
-      <NavBar />
+      <NavBar isLogged={true} user="Marina"/>
       {/* <CreateEvent /> */}
       <EditEvent />
       <Footer />
