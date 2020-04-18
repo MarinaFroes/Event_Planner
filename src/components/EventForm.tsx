@@ -11,19 +11,27 @@ interface TextNode {
   name: string;
 }
 
+const FormContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  font-size: 16px;
+  color: var(--main-color-orange, #f07422);
+  width: 100%;
+`
+
 const Form = styled.form`
   display: flex;
   flex-direction: column;
-  align-items: center;
   font-size: 16px;
   color: var(--main-color-orange, #f07422);
+  width: 90%;
 `
 
 const Label = styled.label`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding: 10px;
+  padding: 10px 0;
   font-family: Poppins;
   font-size: 14px;
   color: var(--main-color-black, #000);
@@ -39,30 +47,29 @@ const Image = styled.img`
 const Input = styled.input`
   font-size: 16px;
   color: var(--main-color-black, #000);
-  background-color: var(--main-color-grey, #eee);
-  border: none;
+  border: 1px solid #c4c4c4;
   padding: 5px;
   border-radius: 5px;
-  width: 80%;
+  width: 100%;
+  height: 40px;
 `
 
 const SmallerInput = styled(Input)`
-  width: auto;
+  width: 100%;
 `
 
 const TextArea = styled.textarea`
   font-size: 16px;
   color: var(--main-color-black, #000);
-  background-color: #eee;
-  border: none;
+  border: 1px solid #c4c4c4;
   padding: 5px;
   border-radius: 5px;
-  width: 80%;
+  width: 100%;
 `
 
 const StyledDiv = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: space-bet;
   width: 100%;
 `
 
@@ -71,95 +78,97 @@ const EventForm: React.FC<Props> = ({ handleChange, showImage }) => {
   const inputRef = useRef<HTMLInputElement>(null);
 
   return (
-    <Form>
-      { showImage &&
-        (<div>
-          <Image src="https://dummyimage.com/300x300/c4c4c4/ffffff.png&text=Add+an+image" alt="" />
-          <Label>
-            Select an image
+    <FormContainer>
+      <Form>
+        {showImage &&
+          (<div>
+            <Image src="https://dummyimage.com/300x300/c4c4c4/ffffff.png&text=Add+an+image" alt="" />
+            <Label>
+              Select an image
           <Input
-              id="event-image"
-              type="file"
-              accept="image/png, image/jpeg"
+                id="event-image"
+                type="file"
+                accept="image/png, image/jpeg"
+                required
+              />
+            </Label>
+          </div>)
+        }
+        <Label>
+          <Input
+            id="event-title"
+            type="text"
+            placeholder="Title"
+            ref={inputRef}
+            onChange={handleChange}
+            required
+          />
+        </Label>
+        <Label>
+          <TextArea
+            id="event-description"
+            placeholder="Description"
+            required
+          />
+        </Label>
+
+        {/* TODO: Allow to choose current location as address */}
+        <Label>
+          Address
+        <Input
+            type="text"
+            placeholder="Address"
+            required
+          />
+        </Label>
+
+        <StyledDiv>
+          {/* TODO: Define dynamic min e max dates */}
+          <Label>
+            Event Date
+            <SmallerInput
+              id="event-date"
+              type="date"
+              min="2020-04-17"
+              max="2999-12-31"
               required
             />
           </Label>
-        </div>)
-      }
-      <Label>
-        <Input
-          id="event-title"
-          type="text"
-          placeholder="Title"
-          ref={inputRef}
-          onChange={handleChange}
-          required
-        />
-      </Label>
-      <Label>
-        <TextArea
-          id="event-description"
-          placeholder="Description"
-          required
-        />
-      </Label>
-      
-      {/* TODO: Allow to choose current location as address */}
-      <Label>
-        Address
-        <Input
-          type="text"
-          placeholder="Address"
-          required
-        />
-      </Label>
 
-      <StyledDiv>
-        {/* TODO: Define dynamic min e max dates */}
-        <Label>
-          Event Date
-        <SmallerInput
-            id="event-date"
-            type="date"
-            min="2020-04-17"
-            max="2999-12-31"
-            required
-          />
-        </Label>
+          <Label>
+            Total cost:
+            <SmallerInput
+              type="number"
+              id="total-cost"
+              min="1"
+              max="99999"
+              required
+            />
+          </Label>
+        </StyledDiv>
+        <StyledDiv>
+          <Label>
+            Event time
+            <SmallerInput
+              id="event-time"
+              type="time"
+              required
+            />
+          </Label>
+          <Label>
+            Nr of Guests
+            <SmallerInput
+              type="number"
+              id="max-guests"
+              min="1"
+              max="99999"
+              required
+            />
+          </Label>
 
-        <Label>
-          Total cost:
-        <SmallerInput
-            type="number"
-            id="total-cost"
-            min="1"
-            max="99999"
-            required
-          />
-        </Label>
-      </StyledDiv>
-      <StyledDiv>
-        <Label>
-          Event time
-        <SmallerInput
-            id="event-time"
-            type="time"
-            required
-          />
-        </Label>
-        <Label>
-          Nr of Guests
-        <SmallerInput
-            type="number"
-            id="max-guests"
-            min="1"
-            max="99999"
-            required
-          />
-        </Label>
-
-      </StyledDiv>
-    </Form>
+        </StyledDiv>
+      </Form>
+    </FormContainer>
   )
 }
 
