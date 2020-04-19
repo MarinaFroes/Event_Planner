@@ -5,6 +5,10 @@ import { FaInstagram, FaFacebook, FaTwitter, FaLinkedin } from 'react-icons/fa'
 import Logo from '../assets/icons/logo.svg'
 
 const StyledFooter = styled.footer`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
   padding: 20px;
   width: 100%;
   background-color: var(--main-color-white, #fff);
@@ -20,7 +24,6 @@ const Title = styled.p`
   font-size: 16px;
   color: var(--main-color-blue, #0c598a);
   margin: auto;
-
 `
 
 const LogoLink = styled.a`
@@ -51,6 +54,8 @@ const LinksContainer = styled.div`
   flex-wrap: wrap;
   padding: 20px;
   border-bottom: 1px solid var(--main-color-blue, #0c598a);
+  width: 100%;
+  max-width: 768px;
 `
 
 const SocialMediaContainer = styled.div`
@@ -58,6 +63,7 @@ const SocialMediaContainer = styled.div`
   justify-content: space-evenly;
   font-size: 16px;
   color: var(--main-color-blue, #0c598a);
+  max-width: 768px;
 `
 
 const SocialMediaLink = styled.a`
@@ -76,6 +82,8 @@ const ExtraInfo = styled.div`
   justify-content: space-evenly;
   color: var(--main-color-blue, #0c598a);
   font-size: 14px;
+  width: 100%;
+  max-width: 768px;
 `
 
 const Footer: React.FC = () => {
