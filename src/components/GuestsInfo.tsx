@@ -11,6 +11,12 @@ const GuestsContainer = styled.div`
   width: 100%;
   align-items: center;
   background-color: var(--main-color-grey, #eee);
+  padding: 20px;
+
+  @media only screen and (min-width: 1000px){
+    flex-direction: row;
+    justify-content: space-evenly;
+  }
 `
 
 const SectionHeadings = styled.h3`
@@ -20,8 +26,22 @@ const SectionHeadings = styled.h3`
   font-size: 20px;
   font-weight: normal;
   color: var(--main-color-black, #000);
+
+  @media only screen and (min-width: 1000px){
+    align-self: "";
+  }
 `
 
+const Cards = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  @media only screen and (min-width: 1000px){
+    flex-direction: row;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+  }
+`
 
 interface Guest {
   name: string;
@@ -35,7 +55,6 @@ interface Props {
   guests: Guest[];
 }
 
-
 const GuestsInfo: React.FC<Props> = ({ guests }) => {
   const heading1 = "Approve the guests who registered for the event"
   const heading2 = "The guest will be notified if you confirm the invitation or update the event info. "
@@ -43,16 +62,21 @@ const GuestsInfo: React.FC<Props> = ({ guests }) => {
   return (
     <GuestsContainer>
       <TextBox heading1={heading1} heading2={heading2} />
-
-      <SectionHeadings>Approved guests</SectionHeadings>
-      {
-        guests.filter(guest => guest.status === "approved").map((guest, key) => <GuestCard key={key} guest={guest} />)
-      }
-
-      <SectionHeadings>Pending approvals</SectionHeadings>
-      {
-        guests.filter(guest => guest.status === "pending").map((guest, key) => <GuestCard key={key} guest={guest} />)
-      }
+      <div style={{maxWidth: "700px"}}>
+        <SectionHeadings>Approved guests</SectionHeadings>
+        <Cards>
+          {
+            guests.filter(guest => guest.status === "approved").map((guest, key) => <GuestCard key={key} guest={guest} />)
+          }
+        </Cards>
+      
+        <SectionHeadings>Pending approvals</SectionHeadings>
+        <Cards>
+          {
+            guests.filter(guest => guest.status === "pending").map((guest, key) => <GuestCard key={key} guest={guest} />)
+          }
+        </Cards>
+      </div>
     </GuestsContainer>
   )
 }
