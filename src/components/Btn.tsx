@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-const StyledButton = styled.button<{ primary: boolean }>`
+const StyledButton = styled.button<{ primary: boolean, btnWidth?: string }>`
   background: ${props => props.primary ? "var(--main-color-orange, #f07422)" : "var(--main-color-white, #fff)"};
   color: ${props => props.primary ? "var(--main-color-white, #fff)" : "var(--main-color-orange, #f07422)"};
   border: 1px solid var(--main-color-orange, #f07422);
@@ -9,6 +9,8 @@ const StyledButton = styled.button<{ primary: boolean }>`
   margin: 10px 0;
   font-size: 16px;
   border-radius: 5px;
+  width: ${props => props.btnWidth ? props.btnWidth : "100%"};
+  max-width: 500px;
 `
 
 interface Props {
@@ -17,7 +19,7 @@ interface Props {
   btnWidth?: string;
 }
 
-const Btn: React.FC<Props> = ({ primaryBtn, btnText, btnWidth = "600px"}) => {
+const Btn: React.FC<Props> = ({ primaryBtn, btnText, btnWidth}) => {
   return (
     <StyledButton type="button" style={{ width: btnWidth }} primary={primaryBtn}>
       {btnText}
