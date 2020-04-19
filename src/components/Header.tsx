@@ -1,6 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 
+import EventCard from './EventCard'
+
 const StyledHeader = styled.header`
   display: flex;
   overflow: hidden;
@@ -42,8 +44,8 @@ const Heading2 = styled.h2`
   }
 `
 
-const Image = styled.img`
-  width: 100%;
+const Image = styled.img<{ imageWidth?: string }>`
+  width: ${props => props.imageWidth ? props.imageWidth : "100%"};
   max-width: 800px;
   padding-bottom: 40px;
 
@@ -53,18 +55,39 @@ const Image = styled.img`
   }
 `
 
+interface EventText {
+  description: string,
+  location: string,
+  date: string,
+  time: string,
+  participants: number,
+  cost: number
+}
+
 interface Props {
   title: string;
   subtitle: string;
   imageUrl: string;
+  eventText?: EventText;
+  imageWidth?: string;
 }
 
-const Header: React.FC<Props> = ({title, subtitle, imageUrl}) => {
+const Header: React.FC<Props> = ({ title, subtitle, imageUrl, eventText, imageWidth }) => {
   return (
     <StyledHeader>
       <Heading1>{title}</Heading1>
       <Heading2>{subtitle}</Heading2>
-      <Image src={imageUrl} alt={`image for ${title}`} />
+      
+      <Image
+        src={imageUrl}
+        alt={`image for ${title}`}
+        imageWidth={imageWidth}
+      />
+      {
+        eventText && (
+          <EventCard eventText={eventText} />
+        )
+      }
     </StyledHeader>
   )
 }
