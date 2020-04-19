@@ -10,7 +10,7 @@ interface Props {
   handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   btnText: string;
   primaryBtn: boolean;
-  btnWidth: string;
+  btnWidth?: string;
   heading1: string;
   heading2?: string;
 }
@@ -26,8 +26,8 @@ const FormContainer = styled.div`
   font-size: 16px;
   color: var(--main-color-orange, #f07422);
   width: 100%;
-  border: 2px solid green;
-
+  padding: 20px 0;
+  
   @media only screen and (min-width: 1024px){
     flex-direction: row;
     justify-content: space-evenly;
