@@ -27,7 +27,7 @@ const FormContainer = styled.div`
   color: var(--main-color-orange, #f07422);
   width: 100%;
   padding: 20px 0;
-  
+
   @media only screen and (min-width: 1024px){
     flex-direction: row;
     justify-content: space-evenly;
@@ -82,8 +82,6 @@ const InputFile = styled(Input)`
     content: '◀';
     margin: 0 10px;
   }
-
-  
 
 `
 
