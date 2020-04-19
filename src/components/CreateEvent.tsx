@@ -24,7 +24,6 @@ const CreateEvent: React.FC = () => {
         handleChange={e => console.log(e.target.value)}
         primaryBtn={true}
         btnText="Create Event"
-        btnWidth="90%"
       />
           
     </CreateEventContainer>

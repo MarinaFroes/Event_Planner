@@ -86,10 +86,9 @@ const EditEvent: React.FC = () => {
         heading2={heading2}
         primaryBtn={false}
         btnText="Save updates"
-        btnWidth="90%"
       />
 
-      <Btn primaryBtn={true} btnText="Get invite link" btnWidth="90%" />
+      <Btn primaryBtn={true} btnText="Get invite link" />
       
       <AlertLink>
         Cancel event
