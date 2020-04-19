@@ -12,15 +12,15 @@ const StyledButton = styled.button<{ primary: boolean }>`
 `
 
 interface Props {
-  primary: boolean;
-  text: string;
-  widthSize?: string;
+  primaryBtn: boolean;
+  btnText: string;
+  btnWidth?: string;
 }
 
-const Btn: React.FC<Props> = ({primary, text, widthSize = "600px"}) => {
+const Btn: React.FC<Props> = ({ primaryBtn, btnText, btnWidth = "600px"}) => {
   return (
-    <StyledButton type="button" style={{ width: widthSize}} primary={primary}>
-      {text}
+    <StyledButton type="button" style={{ width: btnWidth }} primary={primaryBtn}>
+      {btnText}
     </StyledButton>
   )
 }
