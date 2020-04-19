@@ -1,11 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import Btn from './Btn'
 import Header from './Header'
 import EventForm from './EventForm'
 import MainImg from '../assets/images/spencer-davis-vJsj-hgOEG0-unsplash.jpg'
-import TextBox from './TextBox'
 
 const CreateEventContainer = styled.div`
   background-color: var(--main-color-grey, #eee);
@@ -14,12 +12,21 @@ const CreateEventContainer = styled.div`
 const CreateEvent: React.FC = () => {
   const subtitle = "Event planner is an easy way to create events and invite friends, sharing the costs and the tasks."
   const heading1 = "Add your event info"
+
   return (
     <CreateEventContainer>
       <Header title="Event Planner" subtitle={subtitle} imageUrl={MainImg} />
-      <TextBox heading1={heading1} heading2="" />
-      <EventForm showImage={true} handleChange={e => console.log(e.target.value)}/>
-      <Btn primary={true} text="Create Event" widthSize="90%"/>      
+      
+      <EventForm
+        heading1={heading1}
+        heading2="" 
+        showImage={true}
+        handleChange={e => console.log(e.target.value)}
+        primaryBtn={true}
+        btnText="Create Event"
+        btnWidth="90%"
+      />
+          
     </CreateEventContainer>
   )
 }

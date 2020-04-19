@@ -6,7 +6,6 @@ import Header from './Header'
 import EventForm from './EventForm'
 import EventImg from '../assets/images/kyle-head-WE-N1KDqEno-unsplash.jpg'
 import GuestsInfo from './GuestsInfo'
-import TextBox from './TextBox'
 
 const EditEventContainer = styled.div`
   display: flex;
@@ -79,10 +78,19 @@ const EditEvent: React.FC = () => {
   return (
     <EditEventContainer>
       <Header title="My Birthday Details" subtitle={subtitle} imageUrl={EventImg} />
-      <TextBox heading1={heading1} heading2={heading2} />
-      <EventForm showImage={false} handleChange={e => console.log(e.target.value)} />
-      <Btn primary={true} text="Get invite link" widthSize="90%" />
-      <Btn primary={false} text="Notify updates" widthSize="90%" />
+     
+      <EventForm
+        showImage={false}
+        handleChange={e => console.log(e.target.value)}
+        heading1={heading1}
+        heading2={heading2}
+        primaryBtn={false}
+        btnText="Save updates"
+        btnWidth="90%"
+      />
+
+      <Btn primaryBtn={true} btnText="Get invite link" btnWidth="90%" />
+      
       <AlertLink>
         Cancel event
       </AlertLink>
@@ -92,11 +100,3 @@ const EditEvent: React.FC = () => {
 }
 
 export default EditEvent
-
-/**
- * <h1 style={{ color: "var(--main-color-orange, #f07422)" }}>Create Event</h1>
-    <h2 style={{ color: "var(--main-color-blue, #0c598a)"}}>This is the second heading</h2>
-    <h3 style={{ color: "var(--main-color-red, #bd0b2b)" }}>This is the third heading</h3>
-    <h4 style={{ color: "var(--main-color-grey, #eee)" }}>This is the fourth heading</h4>
-    <p>This is a paragraph</p>
- */

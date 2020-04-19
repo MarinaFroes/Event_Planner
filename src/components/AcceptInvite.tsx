@@ -34,7 +34,11 @@ const AcceptInvite: React.FC = () => {
       />
       <EventCard eventText={eventText} />
       <TextBox heading1={heading1} heading2={heading2} />
-      <Btn primary={true} text="Register to the event" widthSize="90%" />
+      <Btn
+        primaryBtn={true}
+        btnText="Register to the event"
+        btnWidth="90%"
+      />
     </AcceptInviteContainer>
   )
 }

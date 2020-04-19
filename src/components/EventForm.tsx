@@ -2,9 +2,17 @@
 import React, { useRef} from 'react'
 import styled from 'styled-components'
 
+import TextBox from './TextBox'
+import Btn from './Btn'
+
 interface Props {
   showImage: boolean;
   handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  btnText: string;
+  primaryBtn: boolean;
+  btnWidth: string;
+  heading1: string;
+  heading2?: string;
 }
 
 interface TextNode {
@@ -13,10 +21,17 @@ interface TextNode {
 
 const FormContainer = styled.div`
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
   font-size: 16px;
   color: var(--main-color-orange, #f07422);
   width: 100%;
+  border: 2px solid green;
+
+  @media only screen and (min-width: 1024px){
+    flex-direction: row;
+    justify-content: space-evenly;
+  }
 `
 
 const Form = styled.form`
@@ -25,6 +40,7 @@ const Form = styled.form`
   font-size: 16px;
   color: var(--main-color-orange, #f07422);
   width: 90%;
+  max-width: 500px;
 `
 
 const Label = styled.label`
@@ -54,6 +70,49 @@ const Input = styled.input`
   height: 40px;
 `
 
+const InputFile = styled(Input)`
+  background-color: white;
+
+  &::-webkit-file-upload-button {
+    visibility: hidden;
+  }
+  
+
+  &::before {
+    content: '◀';
+    margin: 0 10px;
+  }
+
+  
+
+`
+
+/**
+ * &::before {
+    content: 'Select some files';
+    display: inline-block;
+    background: var(--main-color-blue);
+    border: 1px solid #999;
+    border-radius: 3px;
+    padding: 5px 8px;
+    outline: none;
+    white-space: nowrap;
+    -webkit-user-select: none;
+    cursor: pointer;
+    text-shadow: 1px 1px #fff;
+    font-weight: 700;
+    font-size: 10pt;
+  }
+
+  :hover::before {
+    border-color: black;
+  }
+
+  :active::before {
+    background: -webkit-linear-gradient(top, #e3e3e3, #f9f9f9);
+  }
+ */
+
 const SmallerInput = styled(Input)`
   width: 100%;
 `
@@ -73,26 +132,33 @@ const StyledDiv = styled.div`
   width: 100%;
 `
 
-const EventForm: React.FC<Props> = ({ handleChange, showImage }) => {
+const EventForm: React.FC<Props> = ({ handleChange, showImage, btnText, primaryBtn, heading1, heading2, btnWidth }) => {
   // const [name, useName] = useState<TextNode>({name: ""});
   const inputRef = useRef<HTMLInputElement>(null);
 
   return (
     <FormContainer>
+      <div>
+        <TextBox heading1={heading1} heading2={heading2} />
+        {showImage &&
+          (
+            <Image src="https://dummyimage.com/300x300/c4c4c4/ffffff.png&text=Add+an+image" alt="" />
+          )
+        }
+      </div>
       <Form>
         {showImage &&
-          (<div>
-            <Image src="https://dummyimage.com/300x300/c4c4c4/ffffff.png&text=Add+an+image" alt="" />
+          (
             <Label>
-              Select an image
-          <Input
+            Select an image
+            <InputFile
                 id="event-image"
                 type="file"
                 accept="image/png, image/jpeg"
                 required
               />
             </Label>
-          </div>)
+          )
         }
         <Label>
           <Input
@@ -167,6 +233,11 @@ const EventForm: React.FC<Props> = ({ handleChange, showImage }) => {
           </Label>
 
         </StyledDiv>
+        <Btn
+          primaryBtn={primaryBtn}
+          btnText={btnText}
+          btnWidth={btnWidth}
+        /> 
       </Form>
     </FormContainer>
   )
