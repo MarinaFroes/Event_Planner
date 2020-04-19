@@ -1,26 +1,56 @@
 import React from 'react'
 import styled from 'styled-components'
 
-
-const EventContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin: 0;
-  padding: 20px;
-  text-align: left;
-  width: 100%;
-  background-color: var(--main-color-blue, #0c598a);
-`
-
-const Item = styled.p`
+const Item = styled.span`
   font-size: 16px;
-  color: var(--main-color-white, #fff);
+
   font-weight: bold;
-  display: inline;
+
+  @media only screen and (min-width: 768px){
+    font-size: 20px;
+  }
+
+  @media only screen and (min-width: 1080px){
+    font-size: 26px;
+  }
 `
 
-const StyledP = styled(Item)`
+const StyledP = styled.p`
+  font-size: 16px;
+  
   font-weight: normal;
+
+  @media only screen and (min-width: 768px){
+    font-size: 20px;
+  }
+
+  @media only screen and (min-width: 1080px){
+    font-size: 26px;
+  }
+`
+
+const StyledEventCard = styled.div`
+  text-align: left;
+  color: var(--main-color-white, #fff);
+  margin: 20px;
+  width: 100%;
+  max-width: 500px;
+
+  @media only screen and (min-width: 1024px){
+    display: flex;
+    flex-direction: column;
+    
+    
+    text-align: left;
+    background-color: var(--main-color-white, #fff);
+    color: var(--main-color-blue, #0c598a);
+    border-radius: 10px;
+    padding: 30px;
+    
+    -webkit-box-shadow: 4px 4px 10px 2px rgba(0,0,0,0.75);
+    -moz-box-shadow: 4px 4px 10px 2px rgba(0,0,0,0.75);
+    box-shadow: 4px 4px 10px 2px rgba(0,0,0,0.75);
+  }
 `
 
 interface EventText {
@@ -38,7 +68,7 @@ interface Props {
 
 const EventCard: React.FC<Props> = ({ eventText }) => {
   return (
-    <EventContainer>
+    <StyledEventCard>
       <StyledP>
         <Item>Description:</Item> {eventText.description}
       </StyledP>
@@ -57,7 +87,7 @@ const EventCard: React.FC<Props> = ({ eventText }) => {
       <StyledP>
         <Item>Cost per participant:</Item> {eventText.cost}
       </StyledP>
-    </EventContainer>
+    </StyledEventCard>
   )
 }
 
