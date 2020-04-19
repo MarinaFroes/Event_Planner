@@ -5,6 +5,7 @@ const Heading1 = styled.h1`
   font-size: 26px;
   margin: 20px;
   color: var(--main-color-blue, #0c598a);
+  max-width: 500px;
 
   @media only screen and (min-width: 768px){
     font-size: 26px;
@@ -20,6 +21,7 @@ const Heading2 = styled.h2`
   font-weight: normal;
   color: var(--main-color-black, #000);
   margin: 20px;
+  max-width: 500px;
 
   @media only screen and (min-width: 768px){
     font-size: 20px;
