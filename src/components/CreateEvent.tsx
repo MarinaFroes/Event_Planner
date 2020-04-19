@@ -15,7 +15,7 @@ const CreateEvent: React.FC = () => {
 
   return (
     <CreateEventContainer>
-      <Header title="Event Planner" subtitle={subtitle} imageUrl={MainImg} />
+      <Header title="Event Planner" subtitle={subtitle} imageUrl={MainImg}/>
       
       <EventForm
         heading1={heading1}

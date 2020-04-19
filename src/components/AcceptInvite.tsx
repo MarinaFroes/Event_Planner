@@ -5,10 +5,16 @@ import Header from './Header'
 import EventImg from '../assets/images/kyle-head-WE-N1KDqEno-unsplash.jpg'
 import TextBox from './TextBox'
 import Btn from './Btn'
-import EventCard from './EventCard'
 
 const AcceptInviteContainer = styled.div`
   background-color: var(--main-color-grey, #eee);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`
+
+const Content = styled.div`
+  padding: 20px;
 `
 
 const AcceptInvite: React.FC = () => {
@@ -31,14 +37,17 @@ const AcceptInvite: React.FC = () => {
         title={eventName}
         subtitle={subtitle}
         imageUrl={EventImg}
+        eventText={eventText}
+        imageWidth="400px"
       />
-      <EventCard eventText={eventText} />
-      <TextBox heading1={heading1} heading2={heading2} />
-      <Btn
-        primaryBtn={true}
-        btnText="Register to the event"
-        btnWidth="90%"
-      />
+      <Content>
+        <TextBox heading1={heading1} heading2={heading2} />
+        <Btn
+          primaryBtn={true}
+          btnText="Register to the event"
+          btnWidth="90%"
+        />
+      </Content>
     </AcceptInviteContainer>
   )
 }

@@ -77,7 +77,7 @@ const EditEvent: React.FC = () => {
 
   return (
     <EditEventContainer>
-      <Header title="My Birthday Details" subtitle={subtitle} imageUrl={EventImg} />
+      <Header title="My Birthday Details" subtitle={subtitle} imageUrl={EventImg} imageWidth="400px"/>
      
       <EventForm
         showImage={false}
