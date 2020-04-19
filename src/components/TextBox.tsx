@@ -40,10 +40,10 @@ interface Props {
 
 const TextBox: React.FC<Props> = ({heading1, heading2}) => {
   return (
-    <>
+    <div>
       <Heading1>{heading1}</Heading1>
       <Heading2>{heading2}</Heading2>
-    </>
+    </div>
   )
 }
 
