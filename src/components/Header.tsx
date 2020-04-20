@@ -16,9 +16,9 @@ const StyledHeader = styled.header`
   color: var(--main-color-white, #fff);
 `
 
-const Image = styled.img<{ imageWidth?: string }>`
+const Image = styled.img`
   width: 400px;
-  max-width: 400px;
+  max-width: 500px;
   display: none;
   
   @media only screen and (min-width: 1024px){
@@ -63,10 +63,9 @@ interface Props {
   subtitle: string;
   imageUrl: string;
   eventText?: EventText;
-  imageWidth?: string;
 }
 
-const Header: React.FC<Props> = ({ title, subtitle, imageUrl, eventText, imageWidth }) => {
+const Header: React.FC<Props> = ({ title, subtitle, imageUrl, eventText }) => {
   return (
     <StyledHeader>
       
@@ -74,7 +73,6 @@ const Header: React.FC<Props> = ({ title, subtitle, imageUrl, eventText, imageWi
         <Image
           src={imageUrl}
           alt={`image for ${title}`}
-          imageWidth={imageWidth}
         />
       </ImageContainer>
       <HeadingContainer>
@@ -82,7 +80,6 @@ const Header: React.FC<Props> = ({ title, subtitle, imageUrl, eventText, imageWi
         <Image2
           src={imageUrl}
           alt={`image for ${title}`}
-          imageWidth={imageWidth}
         />
         {
           eventText && (
