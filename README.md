@@ -1,4 +1,4 @@
-<p align="center"><a href="https://github.com/MarinaFroes/Event_Planner" target="_blank"><img src="./src/assets/icons/noun_event_1004866.svg" alt="logo" title="logo" width="80"></a></p>
+<p align="center"><a href="https://github.com/MarinaFroes/Event_Planner" target="_blank"><img src="./src/assets/icons/logo.svg" alt="logo" title="logo" width="80"></a></p>
 <h1 align="center">Event Planner Web App</h1>
 
 This app aims to provide an easy way to plan events and invite friends sharing the costs with them.
@@ -32,12 +32,12 @@ There are 2 types of objects stored in the database:
 
 | Attribute    | Type             | Description           |
 |-----------------|------------------|-------------------         |
-| uid                 | String           | The user’s unique identifier |
-| user_name          | String           | The user’s first name  and last name     |
+| id                 | String           | The user’s unique identifier |
+| name          | String           | The user’s first name  and last name     |
 | avatarURL  | String           | The path to the image file |
 | events | Array | A list of ids of the events this user created|
-| user_email      | String         |  The user’s e-email address |
-| user_phone  | String | The user’s phone number (optional) |
+| email      | String         |  The user’s e-email address |
+| phone  | String | The user’s phone number (optional) |
 
 #### Events
 
@@ -45,24 +45,25 @@ There are 2 types of objects stored in the database:
 
 | Attribute | Type | Description |
 |-----------------|------------------|-------------------|
-| eid                  | String | The event’s unique identifier |
-| event_name          | String           | The event’s name |
-| description         | String           | The event’s description |
-| address         | String           | The event’s location |
+| id                  | String | The event’s unique identifier |
+| title          | String           | The event’s name |
+| host | Object | Object containing the host id, name and email  |
+| subject         | Object           | Object containing the meal id and description |
 | date        | Date | The event's date |
 | time        | Time | The event's time |
+| address         | String           | The event’s location |
+| maxNumberGuests | Number | The max number of guests for the event|
+| tasks | Array | Array containing tasks objects, including id, details, eventId and owner id, who is responsible for the task|
 | total_cost | Number | The event's total cost|
 | cost_per_guest | Number | The cost per each guest|
-| max_guests | Number | The max number of guests the event can support|
-| registrations | Object | Object where the keys are the ids of the guests who registered for the event and the value is the guest object |
-| status | String | The event's status, which can be 'upcoming', 'finished' or 'cancelled' |
-| organizer | String | The authed user id |
+
+| guests | Array | Array of guest objects, including id, name and email of the guests who registered for the event |
 | timestamp | String | The time when the event was created |
 
 
 ### Services
 
-My code talk to the database via the methods listed bellow:
+My code talks to the database via the methods listed bellow:
 
 * `_getUsers()`
 * `_getEvents()`
@@ -134,7 +135,7 @@ My code talk to the database via the methods listed bellow:
 
 
 ## How to install and use the frontend
-
+<!-- TODO: Update install and use instructions -->
 - Download the files, cd into root directory and run:
 ```bash
 # Install dependencies
@@ -154,3 +155,7 @@ $ npm start
 - [MDN Documentation](https://developer.mozilla.org)
 
 <!-- TODO: Add reference to images and icons -->
+| Image or icon | Author | Source |
+|-----------------|------------------|-------------------|
+| <img src="./src/assets/icons/logo.svg" alt="logo" title="logo" width="80">            | Oksana Latysheva | [Noun Project](https://thenounproject.com/search/?q=event&i=1004866) |
+ 
