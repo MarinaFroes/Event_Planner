@@ -30,11 +30,11 @@ There are 2 types of objects stored in the database:
 
 - Users include:
 
-| Attribute    | Type             | Description           |
-|-----------------|------------------|-------------------         |
-| id                 | String           | The user’s unique identifier |
-| name          | String           | The user’s first name  and last name     |
-| email      | String         |  The user’s e-email address |
+| Attribute    | Type             | Description                  |
+|--------------|------------------|------------------------------|
+| id           | String           | The user’s unique identifier |
+| name         | String           | The user’s name              |
+| email        | String           | The user’s e-email address   |
 
 <!-- TODO: Add avatarUrl, events, phone
 | avatarURL  | String           | The path to the image file |
@@ -48,16 +48,18 @@ There are 2 types of objects stored in the database:
 
 | Attribute | Type | Description |
 |-----------------|------------------|-------------------|
-| id                  | String | The event’s unique identifier |
+| id              | String | The event’s unique identifier |
 | title          | String           | The event’s name |
 | host | Object | Object containing the host id, name and email  |
-| subject         | Object           | Object containing the meal id and name |
+| subject         | Object           | Object containing the meal id, name and url of the meal photo |
+| additionalInfo  | String     | Additional info (optional) |
 | date        | Date | The event's date |
 | time        | Time | The event's time |
 | address         | String           | The event’s location |
 | maxNumberGuests | Number | The max number of guests for the event|
 | tasks | Array | Array containing tasks objects, including id, details, eventId and owner id, who is responsible for the task|
 | totalCost | Number | The event's total cost|
+| costPerGuest | Number | The cost per guest |
 | guests | Array | Array of guest objects, including id, name and email of the guests who registered for the event |
 | timestamp | String | The time when the event was created |
 
@@ -90,53 +92,59 @@ My code talks to the database via the methods listed bellow:
 3) `_saveEvent(event)` Method
 
 *Description*: Save the event in the database.  
-*Parameters*:  Object that includes the following properties: `event_name`, `description`, `address`, `date`, `time`, `total_cost`, `max_guests`. More details about these properties:
+*Parameters*:  Object that includes the following properties: `title`, `subject`, `additionalInfo`, `address`, `date`, `time`, `total_cost`, `max_guests`. More details about these properties:
 
 | Attribute | Type | Description |
 |-----------------|------------------|-------------------|
-| event_name          | String           | The event’s name |
-| description         | String           | The event’s description |
+| title          | String           | The event’s name |
+| subject | Object | Object containing the name of the meal and meal photo url|
+| additionalInfo  | String     | Additional info (optional) |
 | address         | String           | The event’s location |
 | date        | Date | The event's date |
 | time        | Time | The event's time |
-| total_cost | Number | The event's total cost|
-| max_guests | Number | The max number of guests the event can support|
+| totalCost | Number | The event's total cost|
+| maxNumberGuests | Number | The max number of guests the event can support|
+| tasks | Array | Array containing task objects including only the details | 
 
-*Return Value*:  An object that has all the previous properties plus the following ones: `eid`, `status`, `cost_per_guest`, `organizer`, `timestamp` and `registrations`. More details about these properties:
+*Return Value*:  An object that has all the previous properties plus the following ones: `id`, `host`, `costPerGuest`, `timestamp` and `guests`. Each `task` object inside the `tasks` array will also include a task id and the event id. The `subject` object will also cointain a meal id. More details about these properties:
 
 | Attribute | Type | Description |
 |-----------------|------------------|-------------------|
-| eid                  | String | The event’s unique identifier |
-| status | String | The event's status, which can be 'upcoming', 'finished' or 'cancelled'. It starts as 'upcoming' |
-| cost_per_guest | Number | The cost per each guest|
-| organizer | String | The authed user id |
+| id              | String | The event’s unique identifier |
+| host | Object | Object containing the authed user id, name and email  |
+| costPerGuest | Number | The cost per guest|
 | timestamp | String | The time when the event was created |
-| registrations | Object | Object where the keys are the ids of the guests who registered for the event and the value is the guest object. It starts as an empty object. |
+| guests | Array | Array of guest objects, including id, name and email of the guests who registered for the event. It starts as an empty object. |
+| subject  | Object  | Object containing the meal id, name and url of the meal photo |
+| tasks | Array | Array containing tasks objects, including id, details, eventId and owner id, who is responsible for the task|
 
-4) `_registerToEvent(guest, eid)` Method
+<!-- Status only on frontend? 
+| status | String | The event's status, which can be 'upcoming', 'finished' or 'cancelled'. It starts as 'upcoming' |
+ -->
+
+4) `_registerToEvent(guest, id)` Method
 
 *Description*: Add a guest to a particular event in the database.
-*Parameters*: The event id and the guest object that contains the following properties: `guest_name`, `guest_email` and `guest_phone`. More details about these properties:
+*Parameters*: The event id and the guest object is the authed user object, containing `id`, `name` and `email`. More details about these properties:
+
+| Attribute    | Type             | Description                  |
+|--------------|------------------|------------------------------|
+| id           | String           | The user’s unique identifier |
+| name         | String           | The user’s name              |
+| email        | String           | The user’s e-email address   |
+
+*Return Value*:  The event object updated including the guest object on the guests array with the `id`, `name` and `email` properties plus a `status` property. More details about these properties:
 
 | Attribute | Type | Description |
-|-----------------|------------------|-------------------|
-| guest_name          | String           | The guest’s first name  and last name     |
-| guest_email      | String         |  The guest’s e-email address |
-| guest_phone  | String | The guest’s phone number (optional) |
-
-*Return Value*:  An object that has all the previous properties plus the following ones: `gid` and `reg_status`. More details about these properties:
-
-| Attribute | Type | Description |
-|-----------------|------------------|-------------------|
-| gid                  | String | The guest’s unique identifier |
-| reg_status | String | Registration status, which can be: 'pending', 'approved' or 'rejected'. It starts as 'pending'.|
+|-----------|------|-------------|
+| status | String | Registration status, which can be: 'pending', 'approved' or 'rejected'. It starts as 'pending'.|
 
 5) `_updateGuestStatus(action, eid, gid)` Method
 
 *Description*: Update the guest registration status for a particular event in the database.
 *Parameters*: The event id, the guest id and the action, which can be: `approve` or `reject`. 
 
-*Return Value*:  The event object with the `reg_status` property for the specific guest updated to `approved` or `rejected`.
+*Return Value*:  The event object with the `status` property for the specific guest object updated to `approved` or `rejected`.
 
 
 ## How to install and use the frontend
