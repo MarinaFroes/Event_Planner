@@ -32,21 +32,19 @@ const StyledP = styled.p`
 const StyledEventCard = styled.div`
   text-align: left;
   color: var(--main-color-white, #fff);
-  margin: 20px;
+  margin: 100px;
   width: 100%;
-  max-width: 500px;
+  max-width: 400px;
 
   @media only screen and (min-width: 1024px){
     display: flex;
     flex-direction: column;
-    
-    
     text-align: left;
     background-color: var(--main-color-white, #fff);
     color: var(--main-color-blue, #0c598a);
     border-radius: 10px;
     padding: 30px;
-    
+    max-width: 500px;
     -webkit-box-shadow: 4px 4px 10px 2px rgba(0,0,0,0.75);
     -moz-box-shadow: 4px 4px 10px 2px rgba(0,0,0,0.75);
     box-shadow: 4px 4px 10px 2px rgba(0,0,0,0.75);
