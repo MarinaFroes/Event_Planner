@@ -2,13 +2,13 @@ import React from 'react'
 import styled from 'styled-components'
 
 import EventCard from './EventCard'
+import Headings from './Headings'
 
 const StyledHeader = styled.header`
   display: flex;
   overflow: hidden;
-  flex-direction: column;
-  align-items: center;
   justify-content: space-evenly;
+  align-items: center;
   width: 100%;
   height: 100%;
   text-align: center;
@@ -16,43 +16,37 @@ const StyledHeader = styled.header`
   color: var(--main-color-white, #fff);
 `
 
-const Heading1 = styled.h1`
-  font-size: 26px;
-  padding-top: 20px;
-
-  @media only screen and (min-width: 768px){
-    font-size: 42px;
-  }
-
-  @media only screen and (min-width: 1080px){
-    font-size: 68px;
-  }
-`
-
-const Heading2 = styled.h2`
-  font-size: 16px;
-  font-weight: normal;
-  margin: 20px;
-  max-width: 500px;
-
-  @media only screen and (min-width: 768px){
-    font-size: 20px;
-  }
-
-  @media only screen and (min-width: 1080px){
-    font-size: 26px;
-  }
-`
-
 const Image = styled.img<{ imageWidth?: string }>`
-  width: ${props => props.imageWidth ? props.imageWidth : "100%"};
-  max-width: 800px;
-  padding-bottom: 40px;
-
-  @media only screen and (min-width: 1280px){
-    padding-bottom: 0;
-    margin-bottom: -100px;
+  width: 400px;
+  max-width: 400px;
+  display: none;
+  
+  @media only screen and (min-width: 1024px){
+    display: block;
+    margin: 20px;
   }
+`
+
+const Image2 = styled(Image)`
+  display: block;
+  margin: 0;
+
+  @media only screen and (min-width: 1024px){
+    display: none;
+  }
+`
+
+const HeadingContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px;
+`
+
+const ImageContainer = styled.div`
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
 `
 
 interface EventText {
@@ -75,19 +69,30 @@ interface Props {
 const Header: React.FC<Props> = ({ title, subtitle, imageUrl, eventText, imageWidth }) => {
   return (
     <StyledHeader>
-      <Heading1>{title}</Heading1>
-      <Heading2>{subtitle}</Heading2>
       
-      <Image
-        src={imageUrl}
-        alt={`image for ${title}`}
-        imageWidth={imageWidth}
-      />
-      {
-        eventText && (
-          <EventCard eventText={eventText} />
-        )
-      }
+      <ImageContainer>
+        <Image
+          src={imageUrl}
+          alt={`image for ${title}`}
+          imageWidth={imageWidth}
+        />
+      </ImageContainer>
+      <HeadingContainer>
+        <Headings title={title} subtitle={subtitle}/>
+        <Image2
+          src={imageUrl}
+          alt={`image for ${title}`}
+          imageWidth={imageWidth}
+        />
+        {
+          eventText && (
+            <EventCard eventText={eventText} />
+          )
+        }
+      </HeadingContainer>
+        
+      
+      
     </StyledHeader>
   )
 }
