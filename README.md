@@ -67,6 +67,7 @@ There are 2 types of objects stored in the database:
 
 ### Services
 <!-- TODO: Review services -->
+[ SERVICES NEED UPDATE ]
 My code talks to the database via the methods listed bellow:
 
 * `_getUsers()`
@@ -159,7 +160,7 @@ $ npm start
 - [MDN Documentation](https://developer.mozilla.org)
 
 <!-- TODO: Add reference to images and icons -->
-### Image and Icons References and Resources
+### Image and Icons References
 | Image or icon | Author | Source |
 |-----------------|------------------|-------------------|
 | <img src="./src/assets/icons/logo.svg" alt="logo" width="80">            | Oksana Latysheva | [Noun Project](https://thenounproject.com/search/?q=event&i=1004866) |
