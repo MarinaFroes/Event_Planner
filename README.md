@@ -34,10 +34,13 @@ There are 2 types of objects stored in the database:
 |-----------------|------------------|-------------------         |
 | id                 | String           | The user’s unique identifier |
 | name          | String           | The user’s first name  and last name     |
+| email      | String         |  The user’s e-email address |
+
+<!-- TODO: Add avatarUrl, events, phone
 | avatarURL  | String           | The path to the image file |
 | events | Array | A list of ids of the events this user created|
-| email      | String         |  The user’s e-email address |
 | phone  | String | The user’s phone number (optional) |
+ -->
 
 #### Events
 
@@ -48,21 +51,22 @@ There are 2 types of objects stored in the database:
 | id                  | String | The event’s unique identifier |
 | title          | String           | The event’s name |
 | host | Object | Object containing the host id, name and email  |
-| subject         | Object           | Object containing the meal id and description |
+| subject         | Object           | Object containing the meal id and name |
 | date        | Date | The event's date |
 | time        | Time | The event's time |
 | address         | String           | The event’s location |
 | maxNumberGuests | Number | The max number of guests for the event|
 | tasks | Array | Array containing tasks objects, including id, details, eventId and owner id, who is responsible for the task|
-| total_cost | Number | The event's total cost|
-| cost_per_guest | Number | The cost per each guest|
-
+| totalCost | Number | The event's total cost|
 | guests | Array | Array of guest objects, including id, name and email of the guests who registered for the event |
 | timestamp | String | The time when the event was created |
 
+<!-- TODO: Calculate cost per guest on the frontend
+| cost_per_guest | Number | The cost per each guest|
+ -->
 
 ### Services
-
+<!-- TODO: Review services -->
 My code talks to the database via the methods listed bellow:
 
 * `_getUsers()`
@@ -158,6 +162,6 @@ $ npm start
 ### Image and Icons References and Resources
 | Image or icon | Author | Source |
 |-----------------|------------------|-------------------|
-| <img src="./src/assets/icons/logo.svg" alt="logo" title="logo" width="80">            | Oksana Latysheva | [Noun Project](https://thenounproject.com/search/?q=event&i=1004866) |
-| <img src="./src/assets/images/tuva-mathilde-loland-4rfVL3NNGrA-unsplash.jpg" alt="birthday cake" title="logo" width="150">            | Tuva Mathilde Loland | [Unsplash](https://unsplash.com/photos/4rfVL3NNGrA) |
-| <img src="./src/assets/images/spencer-davis-vJsj-hgOEG0-unsplash.jpg" alt="Top view of a table with food" title="logo" width="150">            | Spencer Davis | [Unsplash](https://unsplash.com/photos/vJsj-hgOEG0) |
+| <img src="./src/assets/icons/logo.svg" alt="logo" width="80">            | Oksana Latysheva | [Noun Project](https://thenounproject.com/search/?q=event&i=1004866) |
+| <img src="./src/assets/images/tuva-mathilde-loland-4rfVL3NNGrA-unsplash.jpg" alt="birthday cake" width="150">  | Tuva Mathilde Loland | [Unsplash](https://unsplash.com/photos/4rfVL3NNGrA) |
+| <img src="./src/assets/images/spencer-davis-vJsj-hgOEG0-unsplash.jpg" alt="Top view of a table with food" width="150"> | Spencer Davis | [Unsplash](https://unsplash.com/photos/vJsj-hgOEG0) |
