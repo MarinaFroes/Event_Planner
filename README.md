@@ -159,5 +159,5 @@ $ npm start
 | Image or icon | Author | Source |
 |-----------------|------------------|-------------------|
 | <img src="./src/assets/icons/logo.svg" alt="logo" title="logo" width="80">            | Oksana Latysheva | [Noun Project](https://thenounproject.com/search/?q=event&i=1004866) |
-| <img src="./src/assets/images/tuva-mathilde-loland-4rfVL3NNGrA-unsplash.jpg" alt="birthday cake" title="logo" width="80">            | Tuva Mathilde Loland | [Unsplash](https://unsplash.com/photos/4rfVL3NNGrA) |
-| <img src="./src/assets/images/spencer-davis-vJsj-hgOEG0-unsplash.jpg" alt="Top view of a table with food" title="logo" width="80">            | Spencer Davis | [Unsplash](https://unsplash.com/photos/vJsj-hgOEG0) |
+| <img src="./src/assets/images/tuva-mathilde-loland-4rfVL3NNGrA-unsplash.jpg" alt="birthday cake" title="logo" width="150">            | Tuva Mathilde Loland | [Unsplash](https://unsplash.com/photos/4rfVL3NNGrA) |
+| <img src="./src/assets/images/spencer-davis-vJsj-hgOEG0-unsplash.jpg" alt="Top view of a table with food" title="logo" width="150">            | Spencer Davis | [Unsplash](https://unsplash.com/photos/vJsj-hgOEG0) |
