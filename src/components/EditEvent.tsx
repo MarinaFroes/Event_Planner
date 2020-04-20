@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import Btn from './Btn'
 import Header from './Header'
 import EventForm from './EventForm'
-import EventImg from '../assets/images/kyle-head-WE-N1KDqEno-unsplash.jpg'
+import EventImg from '../assets/images/tuva-mathilde-loland-4rfVL3NNGrA-unsplash.jpg'
 import GuestsInfo from './GuestsInfo'
 
 const EditEventContainer = styled.div`
@@ -77,7 +77,7 @@ const EditEvent: React.FC = () => {
 
   return (
     <EditEventContainer>
-      <Header title="My Birthday Details" subtitle={subtitle} imageUrl={EventImg} imageWidth="400px"/>
+      <Header title="My Birthday Details" subtitle={subtitle} imageUrl={EventImg}/>
      
       <EventForm
         showImage={false}

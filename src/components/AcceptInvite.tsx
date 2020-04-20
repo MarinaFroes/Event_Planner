@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 import Header from './Header'
-import EventImg from '../assets/images/kyle-head-WE-N1KDqEno-unsplash.jpg'
+import EventImg from '../assets/images/tuva-mathilde-loland-4rfVL3NNGrA-unsplash.jpg'
 import TextBox from './TextBox'
 import Btn from './Btn'
 
@@ -23,7 +23,8 @@ const AcceptInvite: React.FC = () => {
   const heading1 = "Accept the invite by signing up"
   const heading2 = "After accepting the invite, the host will be notified. If the host confirms your participation on the event or updates any event info, you will receive a notification by email."
   const eventText = {
-    description: "Birthday party including snacks, cake and drinks.",
+    description: "Chocolate cake",
+    additionalInfo: "Snacks and drinks are included",
     location: "Bundesallee 198A",
     date: "04/26/2020",
     time: "19:00",
@@ -38,7 +39,6 @@ const AcceptInvite: React.FC = () => {
         subtitle={subtitle}
         imageUrl={EventImg}
         eventText={eventText}
-        imageWidth="400px"
       />
       <Content>
         <TextBox heading1={heading1} heading2={heading2} />
