@@ -57,7 +57,8 @@ interface EventText {
   date: string,
   time: string,
   participants: number,
-  cost: number
+  cost: number,
+  additionalInfo?: string,
 }
 
 interface Props {
@@ -68,8 +69,12 @@ const EventCard: React.FC<Props> = ({ eventText }) => {
   return (
     <StyledEventCard>
       <StyledP>
-        <Item>Description:</Item> {eventText.description}
+        <Item>Meal:</Item> {eventText.description}
       </StyledP>
+        {
+          eventText.additionalInfo !== undefined && (
+          <StyledP><Item>Additional Info:</Item> {eventText.additionalInfo}</StyledP>)
+        }
       <StyledP>
         <Item>Location:</Item> {eventText.location}
       </StyledP>
