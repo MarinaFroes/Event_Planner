@@ -1,6 +1,11 @@
 version: "3.0"
 services:
-  event-planner-app:
-    build: .
-    ports:
-        - "80:80"
+    event-planner-app:
+        build: .
+        ports:
+            - "80:80"
+    event-planner-service:
+        image: jmagnojunior/event-planner-service:1.0
+        ports:
+            - "8080:8080"
+    
