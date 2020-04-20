@@ -1,0 +1,6 @@
+version: "3.0"
+services:
+  event-planner-app:
+    build: .
+    ports:
+        - "80:80"

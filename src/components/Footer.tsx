@@ -99,7 +99,7 @@ const Footer: React.FC = () => {
         <InfoLink href="/">About</InfoLink>
         <InfoLink href="/">Support</InfoLink>
         <InfoLink href="/">Product</InfoLink>
-        <InfoLink href="/">Features</InfoLink>
+        <InfoLink href="/">Featuress</InfoLink>
       </LinksContainer>
 
       <SocialMediaContainer>
