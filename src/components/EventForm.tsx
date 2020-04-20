@@ -145,19 +145,17 @@ const EventForm: React.FC<Props> = ({ handleChange, showImage, btnText, primaryB
         }
       </div>
       <Form>
-        {showImage &&
-          (
-            <Label>
-            Select an image
-            <InputFile
-                id="event-image"
-                type="file"
-                accept="image/png, image/jpeg"
-                required
-              />
-            </Label>
-          )
-        }
+        
+        <Label>
+        Select an image
+        <InputFile
+            id="event-image"
+            type="file"
+            accept="image/png, image/jpeg"
+            required
+          />
+        </Label>
+        
         <Label>
           <Input
             id="event-title"
