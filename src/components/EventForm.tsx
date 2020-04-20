@@ -136,18 +136,31 @@ const EventForm: React.FC<Props> = ({ handleChange, showImage, btnText, primaryB
 
   return (
     <FormContainer>
-      <div>
-        <TextBox heading1={heading1} heading2={heading2} />
-        {showImage &&
-          (
-            <Image src="https://dummyimage.com/300x300/c4c4c4/ffffff.png&text=Add+an+image" alt="" />
-          )
-        }
-      </div>
+      
       <Form>
-        
+        <div>
+          <TextBox
+            heading1={heading1} heading2={heading2}
+          />
+          <Label>
+            Event Title
+            <Input
+              id="event-title"
+              type="text"
+              placeholder="Create a name for your event"
+              ref={inputRef}
+              onChange={handleChange}
+              required
+            />
+          </Label>
+          {showImage &&
+            (
+              <Image src="https://dummyimage.com/400x400/c4c4c4/ffffff.png&text=Add+meal+photo" alt="meal photo" />
+            )
+          }
+        </div>
         <Label>
-        Select an image
+        Select a meal photo
         <InputFile
             id="event-image"
             type="file"
@@ -155,22 +168,20 @@ const EventForm: React.FC<Props> = ({ handleChange, showImage, btnText, primaryB
             required
           />
         </Label>
-        
         <Label>
+          Meal name
           <Input
-            id="event-title"
+            id="meal-name"
             type="text"
-            placeholder="Title"
-            ref={inputRef}
-            onChange={handleChange}
+            placeholder="Describe your dish"
             required
           />
         </Label>
         <Label>
+          Additional Info
           <TextArea
-            id="event-description"
-            placeholder="Description"
-            required
+            id="additional-info"
+            placeholder="What your guests should know"
           />
         </Label>
 
@@ -179,7 +190,7 @@ const EventForm: React.FC<Props> = ({ handleChange, showImage, btnText, primaryB
           Address
         <Input
             type="text"
-            placeholder="Address"
+            placeholder="What is the event location"
             required
           />
         </Label>
