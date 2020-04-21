@@ -17,7 +17,6 @@ const Item = styled.span`
 
 const StyledP = styled.p`
   font-size: 16px;
-  
   font-weight: normal;
 
   @media only screen and (min-width: 768px){
@@ -32,10 +31,10 @@ const StyledP = styled.p`
 const StyledEventCard = styled.div`
   text-align: left;
   color: var(--main-color-blue, #0c598a);
-  width: 100%;
+  width: 90%;
   max-width: 400px;
 
-  @media only screen and (min-width: 768px){
+  @media only screen and (min-width: 540px){
     display: flex;
     flex-direction: column;
     text-align: left;
@@ -52,7 +51,6 @@ const StyledEventCard = styled.div`
 const StyledSelect = styled.select`
   display: block;
 	font-size: 16px;
-	
 	color: var(--main-color-blue, #0c598a);
 	line-height: 1.3;
 	padding: .6em 1.4em .5em .8em;
@@ -84,6 +82,14 @@ const StyledSelect = styled.select`
     box-shadow: 0 0 0 3px -moz-mac-focusring;
     color: #222;
     outline: none;
+  }
+
+  @media only screen and (min-width: 768px){
+    font-size: 18px;
+  }
+
+  @media only screen and (min-width: 1080px){
+    font-size: 20px;
   }
 `
 
