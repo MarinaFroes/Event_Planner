@@ -14,7 +14,7 @@ const AcceptInviteContainer = styled.div`
   align-items: center;
 `
 
-const Content = styled.div`
+const EventInfoSection = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -27,13 +27,7 @@ const Content = styled.div`
   }
 `
 
-// const TasksContainer = styled.form`
-//   display: flex;
-//   flex-direction: column;
-//   font-size: 16px;
-// `
-
-const Section2 = styled.div`
+const SignUpSection = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -52,10 +46,10 @@ interface Task {
 const AcceptInvite: React.FC = () => {
   const eventName = "My Birthday"
   const subtitle = "You were invited to take part on My Birthday. Check the event info below:"
-  const heading1 = "Check the event info and select a task"
-  const heading2 = "If the host defined tasks for the guests, here you can select which one you want to do. Don't worry, they're optional."
-  const heading3 = "Sign up to accept the invite"
-  const heading4 = "After accepting the invite, the host will be notified. If the host confirms your participation on the event or updates any event info, you will receive a notification by email."
+  const eventHeading1 = "Check the event info and select a task"
+  const eventHeading2 = "If the host defined tasks for the guests, here you can select which one you want to do. Don't worry, they're optional."
+  const signUpHeading1 = "Sign up to accept the invite"
+  const signUpHeading2 = "After accepting the invite, the host will be notified. If the host confirms your participation on the event or updates any event info, you will receive a notification by email."
 
   const tasks: Task[] = [
     {
@@ -102,34 +96,18 @@ const AcceptInvite: React.FC = () => {
         subtitle={subtitle}
         imageUrl={EventImg}
       />
-      <Content>
-
-        <TextBox heading1={heading1} heading2={heading2} />
-        
-          <EventCard eventText={eventText} />
-      
-        
-        {/* <TasksContainer>
-          <h2>Tasks</h2>
-          {
-            tasks.map((task: Task) => (
-              <label>
-                <input type="radio" key={task.id} name="tasks" id={task.id} value={task.id} />
-                {task.details}
-              </label>
-            ))
-          }
-        </TasksContainer> */}
-      
-      </Content>
-      <Section2>
-        <TextBox heading1={heading3} heading2={heading4} />
+      <EventInfoSection>
+        <TextBox heading1={eventHeading1} heading2={eventHeading2} />
+        <EventCard eventText={eventText} />
+      </EventInfoSection>
+      <SignUpSection>
+        <TextBox heading1={signUpHeading1} heading2={signUpHeading2} />
         <Btn
           primaryBtn={true}
           btnText="Sign up"
           btnWidth="90%"
         />
-      </Section2>
+      </SignUpSection>
     </AcceptInviteContainer>
   )
 }
