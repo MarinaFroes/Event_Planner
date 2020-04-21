@@ -1,39 +1,28 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import EventCard from './EventCard'
 import Headings from './Headings'
 
 const StyledHeader = styled.header`
   display: flex;
-  overflow: hidden;
-  justify-content: space-evenly;
+  flex-direction: column-reverse;
   align-items: center;
   width: 100%;
   height: 100%;
   text-align: center;
   background-color: var(--main-color-blue, #0c598a);
   color: var(--main-color-white, #fff);
+
+  @media only screen and (min-width: 1024px){
+    flex-direction: row;
+     justify-content: space-evenly;
+  }
 `
 
 const Image = styled.img`
-  width: 400px;
+  width: 100%;
   max-width: 500px;
-  display: none;
-  
-  @media only screen and (min-width: 1024px){
-    display: block;
-    margin: 20px;
-  }
-`
-
-const Image2 = styled(Image)`
-  display: block;
-  margin: 0;
-
-  @media only screen and (min-width: 1024px){
-    display: none;
-  }
+  margin: 40px;
 `
 
 const HeadingContainer = styled.div`
@@ -49,26 +38,15 @@ const ImageContainer = styled.div`
   align-items: center;
 `
 
-interface EventText {
-  description: string,
-  location: string,
-  date: string,
-  time: string,
-  participants: number,
-  cost: number
-}
-
 interface Props {
   title: string;
   subtitle: string;
   imageUrl: string;
-  eventText?: EventText;
 }
 
-const Header: React.FC<Props> = ({ title, subtitle, imageUrl, eventText }) => {
+const Header: React.FC<Props> = ({ title, subtitle, imageUrl }) => {
   return (
     <StyledHeader>
-      
       <ImageContainer>
         <Image
           src={imageUrl}
@@ -77,19 +55,7 @@ const Header: React.FC<Props> = ({ title, subtitle, imageUrl, eventText }) => {
       </ImageContainer>
       <HeadingContainer>
         <Headings title={title} subtitle={subtitle}/>
-        <Image2
-          src={imageUrl}
-          alt={`image for ${title}`}
-        />
-        {
-          eventText && (
-            <EventCard eventText={eventText} />
-          )
-        }
       </HeadingContainer>
-        
-      
-      
     </StyledHeader>
   )
 }
