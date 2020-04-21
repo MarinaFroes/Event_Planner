@@ -5,24 +5,11 @@ import styled from 'styled-components'
 import TextBox from './TextBox'
 import Btn from './Btn'
 
-interface Props {
-  showImage: boolean;
-  handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  btnText: string;
-  primaryBtn: boolean;
-  btnWidth?: string;
-  heading1: string;
-  heading2?: string;
-}
 
-interface TextNode {
-  name: string;
-}
-
-const FormContainer = styled.div`
+const Form = styled.form`
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: stretch;
   font-size: 16px;
   color: var(--main-color-orange, #f07422);
   width: 100%;
@@ -31,16 +18,8 @@ const FormContainer = styled.div`
   @media only screen and (min-width: 1024px){
     flex-direction: row;
     justify-content: space-evenly;
+    flex: 1 1 auto;
   }
-`
-
-const Form = styled.form`
-  display: flex;
-  flex-direction: column;
-  font-size: 16px;
-  color: var(--main-color-orange, #f07422);
-  width: 90%;
-  max-width: 500px;
 `
 
 const Label = styled.label`
@@ -126,19 +105,39 @@ const TextArea = styled.textarea`
 
 const StyledDiv = styled.div`
   display: flex;
-  justify-content: space-bet;
+  justify-content: space-between;
   width: 100%;
 `
+
+const Sec = styled.div`
+  width: 90%;
+  margin: 20px;
+  max-width: 500px;
+`
+
+interface Props {
+  showImage: boolean;
+  handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  btnText: string;
+  primaryBtn: boolean;
+  btnWidth?: string;
+  heading1: string;
+  heading2?: string;
+}
+
+interface TextNode {
+  name: string;
+}
 
 const EventForm: React.FC<Props> = ({ handleChange, showImage, btnText, primaryBtn, heading1, heading2, btnWidth }) => {
   // const [name, useName] = useState<TextNode>({name: ""});
   const inputRef = useRef<HTMLInputElement>(null);
 
   return (
-    <FormContainer>
+   
       
       <Form>
-        <div>
+        <Sec>
           <TextBox
             heading1={heading1} heading2={heading2}
           />
@@ -158,7 +157,7 @@ const EventForm: React.FC<Props> = ({ handleChange, showImage, btnText, primaryB
               <Image src="https://dummyimage.com/400x400/c4c4c4/ffffff.png&text=Add+meal+photo" alt="meal photo" />
             )
           }
-        </div>
+        
         <Label>
         Select a meal photo
         <InputFile
@@ -176,7 +175,9 @@ const EventForm: React.FC<Props> = ({ handleChange, showImage, btnText, primaryB
             placeholder="Describe your dish"
             required
           />
-        </Label>
+          </Label>
+        </Sec>
+        <Sec>
         <Label>
           Additional Info
           <TextArea
@@ -238,15 +239,15 @@ const EventForm: React.FC<Props> = ({ handleChange, showImage, btnText, primaryB
               required
             />
           </Label>
-
-        </StyledDiv>
+          </StyledDiv>
         <Btn
           primaryBtn={primaryBtn}
           btnText={btnText}
           btnWidth={btnWidth}
-        /> 
+          /> 
+        </Sec>
       </Form>
-    </FormContainer>
+   
   )
 }
 
