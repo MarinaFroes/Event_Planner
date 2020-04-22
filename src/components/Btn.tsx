@@ -17,11 +17,16 @@ interface Props {
   primaryBtn: boolean;
   btnText: string;
   btnWidth?: string;
+  btnType: "button" | "submit" | "reset" ;
 }
 
-const Btn: React.FC<Props> = ({ primaryBtn, btnText, btnWidth}) => {
+const Btn: React.FC<Props> = ({ primaryBtn, btnText, btnWidth, btnType = "button"}) => {
   return (
-    <StyledButton type="button" style={{ width: btnWidth }} primary={primaryBtn}>
+    <StyledButton
+      type={btnType}
+      style={{ width: btnWidth }}
+      primary={primaryBtn}
+    >
       {btnText}
     </StyledButton>
   )
