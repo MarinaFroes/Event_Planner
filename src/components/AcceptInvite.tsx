@@ -106,6 +106,7 @@ const AcceptInvite: React.FC = () => {
           primaryBtn={true}
           btnText="Sign up"
           btnWidth="90%"
+          btnType="button"
         />
       </SignUpSection>
     </AcceptInviteContainer>
