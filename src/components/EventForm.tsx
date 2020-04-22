@@ -1,5 +1,5 @@
-// import React, { useState, useRef} from 'react'
-import React, { useRef} from 'react'
+import React, { useState} from 'react'
+// import React, { useRef} from 'react'
 import styled from 'styled-components'
 
 import TextBox from './TextBox'
@@ -125,18 +125,83 @@ interface Props {
   heading2?: string;
 }
 
+interface Task {
+  id: string,
+  details: string,
+  owner: string,
+  eventId: string
+}
+
+interface Subject {
+  name: string,
+  imageUrl: string
+}
+
+interface Event {
+  title: string;
+  host: string;
+  subject: Subject;
+  additionalInfo?: string;
+  date: string;
+  time: string;
+  address: string;
+  maxNumberGuests: number;
+  totalCost: number;
+  tasks?: Task[]
+}
+
 interface TextNode {
   name: string;
 }
 
 const EventForm: React.FC<Props> = ({ handleChange, showImage, btnText, primaryBtn, heading1, heading2, btnWidth }) => {
+  const [form, setForm] = useState<Event>({
+    title: "",
+    host: "",
+    subject: {
+      name: "",
+      imageUrl: ""
+    },
+    additionalInfo: "",
+    date: "",
+    time: "",
+    address: "",
+    maxNumberGuests: 0,
+    totalCost: 0,
+    tasks: []
+  })
+
+  const [subject, setSubject] = useState<Subject>({
+    name: "",
+    imageUrl: ""
+  })
   // const [name, useName] = useState<TextNode>({name: ""});
-  const inputRef = useRef<HTMLInputElement>(null);
+  // const inputRef = useRef<HTMLInputElement>(null);
+
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    
+    setForm({
+      ...form,
+      subject: {...subject}
+    })
+    console.log(form)
+  }
+
+  const updateFields = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setForm({
+      ...form,
+      [event.target.name]: event.target.value
+    })
+
+    console.log(event.target.name)
+    console.log(form)
+  }
 
   return (
    
-      
-      <Form>
+    <Form onSubmit={(event: React.FormEvent<HTMLFormElement>) => handleSubmit(event)}>
         <Sec>
           <TextBox
             heading1={heading1} heading2={heading2}
@@ -147,8 +212,9 @@ const EventForm: React.FC<Props> = ({ handleChange, showImage, btnText, primaryB
               id="event-title"
               type="text"
               placeholder="Create a name for your event"
-              ref={inputRef}
-              onChange={handleChange}
+              name="title"
+              value={form.title}
+              onChange={updateFields}
               required
             />
           </Label>
@@ -164,6 +230,17 @@ const EventForm: React.FC<Props> = ({ handleChange, showImage, btnText, primaryB
             id="event-image"
             type="file"
             accept="image/png, image/jpeg"
+            name="imageUrl"
+            value={subject.imageUrl}
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+              setSubject({
+                ...subject,
+                [event.target.name]: event.target.value
+              })
+
+              console.log(event.target.name)
+              console.log(subject)
+            }}
             required
           />
         </Label>
@@ -173,6 +250,17 @@ const EventForm: React.FC<Props> = ({ handleChange, showImage, btnText, primaryB
             id="meal-name"
             type="text"
             placeholder="Describe your dish"
+            name="name"
+            value={subject.name}
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+              setSubject({
+                ...subject,
+                [event.target.name]: event.target.value
+              })
+
+              console.log(event.target.name)
+              console.log(subject)
+            }}
             required
           />
           </Label>
@@ -182,6 +270,16 @@ const EventForm: React.FC<Props> = ({ handleChange, showImage, btnText, primaryB
           Additional Info
           <TextArea
             id="additional-info"
+            name="additionalInfo"
+            value={form.additionalInfo}
+            onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) => {
+              setForm({
+                ...form,
+                [event.target.name]: event.target.value
+              })
+              console.log(event.target.name)
+              console.log(form)}
+            }
             placeholder="What your guests should know"
           />
         </Label>
@@ -192,6 +290,9 @@ const EventForm: React.FC<Props> = ({ handleChange, showImage, btnText, primaryB
         <Input
             type="text"
             placeholder="What is the event location"
+            name="address"
+            value={form.address}
+            onChange={updateFields}
             required
           />
         </Label>
@@ -205,6 +306,9 @@ const EventForm: React.FC<Props> = ({ handleChange, showImage, btnText, primaryB
               type="date"
               min="2020-04-17"
               max="2999-12-31"
+              name="date"
+              value={form.date}
+              onChange={updateFields}
               required
             />
           </Label>
@@ -216,6 +320,9 @@ const EventForm: React.FC<Props> = ({ handleChange, showImage, btnText, primaryB
               id="total-cost"
               min="1"
               max="99999"
+              name="totalCost"
+              value={form.totalCost}
+              onChange={updateFields}
               required
             />
           </Label>
@@ -226,6 +333,9 @@ const EventForm: React.FC<Props> = ({ handleChange, showImage, btnText, primaryB
             <SmallerInput
               id="event-time"
               type="time"
+              name="time"
+              value={form.time}
+              onChange={updateFields}
               required
             />
           </Label>
@@ -236,14 +346,19 @@ const EventForm: React.FC<Props> = ({ handleChange, showImage, btnText, primaryB
               id="max-guests"
               min="1"
               max="99999"
+              name="maxNumberGuests"
+              value={form.maxNumberGuests}
+              onChange={updateFields}
               required
             />
           </Label>
-          </StyledDiv>
-        <Btn
-          primaryBtn={primaryBtn}
-          btnText={btnText}
-          btnWidth={btnWidth}
+        </StyledDiv>
+        {/* <input type="submit" value="submit" /> */}
+          <Btn
+            primaryBtn={primaryBtn}
+            btnText={btnText}
+            btnWidth={btnWidth}
+            btnType="submit"
           /> 
         </Sec>
       </Form>
