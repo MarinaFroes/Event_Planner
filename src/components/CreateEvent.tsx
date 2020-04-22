@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 
 import MainHeader from './MainHeader'
 import EventForm from './EventForm'
 import MainImg from '../assets/images/spencer-davis-vJsj-hgOEG0-unsplash.jpg'
-import { getUsers } from '../utils/data'
+// import { saveEvent } from '../utils/data'
 
 const CreateEventContainer = styled.div`
   background-color: var(--main-color-grey, #eee);
@@ -15,42 +15,18 @@ interface User {
   email: string
 }
 
-// interface Users {
-//   users: User[] | null;
-// }
-
 const CreateEvent: React.FC = () => {
-  // const [state, setState] = useState(initialState);
-  const [ users, setUsers ] = useState<[User]>()
- // const [name, useName] = useState<TextNode>({name: ""});
+  
+  // const [ users, setUsers ] = useState<[User]>()
+
   const title = "Event Planner"
   const subtitle = "Event planner is an easy way to create events and invite friends, sharing the costs and the tasks."
   const heading1 = "Add your event info"
 
+  // useEffect(() => {
+  //   getUsers().then(res => setUsers(res))
+  // }, [])
   
-  // const getUsers = async () => {
-  //   const response = await fetch("http://localhost:8080/users")
-  //   const data = await response.json()
-  //   console.log(data)
-  //   // setUsers(data)
-  // }
-
-  useEffect(() => {
-    getUsers().then(res => setUsers(res))
-  }, [])
-  
-  // const usersExample = [
-  //   {
-  //   id: "marinaId",
-  //   name: "Marina",
-  //   email: "marina@mail.com"
-  //   }
-  // ]
-
-  console.log(users)
-  
-  // console.log(users)
-
   return (
     <CreateEventContainer>
       <MainHeader
