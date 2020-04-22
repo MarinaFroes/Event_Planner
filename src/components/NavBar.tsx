@@ -60,7 +60,7 @@ interface Props {
   user?: string;
 }
 
-const NavBar: React.FC<Props> = ({isLogged, user}) => {
+const NavBar: React.FC<Props> = ({isLogged, user = "there"}) => {
   return (
     <StyledNav>
       <LogoLink href="/">
