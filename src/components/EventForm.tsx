@@ -117,7 +117,6 @@ const Sec = styled.div`
 
 interface Props {
   showImage: boolean;
-  handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   btnText: string;
   primaryBtn: boolean;
   btnWidth?: string;
@@ -134,7 +133,7 @@ interface Task {
 
 interface Subject {
   name: string;
-  imageUrl: null | string;
+  imageUrl: any;
 }
 
 interface Event {
@@ -144,16 +143,16 @@ interface Event {
   date: string;
   time: string;
   address: string;
-  maxNumberGuests: number;
+  maxNumberGuest: number;
   totalCost: number;
   tasks?: Task[];
 }
 
-interface TextNode {
-  name: string;
-}
+// interface TextNode {
+//   name: string;
+// }
 
-const EventForm: React.FC<Props> = ({ handleChange, showImage, btnText, primaryBtn, heading1, heading2, btnWidth }) => {
+const EventForm: React.FC<Props> = ({ showImage, btnText, primaryBtn, heading1, heading2, btnWidth }) => {
   const [form, setForm] = useState<Event>({
     title: "",
     host: "",
@@ -161,7 +160,7 @@ const EventForm: React.FC<Props> = ({ handleChange, showImage, btnText, primaryB
     date: "",
     time: "",
     address: "",
-    maxNumberGuests: 0,
+    maxNumberGuest: 0,
     totalCost: 0,
     tasks: []
   })
@@ -176,8 +175,8 @@ const EventForm: React.FC<Props> = ({ handleChange, showImage, btnText, primaryB
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
 
-    // console.log(form)
-    // console.log(subject)
+    console.log(form)
+    console.log(subject)
   }
 
   const updateInputs = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -195,20 +194,20 @@ const EventForm: React.FC<Props> = ({ handleChange, showImage, btnText, primaryB
   }
 
   const updateSubject = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.name === "name") {
-      setSubject({
+    event.target.name === "name" && setSubject({
         ...subject,
         name: event.target.value
-      })
-    }
-    if (event.target.files) {
-      setSubject({
+      }) 
+  }
+
+  const updateImage = (event: React.ChangeEvent<HTMLInputElement>) => {
+    event.target.files ? setSubject({
         ...subject,
-        imageUrl: event.target.files[0].name 
+        imageUrl: URL.createObjectURL(event.target.files[0])
+      }) : setSubject({
+        ...subject,
+        imageUrl: "https://dummyimage.com/400x400/c4c4c4/ffffff.jpg&text=Image+not+available"
       })
-      console.log(subject.imageUrl)
-    }
-    
   }
 
   return (
@@ -230,7 +229,7 @@ const EventForm: React.FC<Props> = ({ handleChange, showImage, btnText, primaryB
               required
             />
           </Label>
-        {subject.imageUrl && <Image src={subject.imageUrl} alt="meal photo" />}
+        {subject.imageUrl ? <Image src={subject.imageUrl} alt="meal photo" /> : <Image src="https://dummyimage.com/400x400/c4c4c4/ffffff.jpg&text=Add+meal+photo" alt="meal photo" />}
        
         <Label>
         Add your meal photo
@@ -239,7 +238,7 @@ const EventForm: React.FC<Props> = ({ handleChange, showImage, btnText, primaryB
             type="file"
             accept="image/png, image/jpeg"
             name="imageUrl"
-            onChange={updateSubject}
+            onChange={updateImage}
             required
           />
         </Label>
@@ -330,8 +329,8 @@ const EventForm: React.FC<Props> = ({ handleChange, showImage, btnText, primaryB
               id="max-guests"
               min="1"
               max="99999"
-              name="maxNumberGuests"
-              value={form.maxNumberGuests}
+              name="maxNumberGuest"
+              value={form.maxNumberGuest}
               onChange={updateInputs}
               required
             />
