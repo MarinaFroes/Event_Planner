@@ -6,6 +6,7 @@ import Header from './Header'
 import EventForm from './EventForm'
 import EventImg from '../assets/images/tuva-mathilde-loland-4rfVL3NNGrA-unsplash.jpg'
 import GuestsInfo from './GuestsInfo'
+import { editEvent } from '../utils/text'
 
 const EditEventContainer = styled.div`
   display: flex;
@@ -26,9 +27,6 @@ const AlertLink = styled.a`
 `
 
 const EditEvent: React.FC = () => {
-  const subtitle = "Here you can check your event details, edit them, get the link to share with your friends, see who accepted the invite."
-  const heading1 = "Check event info and get the invite link"
-  const heading2 = "Here you can get a link to invite your friends for the event. They will be able to see all the information about the event and register to participate. They will not see who has accepted the invite."
 
   const guests = [
     {
@@ -77,13 +75,13 @@ const EditEvent: React.FC = () => {
 
   return (
     <EditEventContainer>
-      <Header title="My Birthday Details" subtitle={subtitle} imageUrl={EventImg}/>
+      <Header title="My Birthday Details" subtitle={editEvent.subtitle} imageUrl={EventImg}/>
      
       <EventForm
         showImage={false}
         handleChange={e => console.log(e.target.value)}
-        heading1={heading1}
-        heading2={heading2}
+        heading1={editEvent.formHeading1}
+        heading2={editEvent.formHeading2}
         primaryBtn={false}
         btnText="Save updates"
       />

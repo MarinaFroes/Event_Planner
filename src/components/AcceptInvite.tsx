@@ -6,6 +6,7 @@ import EventImg from '../assets/images/tuva-mathilde-loland-4rfVL3NNGrA-unsplash
 import TextBox from './TextBox'
 import Btn from './Btn'
 import EventCard from './EventCard'
+import { acceptInvite } from '../utils/text'
 
 const AcceptInviteContainer = styled.div`
   background-color: var(--main-color-white, #fff);
@@ -44,12 +45,7 @@ interface Task {
 }
 
 const AcceptInvite: React.FC = () => {
-  const eventName = "My Birthday"
-  const subtitle = "You were invited to take part on My Birthday. Check the event info below:"
-  const eventHeading1 = "Check the event info and select a task"
-  const eventHeading2 = "If the host defined tasks for the guests, here you can select which one you want to do. Don't worry, they're optional."
-  const signUpHeading1 = "Sign up to accept the invite"
-  const signUpHeading2 = "After accepting the invite, the host will be notified. If the host confirms your participation on the event or updates any event info, you will receive a notification by email."
+  
 
   const tasks: Task[] = [
     {
@@ -88,7 +84,8 @@ const AcceptInvite: React.FC = () => {
     cost: 20.00,
     tasks: tasks,
   }
-
+  const { eventName, subtitle, eventHeading1, eventHeading2, signUpHeading1, signUpHeading2 } = acceptInvite
+  
   return (
     <AcceptInviteContainer>
       <Header
