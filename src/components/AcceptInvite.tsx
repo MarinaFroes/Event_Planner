@@ -37,10 +37,10 @@ const SignUpSection = styled.div`
 `
 
 interface Task {
-  id: string,
-  details: string,
-  owner: string,
-  eventId: string
+  id: string;
+  details: string;
+  owner: string;
+  eventId: string;
 }
 
 const AcceptInvite: React.FC = () => {
