@@ -10,9 +10,9 @@ import Footer from './Footer'
 import { getUsers } from '../utils/data'
 
 interface User {
-  id: string,
-  name: string,
-  email: string
+  id: string;
+  name: string;
+  email: string;
 }
 
 const App: React.FC = () => {
