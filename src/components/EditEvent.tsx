@@ -79,7 +79,6 @@ const EditEvent: React.FC = () => {
      
       <EventForm
         showImage={false}
-        handleChange={e => console.log(e.target.value)}
         heading1={editEvent.formHeading1}
         heading2={editEvent.formHeading2}
         primaryBtn={false}

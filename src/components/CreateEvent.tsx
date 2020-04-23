@@ -24,7 +24,6 @@ const CreateEvent: React.FC = () => {
         heading1={createEvent.formHeading1}
         heading2="" 
         showImage={true}
-        handleChange={e => console.log(e.target.value)}
         primaryBtn={true}
         btnText="Create Event"
       />
