@@ -4,7 +4,7 @@ import styled from 'styled-components'
 
 import TextBox from './TextBox'
 import Btn from './Btn'
-
+import { getTodayDate } from '../utils/helpers'
 
 const Form = styled.form`
   display: flex;
@@ -140,7 +140,6 @@ interface Subject {
 interface Event {
   title: string;
   host: string;
-  subject: Subject;
   additionalInfo?: string;
   date: string;
   time: string;
@@ -158,10 +157,6 @@ const EventForm: React.FC<Props> = ({ handleChange, showImage, btnText, primaryB
   const [form, setForm] = useState<Event>({
     title: "",
     host: "",
-    subject: {
-      name: "",
-      imageUrl: ""
-    },
     additionalInfo: "",
     date: "",
     time: "",
@@ -181,22 +176,30 @@ const EventForm: React.FC<Props> = ({ handleChange, showImage, btnText, primaryB
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    
-    setForm({
-      ...form,
-      subject: {...subject}
-    })
+
     console.log(form)
+    console.log(subject)
   }
 
-  const updateFields = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const updateInputs = (event: React.ChangeEvent<HTMLInputElement>) => {
     setForm({
       ...form,
       [event.target.name]: event.target.value
     })
+  }
 
-    console.log(event.target.name)
-    console.log(form)
+  const updateTextArea = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setForm({
+      ...form,
+      [event.target.name]: event.target.value
+    })
+  }
+
+  const updateSubject = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSubject({
+      ...subject,
+      [event.target.name]: event.target.value
+    })
   }
 
   return (
@@ -211,10 +214,10 @@ const EventForm: React.FC<Props> = ({ handleChange, showImage, btnText, primaryB
             <Input
               id="event-title"
               type="text"
-              placeholder="Create a name for your event"
+              placeholder="Create a title for your event"
               name="title"
               value={form.title}
-              onChange={updateFields}
+              onChange={updateInputs}
               required
             />
           </Label>
@@ -225,22 +228,14 @@ const EventForm: React.FC<Props> = ({ handleChange, showImage, btnText, primaryB
           }
         
         <Label>
-        Select a meal photo
+        Add your meal photo
         <InputFile
             id="event-image"
             type="file"
             accept="image/png, image/jpeg"
             name="imageUrl"
             value={subject.imageUrl}
-            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-              setSubject({
-                ...subject,
-                [event.target.name]: event.target.value
-              })
-
-              console.log(event.target.name)
-              console.log(subject)
-            }}
+            onChange={updateSubject}
             required
           />
         </Label>
@@ -249,18 +244,10 @@ const EventForm: React.FC<Props> = ({ handleChange, showImage, btnText, primaryB
           <Input
             id="meal-name"
             type="text"
-            placeholder="Describe your dish"
+            placeholder="What is your dish name"
             name="name"
             value={subject.name}
-            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-              setSubject({
-                ...subject,
-                [event.target.name]: event.target.value
-              })
-
-              console.log(event.target.name)
-              console.log(subject)
-            }}
+            onChange={updateSubject}
             required
           />
           </Label>
@@ -272,14 +259,7 @@ const EventForm: React.FC<Props> = ({ handleChange, showImage, btnText, primaryB
             id="additional-info"
             name="additionalInfo"
             value={form.additionalInfo}
-            onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) => {
-              setForm({
-                ...form,
-                [event.target.name]: event.target.value
-              })
-              console.log(event.target.name)
-              console.log(form)}
-            }
+            onChange={updateTextArea}
             placeholder="What your guests should know"
           />
         </Label>
@@ -287,12 +267,12 @@ const EventForm: React.FC<Props> = ({ handleChange, showImage, btnText, primaryB
         {/* TODO: Allow to choose current location as address */}
         <Label>
           Address
-        <Input
+          <Input
             type="text"
             placeholder="What is the event location"
             name="address"
             value={form.address}
-            onChange={updateFields}
+            onChange={updateInputs}
             required
           />
         </Label>
@@ -304,11 +284,11 @@ const EventForm: React.FC<Props> = ({ handleChange, showImage, btnText, primaryB
             <SmallerInput
               id="event-date"
               type="date"
-              min="2020-04-17"
+              min={getTodayDate()}
               max="2999-12-31"
               name="date"
               value={form.date}
-              onChange={updateFields}
+              onChange={updateInputs}
               required
             />
           </Label>
@@ -322,7 +302,7 @@ const EventForm: React.FC<Props> = ({ handleChange, showImage, btnText, primaryB
               max="99999"
               name="totalCost"
               value={form.totalCost}
-              onChange={updateFields}
+              onChange={updateInputs}
               required
             />
           </Label>
@@ -335,7 +315,7 @@ const EventForm: React.FC<Props> = ({ handleChange, showImage, btnText, primaryB
               type="time"
               name="time"
               value={form.time}
-              onChange={updateFields}
+              onChange={updateInputs}
               required
             />
           </Label>
@@ -348,7 +328,7 @@ const EventForm: React.FC<Props> = ({ handleChange, showImage, btnText, primaryB
               max="99999"
               name="maxNumberGuests"
               value={form.maxNumberGuests}
-              onChange={updateFields}
+              onChange={updateInputs}
               required
             />
           </Label>
