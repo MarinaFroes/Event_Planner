@@ -126,15 +126,15 @@ interface Props {
 }
 
 interface Task {
-  id: string,
-  details: string,
-  owner: string,
-  eventId: string
+  id: string;
+  details: string;
+  owner: string;
+  eventId: string;
 }
 
 interface Subject {
-  name: string,
-  imageUrl: string
+  name: string;
+  imageUrl: null | string;
 }
 
 interface Event {
@@ -146,7 +146,7 @@ interface Event {
   address: string;
   maxNumberGuests: number;
   totalCost: number;
-  tasks?: Task[]
+  tasks?: Task[];
 }
 
 interface TextNode {
@@ -168,17 +168,16 @@ const EventForm: React.FC<Props> = ({ handleChange, showImage, btnText, primaryB
 
   const [subject, setSubject] = useState<Subject>({
     name: "",
-    imageUrl: ""
+    imageUrl: null
   })
   // const [name, useName] = useState<TextNode>({name: ""});
   // const inputRef = useRef<HTMLInputElement>(null);
 
-
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
 
-    console.log(form)
-    console.log(subject)
+    // console.log(form)
+    // console.log(subject)
   }
 
   const updateInputs = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -196,10 +195,20 @@ const EventForm: React.FC<Props> = ({ handleChange, showImage, btnText, primaryB
   }
 
   const updateSubject = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSubject({
-      ...subject,
-      [event.target.name]: event.target.value
-    })
+    if (event.target.name === "name") {
+      setSubject({
+        ...subject,
+        name: event.target.value
+      })
+    }
+    if (event.target.files) {
+      setSubject({
+        ...subject,
+        imageUrl: event.target.files[0].name 
+      })
+      console.log(subject.imageUrl)
+    }
+    
   }
 
   return (
@@ -221,12 +230,8 @@ const EventForm: React.FC<Props> = ({ handleChange, showImage, btnText, primaryB
               required
             />
           </Label>
-          {showImage &&
-            (
-              <Image src="https://dummyimage.com/400x400/c4c4c4/ffffff.png&text=Add+meal+photo" alt="meal photo" />
-            )
-          }
-        
+        {subject.imageUrl && <Image src={subject.imageUrl} alt="meal photo" />}
+       
         <Label>
         Add your meal photo
         <InputFile
@@ -234,7 +239,6 @@ const EventForm: React.FC<Props> = ({ handleChange, showImage, btnText, primaryB
             type="file"
             accept="image/png, image/jpeg"
             name="imageUrl"
-            value={subject.imageUrl}
             onChange={updateSubject}
             required
           />
@@ -333,7 +337,6 @@ const EventForm: React.FC<Props> = ({ handleChange, showImage, btnText, primaryB
             />
           </Label>
         </StyledDiv>
-        {/* <input type="submit" value="submit" /> */}
           <Btn
             primaryBtn={primaryBtn}
             btnText={btnText}
