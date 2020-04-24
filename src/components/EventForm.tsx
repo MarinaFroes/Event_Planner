@@ -78,10 +78,14 @@ const TextArea = styled.textarea`
   width: 100%;
 `
 
-const StyledDiv = styled.div`
+const SmallerFieldsDiv = styled.div`
   display: flex;
   justify-content: space-between;
   width: 100%;
+
+  > :nth-child(2) {
+    margin-left: 20px;
+  }
 `
 
 const Sec = styled.div`
@@ -263,7 +267,7 @@ const EventForm: React.FC<Props> = ({ showImage, btnText, primaryBtn, heading1, 
           />
         </Label>
 
-        <StyledDiv>
+        <SmallerFieldsDiv>
           <Label>
             Event Date
             <SmallerInput
@@ -291,8 +295,8 @@ const EventForm: React.FC<Props> = ({ showImage, btnText, primaryBtn, heading1, 
               required
             />
           </Label>
-        </StyledDiv>
-        <StyledDiv>
+        </SmallerFieldsDiv>
+        <SmallerFieldsDiv>
           <Label>
             Event time
             <SmallerInput
@@ -317,7 +321,7 @@ const EventForm: React.FC<Props> = ({ showImage, btnText, primaryBtn, heading1, 
               required
             />
           </Label>
-        </StyledDiv>
+        </SmallerFieldsDiv>
         <Btn
           primaryBtn={primaryBtn}
           btnText={btnText}
