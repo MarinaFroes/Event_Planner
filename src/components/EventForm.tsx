@@ -117,14 +117,18 @@ interface Subject {
   imageUrl: null | FileList;
 }
 
+interface DateTime {
+  date: string;
+  time: string;
+}
+
 interface Event {
   title: string;
   host: string;
   additionalInfo?: string;
   date: string;
-  time: string;
   address: string;
-  maxNumberGuest: number;
+  maxNumberGuests: number;
   totalCost: number;
   tasks?: Task[];
 }
@@ -135,9 +139,8 @@ const EventForm: React.FC<Props> = ({ showImage, btnText, primaryBtn, heading1, 
     host: "",
     additionalInfo: "",
     date: "",
-    time: "00:00",
     address: "",
-    maxNumberGuest: 0,
+    maxNumberGuests: 0,
     totalCost: 0,
     tasks: []
   })
@@ -149,10 +152,17 @@ const EventForm: React.FC<Props> = ({ showImage, btnText, primaryBtn, heading1, 
 
   const [imgPreview, setImgPreview] = useState<string>("")
 
+  const [dateTime, setDateTime] = useState<DateTime>({ date: "", time: "00:00"})
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-
+    // TODO: Fix setForm to add formattedDate
+    setForm({
+      ...form,
+      date: formatDate(dateTime.date, dateTime.time)
+    })
     console.log(form)
+    console.log(dateTime)
     console.log(subject)
   }
 
@@ -170,11 +180,19 @@ const EventForm: React.FC<Props> = ({ showImage, btnText, primaryBtn, heading1, 
     })
   }
 
-  const updateSubject = (event: React.ChangeEvent<HTMLInputElement>) => {
-    event.target.name === "name" && setSubject({
-        ...subject,
-        name: event.target.value
-      }) 
+  const updateSubjectName = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSubject({
+      ...subject,
+      name: event.target.value
+    }) 
+  }
+
+  const updateDateTime = (event: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(event.target.value)
+    setDateTime({
+      ...dateTime,
+      [event.target.name]: event.target.value
+    }) 
   }
 
   const updateImage = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -222,7 +240,7 @@ const EventForm: React.FC<Props> = ({ showImage, btnText, primaryBtn, heading1, 
           placeholder="What is your dish name"
           name="name"
           value={subject.name}
-          onChange={updateSubject}
+          onChange={updateSubjectName}
           required
         />
         </Label>
@@ -277,8 +295,8 @@ const EventForm: React.FC<Props> = ({ showImage, btnText, primaryBtn, heading1, 
               min={getTodayDate()}
               max="2999-12-31"
               name="date"
-              value={form.date}
-              onChange={updateInputs}
+              value={dateTime.date}
+              onChange={updateDateTime}
               pattern="\d{4}-\d{2}-\d{2}"
               required
             />
@@ -305,8 +323,8 @@ const EventForm: React.FC<Props> = ({ showImage, btnText, primaryBtn, heading1, 
               id="event-time"
               type="time"
               name="time"
-              value={form.time}
-              onChange={updateInputs}
+              value={dateTime.time}
+              onChange={updateDateTime}
               required
             />
           </Label>
@@ -317,8 +335,8 @@ const EventForm: React.FC<Props> = ({ showImage, btnText, primaryBtn, heading1, 
               id="max-guests"
               min="1"
               max="99999"
-              name="maxNumberGuest"
-              value={form.maxNumberGuest}
+              name="maxNumberGuests"
+              value={form.maxNumberGuests}
               onChange={updateInputs}
               required
             />
