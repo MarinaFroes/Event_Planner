@@ -10,3 +10,11 @@ export const getTodayDate = () => {
 
   return year + '-' + mm + '-' + dd
 }
+
+export const formatDate = (date: string, time: string) => {
+  // date: "2020-12-03"
+  // time: "18:30"
+  const formattedDate = `${date.split("-").reverse().join("-")} ${time}:00`
+  // formattedDate: "30-04-2020 12:12:00"
+  return formattedDate
+}
