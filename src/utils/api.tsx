@@ -5,7 +5,8 @@ const absolutePath = "http://localhost:8080"
 export const getUsers = async () => {
   const response = await fetch(`${absolutePath}/users`)
   const usersData = await response.json()
-  return usersData
+  // console.log(usersData)
+  return usersData.items
   // setUsers(data)
 }
 
