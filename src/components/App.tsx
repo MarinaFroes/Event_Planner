@@ -7,7 +7,7 @@ import EditEvent from './EditEvent'
 import AcceptInvite from './AcceptInvite'
 import NavBar from './NavBar'
 import Footer from './Footer'
-import { getUsers } from '../utils/data'
+import { getUsers } from '../utils/api'
 
 interface User {
   id: string;
@@ -19,13 +19,14 @@ const App: React.FC = () => {
   const [users, setUsers] = useState<[User]>()
   
   useEffect(() => {
-    getUsers().then(res => setUsers(res))
+    getUsers()
+      .then(res => setUsers(res))
   }, [])
 
   return (
     <div className="App">
       <Router>
-        <NavBar isLogged={true} user={users?.[0].name} />
+        <NavBar isLogged={true} user={users && users[0].name} />
         <Route exact path="/" component={CreateEvent} />
         <Route exact path="/events/:eid" component={EditEvent} />
         <Route exact path="/invite/:eid" component={AcceptInvite} />
