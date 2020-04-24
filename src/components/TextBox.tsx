@@ -33,7 +33,7 @@ const Heading2 = styled.h2`
 `
 
 interface Props {
-  heading1: string;
+  heading1?: string;
   heading2?: string;
 }
 

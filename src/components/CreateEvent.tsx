@@ -11,23 +11,25 @@ const CreateEventContainer = styled.div`
 `
 
 const CreateEvent: React.FC = () => {
+  const { title, subtitle, formMainHeading1, formMealHeading2, formEventHeading2 } = createEvent
   
   return (
     <CreateEventContainer>
       <MainHeader
-        title={createEvent.title}
-        subtitle={createEvent.subtitle}
+        title={title}
+        subtitle={subtitle}
         imageUrl={MainImg}
       />
       
       <EventForm
-        heading1={createEvent.formHeading1}
-        heading2="" 
+        heading1={formMainHeading1}
+        heading2={formMealHeading2} 
+        heading3=""
+        heading4={formEventHeading2}
         showImage={true}
         primaryBtn={true}
         btnText="Create Event"
-      />
-          
+      />   
     </CreateEventContainer>
   )
 }
