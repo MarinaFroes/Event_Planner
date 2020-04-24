@@ -143,6 +143,8 @@ const EventForm: React.FC<Props> = ({ showImage, btnText, primaryBtn, heading1, 
     imageUrl: null
   })
 
+  const [imgPreview, setImgPreview] = useState<string>("")
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
 
@@ -172,15 +174,19 @@ const EventForm: React.FC<Props> = ({ showImage, btnText, primaryBtn, heading1, 
   }
 
   const updateImage = (event: React.ChangeEvent<HTMLInputElement>) => {
-    event.target.files ? setSubject({
+    if (event.target.files) {
+      setSubject({
         ...subject,
-        imageUrl: URL.createObjectURL(event.target.files[0])
-      }) : setSubject({
-        ...subject,
-        imageUrl: "https://dummyimage.com/400x400/c4c4c4/ffffff.jpg&text=Image+not+available"
+        imageUrl: event.target.files
       })
-  }
 
+      setImgPreview(URL.createObjectURL(event.target.files[0]))
+
+    } else {
+      setImgPreview("https://dummyimage.com/400x400/c4c4c4/ffffff.jpg&text=Image+not+available")
+    }
+  }
+  
   return (
    
     <Form onSubmit={(event: React.FormEvent<HTMLFormElement>) => handleSubmit(event)}>
@@ -190,7 +196,7 @@ const EventForm: React.FC<Props> = ({ showImage, btnText, primaryBtn, heading1, 
           heading2={heading2}
         />
         
-      {subject.imageUrl ? <Image src={subject.imageUrl} alt="meal photo" /> : <Image src="https://dummyimage.com/400x400/c4c4c4/ffffff.jpg&text=Add+meal+photo" alt="meal photo" />}
+      {imgPreview ? <Image src={imgPreview} alt="meal photo" /> : <Image src="https://dummyimage.com/400x400/c4c4c4/ffffff.jpg&text=Add+meal+photo" alt="meal photo" />}
       
       <Label>
       Add your meal photo
