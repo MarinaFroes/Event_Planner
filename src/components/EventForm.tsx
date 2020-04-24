@@ -278,6 +278,7 @@ const EventForm: React.FC<Props> = ({ showImage, btnText, primaryBtn, heading1, 
               name="date"
               value={form.date}
               onChange={updateInputs}
+              pattern="\d{4}-\d{2}-\d{2}"
               required
             />
           </Label>
