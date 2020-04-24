@@ -9,7 +9,7 @@ import { getTodayDate } from '../utils/helpers'
 const Form = styled.form`
   display: flex;
   flex-direction: column;
-  align-items: stretch;
+  align-items: center;
   font-size: 16px;
   color: var(--main-color-orange, #f07422);
   width: 100%;
@@ -18,6 +18,7 @@ const Form = styled.form`
   @media only screen and (min-width: 1024px){
     flex-direction: row;
     justify-content: space-evenly;
+    align-items: stretch;
     flex: 1 1 auto;
   }
 `
@@ -36,7 +37,9 @@ const Label = styled.label`
 
 const Image = styled.img`
   width: 300px;
+  height: 300px;
   align-self: center;
+  object-fit: cover;
 `
 
 const Input = styled.input`
@@ -53,42 +56,14 @@ const InputFile = styled(Input)`
   background-color: white;
 
   &::-webkit-file-upload-button {
-    visibility: hidden;
+    background-color: var(--main-color-orange, #f07422);
+    border: none;
+    height: 100%;
+    margin: 0;
+    color: white;
+    border-radius: 5px;
   }
-  
-
-  &::before {
-    content: '◀';
-    margin: 0 10px;
-  }
-
 `
-
-/**
- * &::before {
-    content: 'Select some files';
-    display: inline-block;
-    background: var(--main-color-blue);
-    border: 1px solid #999;
-    border-radius: 3px;
-    padding: 5px 8px;
-    outline: none;
-    white-space: nowrap;
-    -webkit-user-select: none;
-    cursor: pointer;
-    text-shadow: 1px 1px #fff;
-    font-weight: 700;
-    font-size: 10pt;
-  }
-
-  :hover::before {
-    border-color: black;
-  }
-
-  :active::before {
-    background: -webkit-linear-gradient(top, #e3e3e3, #f9f9f9);
-  }
- */
 
 const SmallerInput = styled(Input)`
   width: 100%;
@@ -122,6 +97,8 @@ interface Props {
   btnWidth?: string;
   heading1: string;
   heading2?: string;
+  heading3?: string;
+  heading4?: string;
 }
 
 interface Task {
@@ -148,17 +125,13 @@ interface Event {
   tasks?: Task[];
 }
 
-// interface TextNode {
-//   name: string;
-// }
-
-const EventForm: React.FC<Props> = ({ showImage, btnText, primaryBtn, heading1, heading2, btnWidth }) => {
+const EventForm: React.FC<Props> = ({ showImage, btnText, primaryBtn, heading1, heading2, heading3, heading4, btnWidth }) => {
   const [form, setForm] = useState<Event>({
     title: "",
     host: "",
     additionalInfo: "",
     date: "",
-    time: "",
+    time: "00:00",
     address: "",
     maxNumberGuest: 0,
     totalCost: 0,
@@ -169,8 +142,6 @@ const EventForm: React.FC<Props> = ({ showImage, btnText, primaryBtn, heading1, 
     name: "",
     imageUrl: null
   })
-  // const [name, useName] = useState<TextNode>({name: ""});
-  // const inputRef = useRef<HTMLInputElement>(null);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -213,49 +184,55 @@ const EventForm: React.FC<Props> = ({ showImage, btnText, primaryBtn, heading1, 
   return (
    
     <Form onSubmit={(event: React.FormEvent<HTMLFormElement>) => handleSubmit(event)}>
-        <Sec>
-          <TextBox
-            heading1={heading1} heading2={heading2}
-          />
-          <Label>
-            Event Title
-            <Input
-              id="event-title"
-              type="text"
-              placeholder="Create a title for your event"
-              name="title"
-              value={form.title}
-              onChange={updateInputs}
-              required
-            />
-          </Label>
-        {subject.imageUrl ? <Image src={subject.imageUrl} alt="meal photo" /> : <Image src="https://dummyimage.com/400x400/c4c4c4/ffffff.jpg&text=Add+meal+photo" alt="meal photo" />}
-       
+      <Sec>
+        <TextBox
+          heading1={heading1}
+          heading2={heading2}
+        />
+        
+      {subject.imageUrl ? <Image src={subject.imageUrl} alt="meal photo" /> : <Image src="https://dummyimage.com/400x400/c4c4c4/ffffff.jpg&text=Add+meal+photo" alt="meal photo" />}
+      
+      <Label>
+      Add your meal photo
+      <InputFile
+          id="event-image"
+          type="file"
+          accept="image/png, image/jpeg"
+          name="imageUrl"
+          onChange={updateImage}
+          required
+        />
+      </Label>
+      <Label>
+        Meal name
+        <Input
+          id="meal-name"
+          type="text"
+          placeholder="What is your dish name"
+          name="name"
+          value={subject.name}
+          onChange={updateSubject}
+          required
+        />
+        </Label>
+      </Sec>
+      <Sec>
+        <TextBox
+          heading1={heading3}
+          heading2={heading4}
+        />
         <Label>
-        Add your meal photo
-        <InputFile
-            id="event-image"
-            type="file"
-            accept="image/png, image/jpeg"
-            name="imageUrl"
-            onChange={updateImage}
+          Event Title
+          <Input
+            id="event-title"
+            type="text"
+            placeholder="Create a title for your event"
+            name="title"
+            value={form.title}
+            onChange={updateInputs}
             required
           />
         </Label>
-        <Label>
-          Meal name
-          <Input
-            id="meal-name"
-            type="text"
-            placeholder="What is your dish name"
-            name="name"
-            value={subject.name}
-            onChange={updateSubject}
-            required
-          />
-          </Label>
-        </Sec>
-        <Sec>
         <Label>
           Additional Info
           <TextArea
@@ -267,7 +244,7 @@ const EventForm: React.FC<Props> = ({ showImage, btnText, primaryBtn, heading1, 
           />
         </Label>
 
-        {/* TODO: Allow to choose current location as address */}
+      {/* TODO: Allow to choose current location as address */}
         <Label>
           Address
           <Input
@@ -281,7 +258,6 @@ const EventForm: React.FC<Props> = ({ showImage, btnText, primaryBtn, heading1, 
         </Label>
 
         <StyledDiv>
-          {/* TODO: Define dynamic min e max dates */}
           <Label>
             Event Date
             <SmallerInput
@@ -336,14 +312,14 @@ const EventForm: React.FC<Props> = ({ showImage, btnText, primaryBtn, heading1, 
             />
           </Label>
         </StyledDiv>
-          <Btn
-            primaryBtn={primaryBtn}
-            btnText={btnText}
-            btnWidth={btnWidth}
-            btnType="submit"
-          /> 
-        </Sec>
-      </Form>
+        <Btn
+          primaryBtn={primaryBtn}
+          btnText={btnText}
+          btnWidth={btnWidth}
+          btnType="submit"
+        /> 
+      </Sec>
+    </Form>
    
   )
 }
