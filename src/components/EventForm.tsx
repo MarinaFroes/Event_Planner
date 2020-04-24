@@ -4,7 +4,7 @@ import styled from 'styled-components'
 
 import TextBox from './TextBox'
 import Btn from './Btn'
-import { getTodayDate } from '../utils/helpers'
+import { getTodayDate, formatDate } from '../utils/helpers'
 
 const Form = styled.form`
   display: flex;
@@ -190,7 +190,8 @@ const EventForm: React.FC<Props> = ({ showImage, btnText, primaryBtn, heading1, 
       setImgPreview("https://dummyimage.com/400x400/c4c4c4/ffffff.jpg&text=Image+not+available")
     }
   }
-  
+
+
   return (
    
     <Form onSubmit={(event: React.FormEvent<HTMLFormElement>) => handleSubmit(event)}>
