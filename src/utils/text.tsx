@@ -1,7 +1,9 @@
 export const createEvent = {
   title: "Event Planner",
   subtitle: "Event planner is an easy way to create events and invite friends, sharing the costs and the tasks.",
-  formHeading1: "Add your event info"
+  formMainHeading1: "Create your event",
+  formMealHeading2: "Add your meal info:",
+  formEventHeading2: "Add your event info:",
 }
 
 export const editEvent = {
