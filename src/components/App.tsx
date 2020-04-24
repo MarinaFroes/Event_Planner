@@ -7,6 +7,7 @@ import EditEvent from './EditEvent'
 import AcceptInvite from './AcceptInvite'
 import NavBar from './NavBar'
 import Footer from './Footer'
+import UserPage from './UserPage'
 import { getUsers } from '../utils/api'
 
 interface User {
@@ -28,6 +29,7 @@ const App: React.FC = () => {
       <Router>
         <NavBar isLogged={true} user={users && users[0].name} />
         <Route exact path="/" component={CreateEvent} />
+        <Route exact path="/users/:uid" component={UserPage} />
         <Route exact path="/events/:eid" component={EditEvent} />
         <Route exact path="/invite/:eid" component={AcceptInvite} />
         <Footer />
