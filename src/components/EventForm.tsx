@@ -110,7 +110,7 @@ interface Task {
 
 interface Subject {
   name: string;
-  imageUrl: any;
+  imageUrl: null | FileList;
 }
 
 interface Event {
