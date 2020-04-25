@@ -196,12 +196,12 @@ const EventForm: React.FC<Props> = ({ showImage, btnText, primaryBtn, heading1, 
   }
 
   const updateImage = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files) {
+    if (event.target.files && event.target.files.length !== 0) {
       setSubject({
         ...subject,
         imageUrl: event.target.files
       })
-
+    
       setImgPreview(URL.createObjectURL(event.target.files[0]))
 
     } else {
