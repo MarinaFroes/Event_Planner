@@ -1,4 +1,4 @@
-import React, { useState} from 'react'
+import React, { useState } from 'react'
 // import React, { useRef} from 'react'
 import styled from 'styled-components'
 
@@ -152,7 +152,7 @@ const EventForm: React.FC<Props> = ({ showImage, btnText, primaryBtn, heading1, 
 
   const [imgPreview, setImgPreview] = useState<string>("")
 
-  const [dateTime, setDateTime] = useState<DateTime>({ date: "", time: "00:00"})
+  const [dateTime, setDateTime] = useState<DateTime>({ date: "", time: "00:00" })
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -184,7 +184,7 @@ const EventForm: React.FC<Props> = ({ showImage, btnText, primaryBtn, heading1, 
     setSubject({
       ...subject,
       name: event.target.value
-    }) 
+    })
   }
 
   const updateDateTime = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -192,57 +192,56 @@ const EventForm: React.FC<Props> = ({ showImage, btnText, primaryBtn, heading1, 
     setDateTime({
       ...dateTime,
       [event.target.name]: event.target.value
-    }) 
+    })
   }
 
   const updateImage = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files && event.target.files.length !== 0) {
-      setSubject({
-        ...subject,
-        imageUrl: event.target.files
-      })
-    
-      setImgPreview(URL.createObjectURL(event.target.files[0]))
-
-    } else {
-      setImgPreview("https://dummyimage.com/400x400/c4c4c4/ffffff.jpg&text=Image+not+available")
+    let imagePreview = "https://dummyimage.com/400x400/c4c4c4/ffffff.jpg&text=Image+not+available"
+    if (event.target.files) {
+      imagePreview = Array.from(event.target.files).map(file => {
+        setSubject({
+          ...subject,
+          imageUrl: event.target.files
+        })
+        return URL.createObjectURL(file)
+      })[0]
     }
+    setImgPreview(imagePreview)
   }
 
-
   return (
-   
+
     <Form onSubmit={(event: React.FormEvent<HTMLFormElement>) => handleSubmit(event)}>
       <Sec>
         <TextBox
           heading1={heading1}
           heading2={heading2}
         />
-        
-      {imgPreview ? <Image src={imgPreview} alt="meal photo" /> : <Image src="https://dummyimage.com/400x400/c4c4c4/ffffff.jpg&text=Add+meal+photo" alt="meal photo" />}
-      
-      <Label>
-      Add your meal photo
+
+        {imgPreview ? <Image src={imgPreview} alt="meal photo" /> : <Image src="https://dummyimage.com/400x400/c4c4c4/ffffff.jpg&text=Add+meal+photo" alt="meal photo" />}
+
+        <Label>
+          Add your meal photo
       <InputFile
-          id="event-image"
-          type="file"
-          accept="image/png, image/jpeg"
-          name="imageUrl"
-          onChange={updateImage}
-          required
-        />
-      </Label>
-      <Label>
-        Meal name
+            id="event-image"
+            type="file"
+            accept="image/png, image/jpeg"
+            name="imageUrl"
+            onChange={updateImage}
+            required
+          />
+        </Label>
+        <Label>
+          Meal name
         <Input
-          id="meal-name"
-          type="text"
-          placeholder="What is your dish name"
-          name="name"
-          value={subject.name}
-          onChange={updateSubjectName}
-          required
-        />
+            id="meal-name"
+            type="text"
+            placeholder="What is your dish name"
+            name="name"
+            value={subject.name}
+            onChange={updateSubjectName}
+            required
+          />
         </Label>
       </Sec>
       <Sec>
@@ -273,7 +272,7 @@ const EventForm: React.FC<Props> = ({ showImage, btnText, primaryBtn, heading1, 
           />
         </Label>
 
-      {/* TODO: Allow to choose current location as address */}
+        {/* TODO: Allow to choose current location as address */}
         <Label>
           Address
           <Input
@@ -347,10 +346,10 @@ const EventForm: React.FC<Props> = ({ showImage, btnText, primaryBtn, heading1, 
           btnText={btnText}
           btnWidth={btnWidth}
           btnType="submit"
-        /> 
+        />
       </Sec>
     </Form>
-   
+
   )
 }
 
