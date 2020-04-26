@@ -56,3 +56,19 @@ export const saveEvent = async (event: Event, access_token: string, id_token: st
   });
   return response.json()
 }
+
+export const saveSubject = async (subject: Subject, access_token: string, id_token: string) => {
+  const response = await fetch(`${absolutePath}/subjects`, {
+    method: 'POST',
+    mode: 'cors', // no-cors, *cors, same-origin
+    cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+    credentials: 'same-origin', // include, *same-origin, omit
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': access_token,
+      'X-Id-Token': id_token
+    },
+    body: JSON.stringify(subject) // body data type must match "Content-Type" header
+  });
+  return response.json()
+}
