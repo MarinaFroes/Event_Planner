@@ -136,25 +136,38 @@ interface Event {
 const path = "https://cheetos-eventplanner.auth.eu-central-1.amazoncognito.com/login?client_id=up5tc3aetd1skggbojedfjrqh&response_type=code&scope=email+openid+profile&redirect_uri=http://localhost:8080/v1/auth"
 
 const EventForm: React.FC<Props> = ({ showImage, btnText, primaryBtn, heading1, heading2, heading3, heading4, btnWidth }) => {
-  const [form, setForm] = useState<Event>({
+  let formData = JSON.parse(localStorage.getItem('formData') || '{}');
+  let subjectData = JSON.parse(localStorage.getItem('subjectData') || '{}');
+  let dateTimeData = JSON.parse(localStorage.getItem('dateTimeData') || '{}');
+  
+
+  const [form, setForm] = useState<Event>(
+    Object.keys(formData).length === 0 ? {
     title: "",
     host: "",
     additionalInfo: "",
     address: "",
     maxNumberGuests: 0,
     totalCost: 0,
-  })
+  } : formData)
 
-  const [subject, setSubject] = useState<Subject>({
+  const [subject, setSubject] = useState<Subject>(
+    Object.keys(subjectData).length === 0 ? {
     name: "",
     imageUrl: null
-  })
+  } : subjectData)
 
   const [imgPreview, setImgPreview] = useState<string>("")
 
-  const [dateTime, setDateTime] = useState<DateTime>({ date: "", time: "00:00" })
-
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(true)
+  const [dateTime, setDateTime] = useState<DateTime>(
+    Object.keys(dateTimeData).length === 0
+      ? { date: "", time: "00:00" }
+      : dateTimeData
+  )
+console.log(form)
+console.log(dateTime)
+console.log(subject)
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false)
 
   useEffect(() => {
     localStorage.setItem('formData', JSON.stringify(form));
