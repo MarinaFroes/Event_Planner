@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { FaInstagram, FaFacebook, FaTwitter, FaLinkedin } from 'react-icons/fa'
 
-import Logo from '../assets/icons/logo.svg'
+import Logo from '../../assets/icons/logo.svg'
 
 const StyledFooter = styled.footer`
   display: flex;

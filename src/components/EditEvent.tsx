@@ -1,11 +1,11 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import Btn from './Btn'
-import Header from './Header'
+import Btn from './core/Btn'
+import Header from './core/Header'
 import EventForm from './EventForm'
 import EventImg from '../assets/images/tuva-mathilde-loland-4rfVL3NNGrA-unsplash.jpg'
-import GuestsInfo from './GuestsInfo'
+import ShowGuests from './ShowGuests'
 import { editEvent } from '../utils/text'
 
 const EditEventContainer = styled.div`
@@ -90,7 +90,7 @@ const EditEvent: React.FC = () => {
       <AlertLink>
         Cancel event
       </AlertLink>
-      <GuestsInfo guests={guests}/>
+      <ShowGuests guests={guests}/>
     </EditEventContainer>
   )
 }

@@ -1,7 +1,7 @@
 import React from 'react'
 
 
-const UserPage: React.FC = () => {
+const ViewUser: React.FC = () => {
   return (
       <div>
         <p>User</p>
@@ -9,4 +9,4 @@ const UserPage: React.FC = () => {
     );
 }
 
-export default UserPage
+export default ViewUser

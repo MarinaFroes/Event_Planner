@@ -1,10 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import Header from './Header'
+import Header from './core/Header'
 import EventImg from '../assets/images/tuva-mathilde-loland-4rfVL3NNGrA-unsplash.jpg'
-import TextBox from './TextBox'
-import Btn from './Btn'
+import TextBox from './core/TextBox'
+import Btn from './core/Btn'
 import EventCard from './EventCard'
 import { acceptInvite } from '../utils/text'
 
@@ -112,22 +112,3 @@ const AcceptInvite: React.FC = () => {
 
 export default AcceptInvite
 
-
-/**
- * <label>
-            <input type="radio" key={tasks[0].id} name="tasks" id={tasks[0].id} value={tasks[0].id}/>
-            {tasks[0].details}
-          </label>
-          <label>
-            <input type="radio" key={tasks[1].id} name="tasks" id={tasks[1].id} value={tasks[1].id}/>
-            {tasks[1].details}
-          </label>
-          <label>
-            <input type="radio" key={tasks[2].id} name="tasks" id={tasks[2].id} value={tasks[2].id}/>
-            {tasks[2].details}
-          </label>
-          <label>
-            <input type="radio" key={tasks[3].id} name="tasks" id={tasks[3].id} value={tasks[3].id}/>
-            {tasks[3].details}
-          </label>
- */

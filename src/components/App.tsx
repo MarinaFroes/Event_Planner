@@ -5,10 +5,11 @@ import '../styles/App.css'
 import CreateEvent from './CreateEvent'
 import EditEvent from './EditEvent'
 import AcceptInvite from './AcceptInvite'
-import NavBar from './NavBar'
-import Footer from './Footer'
-import UserPage from './UserPage'
-import { getUsers } from '../utils/api'
+import NavBar from './core/NavBar'
+import Footer from './core/Footer'
+import ViewUser from './ViewUser'
+// import { getUsers } from '../utils/api'
+import { saveAuthedUser, getLocalStorage } from '../utils/helpers'
 
 interface User {
   id: string;
@@ -17,20 +18,24 @@ interface User {
 }
 
 const App: React.FC = () => {
-  const [users, setUsers] = useState<[User]>()
+  const [user, setUser] = useState<User>()
   
   useEffect(() => {
-    getUsers()
-      .then(res => setUsers(res))
+    console.log('location', window.location)
+    window.location && saveAuthedUser(window.location)
+
+    const authedUser = getLocalStorage('authedUserData') && getLocalStorage('authedUserData')
+    console.log(authedUser.name)
+    authedUser && setUser(authedUser.name)
   }, [])
 
   return (
     <div className="App">
       <Router>
-        <NavBar isLogged={true} user={users && users[0].name} />
+        <NavBar isLogged={true} user={user && user.name} />
         <Switch>
           <Route exact path="/" component={CreateEvent} />
-          <Route exact path="/users/:uid" component={UserPage} />
+          <Route exact path="/users/:uid" component={ViewUser} />
           <Route exact path="/events/:eid" component={EditEvent} />
           <Route exact path="/invite/:eid" component={AcceptInvite} />
         </Switch>

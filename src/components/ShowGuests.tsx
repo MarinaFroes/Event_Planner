@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import TextBox from './TextBox'
+import TextBox from './core/TextBox'
 import GuestCard from './GuestCard'
 
 
@@ -55,7 +55,7 @@ interface Props {
   guests: Guest[];
 }
 
-const GuestsInfo: React.FC<Props> = ({ guests }) => {
+const ShowGuests: React.FC<Props> = ({ guests }) => {
   const heading1 = "Approve the guests who registered for the event"
   const heading2 = "The guest will be notified if you confirm the invitation or update the event info. "
   
@@ -81,4 +81,4 @@ const GuestsInfo: React.FC<Props> = ({ guests }) => {
   )
 }
 
-export default GuestsInfo
+export default ShowGuests

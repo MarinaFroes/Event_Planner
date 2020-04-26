@@ -1,18 +1,16 @@
+import { getLocalStorage } from './helpers'
 
-const absolutePath = "http://localhost:8080"
-// const relativePath = "localhost/api/"
+const absolutePath = 'http://localhost:8080'
+// const relativePath = 'localhost/api/'
 
-let access_token = JSON.parse(localStorage.getItem('access_token') || '')
-let id_token = JSON.parse(localStorage.getItem('id_token') || '')
-
-// TODO: get id of the authed user 
+let access_token = getLocalStorage('access_token')
+let id_token = getLocalStorage('id_token')
 
 export const getUsers = async () => {
   const response = await fetch(`${absolutePath}/users`)
   const usersData = await response.json()
-  // console.log(usersData)
+
   return usersData.items
-  // setUsers(data)
 }
 
 export const getEvent = async (eventId: string) => {

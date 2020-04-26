@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react'
-// import React, { useRef} from 'react'
 import styled from 'styled-components'
 
-import TextBox from './TextBox'
-import Btn from './Btn'
-import { getTodayDate, formatDate } from '../utils/helpers'
-// import { saveSubject, saveEvent } from '../utils/api'
+import TextBox from './core/TextBox'
+import Btn from './core/Btn'
+import { getTodayDate, formatDate, setLocalStorage, getLocalStorage } from '../utils/helpers'
 
 const Form = styled.form`
   display: flex;
@@ -106,12 +104,12 @@ interface Props {
   heading4?: string;
 }
 
-// interface Task {
-//   id: string;
-//   details: string;
-//   owner: string;
-//   eventId: string;
-// }
+interface Task {
+  id: string;
+  details: string;
+  owner: string;
+  eventId: string;
+}
 
 interface Subject {
   name: string;
@@ -125,29 +123,30 @@ interface DateTime {
 
 interface Event {
   title: string;
-  host: string;
   additionalInfo?: string;
   address: string;
   maxNumberGuests: number;
   totalCost: number;
+  tasks: Task[];
 }
 
 const path = "https://cheetos-eventplanner.auth.eu-central-1.amazoncognito.com/login?client_id=up5tc3aetd1skggbojedfjrqh&response_type=code&scope=email+openid+profile&redirect_uri=http://localhost:8080/v1/auth"
 
 const EventForm: React.FC<Props> = ({ showImage, btnText, primaryBtn, heading1, heading2, heading3, heading4, btnWidth }) => {
-  let formData = JSON.parse(localStorage.getItem('formData') || '{}');
-  let subjectData = JSON.parse(localStorage.getItem('subjectData') || '{}');
-  let dateTimeData = JSON.parse(localStorage.getItem('dateTimeData') || '{}');
-  
+
+  let formData = getLocalStorage('formData')
+  let subjectData = getLocalStorage('subjectData')
+  let dateTimeData = getLocalStorage('dateTimeData')
+  let userData = getLocalStorage('userData')
 
   const [form, setForm] = useState<Event>(
     Object.keys(formData).length === 0 ? {
     title: "",
-    host: "",
     additionalInfo: "",
     address: "",
     maxNumberGuests: 0,
     totalCost: 0,
+    tasks: [],
   } : formData)
 
   const [subject, setSubject] = useState<Subject>(
@@ -167,20 +166,20 @@ const EventForm: React.FC<Props> = ({ showImage, btnText, primaryBtn, heading1, 
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false)
 
   useEffect(() => {
-    localStorage.setItem('formData', JSON.stringify(form))
+    setLocalStorage('formData', form)
   }, [form])
 
   useEffect(() => {
-    localStorage.setItem('subjectData', JSON.stringify(subject))
+    setLocalStorage('subjectData', subject)
   }, [subject])
 
   useEffect(() => {
-    localStorage.setItem('dateTimeData', JSON.stringify(dateTime))
+    setLocalStorage('dateTimeData', dateTime)
   }, [dateTime])
 
   useEffect(() => {
-    const access_token = JSON.parse(localStorage.getItem('access_token') || '')
-    const id_token = JSON.parse(localStorage.getItem('id_token') || '')
+    const access_token = getLocalStorage('access_token')
+    const id_token = getLocalStorage('id_token')
 
     if (access_token.length > 0 && id_token.length > 0) {
       setIsLoggedIn(true)
@@ -193,6 +192,7 @@ const EventForm: React.FC<Props> = ({ showImage, btnText, primaryBtn, heading1, 
     const date = formatDate(dateTime.date, dateTime.time)
     const formData = {
       ...form,
+      host: userData.email,
       subject,
       date
     }
@@ -222,7 +222,6 @@ const EventForm: React.FC<Props> = ({ showImage, btnText, primaryBtn, heading1, 
   }
 
   const updateDateTime = (event: React.ChangeEvent<HTMLInputElement>) => {
-    // console.log(event.target.value)
     setDateTime({
       ...dateTime,
       [event.target.name]: event.target.value
@@ -231,21 +230,20 @@ const EventForm: React.FC<Props> = ({ showImage, btnText, primaryBtn, heading1, 
 
   const updateImage = (event: React.ChangeEvent<HTMLInputElement>) => {
     let imagePreview: string | undefined
+    
     if (event.target.files) {
+      setSubject({
+        ...subject,
+        imageUrl: event.target.files
+      })
+
       imagePreview = Array.from(event.target.files).map(file => {
-        setSubject({
-          ...subject,
-          imageUrl: event.target.files
-        })
         return URL.createObjectURL(file)
       })[0]
     }
     setImgPreview(imagePreview || "https://dummyimage.com/400x400/c4c4c4/ffffff.jpg&text=Image+not+available")
   }
 
-  // let { access_token, id_token} = useParams()
-  // console.log(access_token)
-  // console.log(id_token)
 
   return (
 
@@ -260,7 +258,7 @@ const EventForm: React.FC<Props> = ({ showImage, btnText, primaryBtn, heading1, 
 
         <Label>
           Add your meal photo
-      <InputFile
+          <InputFile
             id="event-image"
             type="file"
             accept="image/png, image/jpeg"
@@ -271,7 +269,7 @@ const EventForm: React.FC<Props> = ({ showImage, btnText, primaryBtn, heading1, 
         </Label>
         <Label>
           Meal name
-        <Input
+          <Input
             id="meal-name"
             type="text"
             placeholder="What is your dish name"
