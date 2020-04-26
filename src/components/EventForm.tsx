@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 // import React, { useRef} from 'react'
-import { useParams } from 'react-router-dom'
 import styled from 'styled-components'
 
 import TextBox from './TextBox'
@@ -164,22 +163,29 @@ const EventForm: React.FC<Props> = ({ showImage, btnText, primaryBtn, heading1, 
       ? { date: "", time: "00:00" }
       : dateTimeData
   )
-console.log(form)
-console.log(dateTime)
-console.log(subject)
+
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false)
 
   useEffect(() => {
-    localStorage.setItem('formData', JSON.stringify(form));
+    localStorage.setItem('formData', JSON.stringify(form))
   }, [form])
 
   useEffect(() => {
-    localStorage.setItem('subjectData', JSON.stringify(subject));
+    localStorage.setItem('subjectData', JSON.stringify(subject))
   }, [subject])
 
   useEffect(() => {
-    localStorage.setItem('dateTimeData', JSON.stringify(dateTime));
+    localStorage.setItem('dateTimeData', JSON.stringify(dateTime))
   }, [dateTime])
+
+  useEffect(() => {
+    const access_token = JSON.parse(localStorage.getItem('access_token') || '')
+    const id_token = JSON.parse(localStorage.getItem('id_token') || '')
+
+    if (access_token.length > 0 && id_token.length > 0) {
+      setIsLoggedIn(true)
+    }
+  }, [])
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
