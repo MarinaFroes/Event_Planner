@@ -198,13 +198,14 @@ const EventForm: React.FC<Props> = ({ showImage, btnText, primaryBtn, heading1, 
   const updateImage = (event: React.ChangeEvent<HTMLInputElement>) => {
     let imagePreview: string | undefined
     if (event.target.files) {
-      imagePreview = Array.from(event.target.files).map(file => {
-        setSubject({
-          ...subject,
-          imageUrl: event.target.files
-        })
-        return URL.createObjectURL(file)
-      })[0]
+      setSubject({
+        ...subject,
+        imageUrl: event.target.files
+      })
+      imagePreview = Array.from(event.target.files)
+        .map(file => {
+          return URL.createObjectURL(file)
+        })[0]
     }
     setImgPreview(imagePreview || "https://dummyimage.com/400x400/c4c4c4/ffffff.jpg&text=Image+not+available")
   }
