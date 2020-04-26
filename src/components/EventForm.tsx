@@ -125,7 +125,6 @@ interface DateTime {
 
 interface Event {
   title: string;
-  host: string;
   additionalInfo?: string;
   address: string;
   maxNumberGuests: number;
@@ -138,12 +137,11 @@ const EventForm: React.FC<Props> = ({ showImage, btnText, primaryBtn, heading1, 
   let formData = JSON.parse(localStorage.getItem('formData') || '{}');
   let subjectData = JSON.parse(localStorage.getItem('subjectData') || '{}');
   let dateTimeData = JSON.parse(localStorage.getItem('dateTimeData') || '{}');
-  
+  let userData = JSON.parse(localStorage.getItem('authedUserData') || '')
 
   const [form, setForm] = useState<Event>(
     Object.keys(formData).length === 0 ? {
     title: "",
-    host: "",
     additionalInfo: "",
     address: "",
     maxNumberGuests: 0,
@@ -193,6 +191,7 @@ const EventForm: React.FC<Props> = ({ showImage, btnText, primaryBtn, heading1, 
     const date = formatDate(dateTime.date, dateTime.time)
     const formData = {
       ...form,
+      host: userData.email,
       subject,
       date
     }
