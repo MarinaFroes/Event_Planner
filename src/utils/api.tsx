@@ -2,6 +2,11 @@
 const absolutePath = "http://localhost:8080"
 // const relativePath = "localhost/api/"
 
+let access_token = JSON.parse(localStorage.getItem('access_token') || '')
+let id_token = JSON.parse(localStorage.getItem('id_token') || '')
+
+// TODO: get id of the authed user 
+
 export const getUsers = async () => {
   const response = await fetch(`${absolutePath}/users`)
   const usersData = await response.json()
@@ -41,7 +46,7 @@ interface Event {
   tasks?: Task[]
 }
 
-export const saveEvent = async (event: Event, access_token: string, id_token: string) => {
+export const saveEvent = async (event: Event) => {
   const response = await fetch(`${absolutePath}/events`, {
     method: 'POST', 
     mode: 'cors', // no-cors, *cors, same-origin
@@ -57,7 +62,7 @@ export const saveEvent = async (event: Event, access_token: string, id_token: st
   return response.json()
 }
 
-export const saveSubject = async (subject: Subject, access_token: string, id_token: string) => {
+export const saveSubject = async (subject: Subject) => {
   const response = await fetch(`${absolutePath}/subjects`, {
     method: 'POST',
     mode: 'cors', // no-cors, *cors, same-origin
