@@ -1,10 +1,12 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 // import React, { useRef} from 'react'
+import { useParams } from 'react-router-dom'
 import styled from 'styled-components'
 
 import TextBox from './TextBox'
 import Btn from './Btn'
 import { getTodayDate, formatDate } from '../utils/helpers'
+// import { saveSubject, saveEvent } from '../utils/api'
 
 const Form = styled.form`
   display: flex;
@@ -105,12 +107,12 @@ interface Props {
   heading4?: string;
 }
 
-interface Task {
-  id: string;
-  details: string;
-  owner: string;
-  eventId: string;
-}
+// interface Task {
+//   id: string;
+//   details: string;
+//   owner: string;
+//   eventId: string;
+// }
 
 interface Subject {
   name: string;
@@ -126,23 +128,21 @@ interface Event {
   title: string;
   host: string;
   additionalInfo?: string;
-  date: string;
   address: string;
   maxNumberGuests: number;
   totalCost: number;
-  tasks?: Task[];
 }
+
+const path = "https://cheetos-eventplanner.auth.eu-central-1.amazoncognito.com/login?client_id=up5tc3aetd1skggbojedfjrqh&response_type=code&scope=email+openid+profile&redirect_uri=http://localhost:8080/v1/auth"
 
 const EventForm: React.FC<Props> = ({ showImage, btnText, primaryBtn, heading1, heading2, heading3, heading4, btnWidth }) => {
   const [form, setForm] = useState<Event>({
     title: "",
     host: "",
     additionalInfo: "",
-    date: "",
     address: "",
     maxNumberGuests: 0,
     totalCost: 0,
-    tasks: []
   })
 
   const [subject, setSubject] = useState<Subject>({
@@ -154,16 +154,31 @@ const EventForm: React.FC<Props> = ({ showImage, btnText, primaryBtn, heading1, 
 
   const [dateTime, setDateTime] = useState<DateTime>({ date: "", time: "00:00" })
 
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(true)
+
+  useEffect(() => {
+    localStorage.setItem('formData', JSON.stringify(form));
+  }, [form])
+
+  useEffect(() => {
+    localStorage.setItem('subjectData', JSON.stringify(subject));
+  }, [subject])
+
+  useEffect(() => {
+    localStorage.setItem('dateTimeData', JSON.stringify(dateTime));
+  }, [dateTime])
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    // TODO: Fix setForm to add formattedDate
-    setForm({
+
+    const date = formatDate(dateTime.date, dateTime.time)
+    const formData = {
       ...form,
-      date: formatDate(dateTime.date, dateTime.time)
-    })
-    console.log(form)
-    console.log(dateTime)
-    console.log(subject)
+      subject,
+      date
+    }
+    
+    console.log(formData)
   }
 
   const updateInputs = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -188,7 +203,7 @@ const EventForm: React.FC<Props> = ({ showImage, btnText, primaryBtn, heading1, 
   }
 
   const updateDateTime = (event: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(event.target.value)
+    // console.log(event.target.value)
     setDateTime({
       ...dateTime,
       [event.target.name]: event.target.value
@@ -208,6 +223,10 @@ const EventForm: React.FC<Props> = ({ showImage, btnText, primaryBtn, heading1, 
     }
     setImgPreview(imagePreview || "https://dummyimage.com/400x400/c4c4c4/ffffff.jpg&text=Image+not+available")
   }
+
+  // let { access_token, id_token} = useParams()
+  // console.log(access_token)
+  // console.log(id_token)
 
   return (
 
@@ -341,12 +360,29 @@ const EventForm: React.FC<Props> = ({ showImage, btnText, primaryBtn, heading1, 
             />
           </Label>
         </SmallerFieldsDiv>
-        <Btn
-          primaryBtn={primaryBtn}
-          btnText={btnText}
-          btnWidth={btnWidth}
-          btnType="submit"
-        />
+        {
+          isLoggedIn && (
+            <Btn
+              primaryBtn={primaryBtn}
+              btnText={btnText}
+              btnWidth={btnWidth}
+              btnType="submit"
+            />
+          )
+        }
+        {
+          !isLoggedIn && (
+            <Btn
+              primaryBtn={primaryBtn}
+              btnText="Login to create the event"
+              btnWidth={btnWidth}
+              btnType="button"
+              onClick={() => {
+                window.location.assign(path)
+              }}
+            />
+          )
+        }
       </Sec>
     </Form>
 
