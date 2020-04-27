@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import '../styles/App.css'
 
 import CreateEvent from './CreateEvent'
@@ -28,10 +28,12 @@ const App: React.FC = () => {
     <div className="App">
       <Router>
         <NavBar isLogged={true} user={users && users[0].name} />
-        <Route exact path="/" component={CreateEvent} />
-        <Route exact path="/users/:uid" component={UserPage} />
-        <Route exact path="/events/:eid" component={EditEvent} />
-        <Route exact path="/invite/:eid" component={AcceptInvite} />
+        <Switch>
+          <Route exact path="/" component={CreateEvent} />
+          <Route exact path="/users/:uid" component={UserPage} />
+          <Route exact path="/events/:eid" component={EditEvent} />
+          <Route exact path="/invite/:eid" component={AcceptInvite} />
+        </Switch>
         <Footer />
       </Router>  
     </div>

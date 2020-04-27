@@ -1,5 +1,7 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
+import queryString from 'query-string'
+import jwt_decode from 'jwt-decode'
 
 import MainHeader from './MainHeader'
 import EventForm from './EventForm'
@@ -10,8 +12,23 @@ const CreateEventContainer = styled.div`
   background-color: var(--main-color-grey, #eee);
 `
 
-const CreateEvent: React.FC = () => {
+const CreateEvent: React.FC<any> = ({ location }) => {
   const { title, subtitle, formMainHeading1, formMealHeading2, formEventHeading2 } = createEvent
+  
+  useEffect(() => {
+    const values = queryString.parse(location.search) || []
+    const { access_token, id_token } = values
+    console.log(values)
+    
+    access_token && localStorage.setItem('access_token', JSON.stringify(access_token))
+
+    id_token && localStorage.setItem('id_token', JSON.stringify(id_token))
+   
+    const authedUserData = jwt_decode(JSON.stringify(id_token) || "")
+
+    authedUserData && localStorage.setItem('authedUserData', JSON.stringify(authedUserData))
+    
+  }, [location])
   
   return (
     <CreateEventContainer>

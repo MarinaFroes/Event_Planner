@@ -2,6 +2,11 @@
 const absolutePath = "http://localhost:8080"
 // const relativePath = "localhost/api/"
 
+let access_token = JSON.parse(localStorage.getItem('access_token') || '')
+let id_token = JSON.parse(localStorage.getItem('id_token') || '')
+
+// TODO: get id of the authed user 
+
 export const getUsers = async () => {
   const response = await fetch(`${absolutePath}/users`)
   const usersData = await response.json()
@@ -41,7 +46,7 @@ interface Event {
   tasks?: Task[]
 }
 
-export const saveEvent = async (event: Event, access_token: string, id_token: string) => {
+export const saveEvent = async (event: Event) => {
   const response = await fetch(`${absolutePath}/events`, {
     method: 'POST', 
     mode: 'cors', // no-cors, *cors, same-origin
@@ -53,6 +58,22 @@ export const saveEvent = async (event: Event, access_token: string, id_token: st
       'X-Id-Token': id_token
     },
     body: JSON.stringify(event) // body data type must match "Content-Type" header
+  });
+  return response.json()
+}
+
+export const saveSubject = async (subject: Subject) => {
+  const response = await fetch(`${absolutePath}/subjects`, {
+    method: 'POST',
+    mode: 'cors', // no-cors, *cors, same-origin
+    cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+    credentials: 'same-origin', // include, *same-origin, omit
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': access_token,
+      'X-Id-Token': id_token
+    },
+    body: JSON.stringify(subject) // body data type must match "Content-Type" header
   });
   return response.json()
 }
