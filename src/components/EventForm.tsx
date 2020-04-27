@@ -133,11 +133,18 @@ interface Event {
 const path = "https://cheetos-eventplanner.auth.eu-central-1.amazoncognito.com/login?client_id=up5tc3aetd1skggbojedfjrqh&response_type=code&scope=email+openid+profile&redirect_uri=http://localhost:8080/v1/auth"
 
 const EventForm: React.FC<Props> = ({ showImage, btnText, primaryBtn, heading1, heading2, heading3, heading4, btnWidth }) => {
+<<<<<<< HEAD
 
   let formData = getLocalStorage('formData')
   let subjectData = getLocalStorage('subjectData')
   let dateTimeData = getLocalStorage('dateTimeData')
   let userData = getLocalStorage('userData')
+=======
+  let formData = JSON.parse(localStorage.getItem('formData') || '{}');
+  let subjectData = JSON.parse(localStorage.getItem('subjectData') || '{}');
+  let dateTimeData = JSON.parse(localStorage.getItem('dateTimeData') || '{}');
+  let userData = JSON.parse(localStorage.getItem('authedUserData') || '')
+>>>>>>> c15eae162796847d780cf4e0fe0e8915aecc4b67
 
   const [form, setForm] = useState<Event>(
     Object.keys(formData).length === 0 ? {
