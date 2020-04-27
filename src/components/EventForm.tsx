@@ -234,17 +234,10 @@ const EventForm: React.FC<Props> = ({ showImage, btnText, primaryBtn, heading1, 
         ...subject,
         imageUrl: event.target.files
       })
-<<<<<<< HEAD
 
       imagePreview = Array.from(event.target.files).map(file => {
         return URL.createObjectURL(file)
       })[0]
-=======
-      imagePreview = Array.from(event.target.files)
-        .map(file => {
-          return URL.createObjectURL(file)
-        })[0]
->>>>>>> master
     }
     setImgPreview(imagePreview || "https://dummyimage.com/400x400/c4c4c4/ffffff.jpg&text=Image+not+available")
   }
