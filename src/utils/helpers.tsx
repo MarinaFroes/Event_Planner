@@ -23,7 +23,6 @@ export const formatDate = (date: string, time: string) => {
 }
 
 export const setLocalStorage = (name: string, data: any) => {
-  console.log('saving', data)
   localStorage.setItem(name, JSON.stringify(data))
 }
 
@@ -32,18 +31,50 @@ export const getLocalStorage = (name: string) => {
   return data
 }
 
-export const saveAuthedUser = (location: Location) => {
-  const values = queryString.parse(location.search) 
+interface Tokens{
+  access_token: string,
+  id_token: string
+}
 
-  if (Object.keys(values).length > 0) {
-    const { access_token, id_token } = values
-
-    access_token && setLocalStorage('access_token', access_token)
-
-    id_token && setLocalStorage('id_token', id_token)
-
-    const authedUserData = jwt_decode(JSON.stringify(id_token) || "")
-
-    authedUserData && setLocalStorage('authedUserData', authedUserData)
+export const isTokenProvided = (location: Location): boolean => {
+  const values = getTokensFromURL(location)
+  if (!values) {
+    return false
   }
+  
+  if (values.access_token.length > 0 && values.id_token.length > 0) {
+    return true
+  } else {
+    return false
+  }
+}
+
+export const getTokensFromURL = (location: Location): Tokens | null => {
+  const values = queryString.parse(location.search)
+  if (Object.keys(values).length <= 0) {
+    return null
+  }
+  return {
+    access_token: values.access_token as string,
+    id_token: values.id_token as string 
+  }
+}
+
+const saveUserData = (data: any) => {
+  setLocalStorage('access_token', data.access_token)
+  setLocalStorage('id_token', data.id_token)
+  setLocalStorage('authedUserData', data.authedUserData)
+}
+
+export const saveAuthedUser = (location: Location) => {
+
+  const values = getTokensFromURL(location)
+  if (values === null) {
+    return
+  }
+
+  const { access_token, id_token } = values
+  const authedUserData = jwt_decode(JSON.stringify(id_token))
+  saveUserData({ access_token, id_token, authedUserData }) 
+  
 }

@@ -3,7 +3,7 @@ import styled from 'styled-components'
 
 import TextBox from './core/TextBox'
 import Btn from './core/Btn'
-import { getTodayDate, formatDate, setLocalStorage, getLocalStorage } from '../utils/helpers'
+import { getTodayDate, formatDate, setLocalStorage, getLocalStorage, isTokenProvided } from '../utils/helpers'
 
 const Form = styled.form`
   display: flex;
@@ -178,10 +178,8 @@ const EventForm: React.FC<Props> = ({ showImage, btnText, primaryBtn, heading1, 
   }, [dateTime])
 
   useEffect(() => {
-    const access_token = getLocalStorage('access_token')
-    const id_token = getLocalStorage('id_token')
 
-    if (access_token.length > 0 && id_token.length > 0) {
+    if (isTokenProvided(window.location)) {
       setIsLoggedIn(true)
     }
   }, [])
