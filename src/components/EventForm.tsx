@@ -3,7 +3,9 @@ import styled from 'styled-components'
 
 import TextBox from './core/TextBox'
 import Btn from './core/Btn'
-import { getTodayDate, formatDate, setLocalStorage, getLocalStorage, isTokenProvided } from '../utils/helpers'
+import { getTodayDate, formatEvent, populateForm } from '../utils/formServices'
+import { setLocalStorage } from '../utils/authDataRepository'
+import { isTokenProvided, path } from '../utils/authServices'
 
 const Form = styled.form`
   display: flex;
@@ -93,7 +95,7 @@ const Sec = styled.div`
   max-width: 500px;
 `
 
-interface Props {
+interface FormProps {
   showImage: boolean;
   btnText: string;
   primaryBtn: boolean;
@@ -111,74 +113,51 @@ interface Task {
   eventId: string;
 }
 
-interface Subject {
-  name: string;
-  imageUrl: null | FileList;
-}
-
-interface DateTime {
-  date: string;
-  time: string;
-}
-
-interface Event {
+interface FormData {
   title: string;
   additionalInfo?: string;
   address: string;
   maxNumberGuests: number;
   totalCost: number;
   tasks: Task[];
+  date: string;
+  time: string;
+  subjectName: string;
+  imageUrl: null | FileList;
+  imagePreview: string;
 }
 
-const path = "https://cheetos-eventplanner.auth.eu-central-1.amazoncognito.com/login?client_id=up5tc3aetd1skggbojedfjrqh&response_type=code&scope=email+openid+profile&redirect_uri=http://localhost:8080/v1/auth"
+// Custom hook 
+const usePersistentState = (init: FormData) => {
+  
+  const [value, setValue] = useState(populateForm(init))
+  
+  useEffect(() => {
+    setLocalStorage('formData', value)
+  }, [value])
 
-const EventForm: React.FC<Props> = ({ showImage, btnText, primaryBtn, heading1, heading2, heading3, heading4, btnWidth }) => {
+  return [value, setValue]
+}
 
-  let formData = getLocalStorage('formData')
-  let subjectData = getLocalStorage('subjectData')
-  let dateTimeData = getLocalStorage('dateTimeData')
-  let userData = getLocalStorage('userData')
+const EventForm: React.FC<FormProps> = ({ showImage, btnText, primaryBtn, heading1, heading2, heading3, heading4, btnWidth }) => {
 
-  const [form, setForm] = useState<Event>(
-    Object.keys(formData).length === 0 ? {
+  const [form, setForm] = usePersistentState({
     title: "",
     additionalInfo: "",
     address: "",
     maxNumberGuests: 0,
     totalCost: 0,
     tasks: [],
-  } : formData)
-
-  const [subject, setSubject] = useState<Subject>(
-    Object.keys(subjectData).length === 0 ? {
-    name: "",
-    imageUrl: null
-  } : subjectData)
-
-  const [imgPreview, setImgPreview] = useState<string>("")
-
-  const [dateTime, setDateTime] = useState<DateTime>(
-    Object.keys(dateTimeData).length === 0
-      ? { date: "", time: "00:00" }
-      : dateTimeData
-  )
+    date: "",
+    time: "00:00",
+    subjectName: "",
+    imageUrl: null,
+    imagePreview: "https://dummyimage.com/400x400/c4c4c4/ffffff.jpg&text=Add+meal+photo",
+  })
 
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false)
 
   useEffect(() => {
-    setLocalStorage('formData', form)
-  }, [form])
-
-  useEffect(() => {
-    setLocalStorage('subjectData', subject)
-  }, [subject])
-
-  useEffect(() => {
-    setLocalStorage('dateTimeData', dateTime)
-  }, [dateTime])
-
-  useEffect(() => {
-
     if (isTokenProvided(window.location)) {
       setIsLoggedIn(true)
     }
@@ -186,62 +165,36 @@ const EventForm: React.FC<Props> = ({ showImage, btnText, primaryBtn, heading1, 
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-
-    const date = formatDate(dateTime.date, dateTime.time)
-    const formData = {
-      ...form,
-      host: userData.email,
-      subject,
-      date
-    }
-    
-    console.log(formData)
+    console.log(event)
+    formatEvent(form);
   }
 
-  const updateInputs = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const updateFields = (event: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>) => {
     setForm({
       ...form,
-      [event.target.name]: event.target.value
-    })
-  }
-
-  const updateTextArea = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setForm({
-      ...form,
-      [event.target.name]: event.target.value
-    })
-  }
-
-  const updateSubjectName = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSubject({
-      ...subject,
-      name: event.target.value
-    })
-  }
-
-  const updateDateTime = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setDateTime({
-      ...dateTime,
       [event.target.name]: event.target.value
     })
   }
 
   const updateImage = (event: React.ChangeEvent<HTMLInputElement>) => {
-    let imagePreview: string | undefined
     
     if (event.target.files) {
-      setSubject({
-        ...subject,
-        imageUrl: event.target.files
-      })
-
-      imagePreview = Array.from(event.target.files).map(file => {
+      const imagePreview = Array.from(event.target.files).map(file => {
         return URL.createObjectURL(file)
       })[0]
-    }
-    setImgPreview(imagePreview || "https://dummyimage.com/400x400/c4c4c4/ffffff.jpg&text=Image+not+available")
-  }
 
+      setForm({
+        ...form,
+        imageUrl: event.target.files,
+        imagePreview: imagePreview || "https://dummyimage.com/400x400/c4c4c4/ffffff.jpg&text=Image+not+available"
+      })
+    } else {
+      setForm({
+        ...form,
+        imagePreview: "https://dummyimage.com/400x400/c4c4c4/ffffff.jpg&text=Image+not+available"
+      })
+    }
+  }
 
   return (
 
@@ -252,7 +205,11 @@ const EventForm: React.FC<Props> = ({ showImage, btnText, primaryBtn, heading1, 
           heading2={heading2}
         />
 
-        {imgPreview ? <Image src={imgPreview} alt="meal photo" /> : <Image src="https://dummyimage.com/400x400/c4c4c4/ffffff.jpg&text=Add+meal+photo" alt="meal photo" />}
+        {
+          form.imagePreview
+            ? <Image src={form.imagePreview} alt="meal photo" />
+            : <Image src="https://dummyimage.com/400x400/c4c4c4/ffffff.jpg&text=Add+meal+photo" alt="meal photo" />
+        }
 
         <Label>
           Add your meal photo
@@ -271,9 +228,9 @@ const EventForm: React.FC<Props> = ({ showImage, btnText, primaryBtn, heading1, 
             id="meal-name"
             type="text"
             placeholder="What is your dish name"
-            name="name"
-            value={subject.name}
-            onChange={updateSubjectName}
+            name="subjectName"
+            value={form.subjectName}
+            onChange={updateFields}
             required
           />
         </Label>
@@ -291,7 +248,7 @@ const EventForm: React.FC<Props> = ({ showImage, btnText, primaryBtn, heading1, 
             placeholder="Create a title for your event"
             name="title"
             value={form.title}
-            onChange={updateInputs}
+            onChange={updateFields}
             required
           />
         </Label>
@@ -301,7 +258,7 @@ const EventForm: React.FC<Props> = ({ showImage, btnText, primaryBtn, heading1, 
             id="additional-info"
             name="additionalInfo"
             value={form.additionalInfo}
-            onChange={updateTextArea}
+            onChange={updateFields}
             placeholder="What your guests should know"
           />
         </Label>
@@ -314,7 +271,7 @@ const EventForm: React.FC<Props> = ({ showImage, btnText, primaryBtn, heading1, 
             placeholder="What is the event location"
             name="address"
             value={form.address}
-            onChange={updateInputs}
+            onChange={updateFields}
             required
           />
         </Label>
@@ -328,8 +285,8 @@ const EventForm: React.FC<Props> = ({ showImage, btnText, primaryBtn, heading1, 
               min={getTodayDate()}
               max="2999-12-31"
               name="date"
-              value={dateTime.date}
-              onChange={updateDateTime}
+              value={form.date}
+              onChange={updateFields}
               pattern="\d{4}-\d{2}-\d{2}"
               required
             />
@@ -344,7 +301,7 @@ const EventForm: React.FC<Props> = ({ showImage, btnText, primaryBtn, heading1, 
               max="99999"
               name="totalCost"
               value={form.totalCost}
-              onChange={updateInputs}
+              onChange={updateFields}
               required
             />
           </Label>
@@ -356,8 +313,8 @@ const EventForm: React.FC<Props> = ({ showImage, btnText, primaryBtn, heading1, 
               id="event-time"
               type="time"
               name="time"
-              value={dateTime.time}
-              onChange={updateDateTime}
+              value={form.time}
+              onChange={updateFields}
               required
             />
           </Label>
@@ -370,7 +327,7 @@ const EventForm: React.FC<Props> = ({ showImage, btnText, primaryBtn, heading1, 
               max="99999"
               name="maxNumberGuests"
               value={form.maxNumberGuests}
-              onChange={updateInputs}
+              onChange={updateFields}
               required
             />
           </Label>

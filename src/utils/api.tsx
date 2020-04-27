@@ -1,4 +1,4 @@
-import { getLocalStorage } from './helpers'
+import { getLocalStorage } from './authDataRepository'
 
 const absolutePath = 'http://localhost:8080'
 // const relativePath = 'localhost/api/'

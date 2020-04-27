@@ -8,31 +8,21 @@ import AcceptInvite from './AcceptInvite'
 import NavBar from './core/NavBar'
 import Footer from './core/Footer'
 import ViewUser from './ViewUser'
-// import { getUsers } from '../utils/api'
-import { saveAuthedUser, getLocalStorage } from '../utils/helpers'
-
-interface User {
-  id: string;
-  name: string;
-  email: string;
-}
+import { saveAuthedUser, getUserName } from '../utils/authServices'
 
 const App: React.FC = () => {
-  const [user, setUser] = useState<User>()
+  const [user, setUser] = useState<string>('')
   
   useEffect(() => {
-    console.log('location', window.location)
     window.location && saveAuthedUser(window.location)
-
-    const authedUser = getLocalStorage('authedUserData') && getLocalStorage('authedUserData')
-    console.log(authedUser.name)
-    authedUser && setUser(authedUser.name)
+    const authedUserName = getUserName()
+    setUser(authedUserName)
   }, [])
 
   return (
     <div className="App">
       <Router>
-        <NavBar isLogged={true} user={user && user.name} />
+        <NavBar isLogged={true} user={user} />
         <Switch>
           <Route exact path="/" component={CreateEvent} />
           <Route exact path="/users/:uid" component={ViewUser} />
