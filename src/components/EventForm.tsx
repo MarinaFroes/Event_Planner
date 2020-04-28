@@ -3,9 +3,9 @@ import styled from 'styled-components'
 
 import TextBox from './core/TextBox'
 import Btn from './core/Btn'
-import { getTodayDate, formatEvent, populateForm } from '../utils/formServices'
+import { getTodayDate, formatEvent, populateForm } from '../services/formServices'
 import { setLocalStorage } from '../utils/authDataRepository'
-import { isTokenProvided, path } from '../utils/authServices'
+import { isTokenProvided, path } from '../services/authServices'
 
 const Form = styled.form`
   display: flex;
