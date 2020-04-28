@@ -8,7 +8,7 @@ import AcceptInvite from './AcceptInvite'
 import NavBar from './core/NavBar'
 import Footer from './core/Footer'
 import ViewUser from './ViewUser'
-import { saveAuthedUser, getUserName } from '../utils/authServices'
+import { saveAuthedUser, getUserName } from '../services/authServices'
 
 const App: React.FC = () => {
   const [user, setUser] = useState<string>('')
