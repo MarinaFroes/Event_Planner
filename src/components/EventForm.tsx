@@ -177,17 +177,30 @@ const EventForm: React.FC<FormProps> = ({ showImage, btnText, primaryBtn, headin
   }
 
   const updateImage = (event: React.ChangeEvent<HTMLInputElement>) => {
-    
+
     if (event.target.files) {
       const imagePreview = Array.from(event.target.files).map(file => {
         return URL.createObjectURL(file)
       })[0]
 
-      setForm({
-        ...form,
-        imageUrl: event.target.files,
-        imagePreview: imagePreview || "https://dummyimage.com/400x400/c4c4c4/ffffff.jpg&text=Image+not+available"
-      })
+      if (event.target.files[0]) {
+        var file = event.target.files[0];
+        var reader = new FileReader();
+        
+        reader.readAsText(file)
+      
+        reader.onload = function (e) {
+          
+          if (e.target) {
+            setForm({
+              ...form,
+              imageUrl: e.target.result,
+              imagePreview: imagePreview || "https://dummyimage.com/400x400/c4c4c4/ffffff.jpg&text=Image+not+available"
+            })
+          }
+        };
+      }
+
     } else {
       setForm({
         ...form,
