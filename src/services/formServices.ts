@@ -73,3 +73,7 @@ export const populateForm = (init: FormData) => {
 
   return data
 }
+
+export const clearForm = () => {
+  localStorage.removeItem('formData')
+}
