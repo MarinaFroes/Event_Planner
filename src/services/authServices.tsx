@@ -3,8 +3,7 @@ import jwt_decode from 'jwt-decode'
 
 import { getLocalStorage, setLocalStorage } from '../utils/authDataRepository'
 
-
-export const path = "https://cheetos-eventplanner.auth.eu-central-1.amazoncognito.com/login?client_id=up5tc3aetd1skggbojedfjrqh&response_type=code&scope=email+openid+profile&redirect_uri=http://localhost:8080/v1/auth"
+export const loginUrl = "https://cheetos-eventplanner.auth.eu-central-1.amazoncognito.com/login?client_id=up5tc3aetd1skggbojedfjrqh&response_type=code&scope=email+openid+profile&redirect_uri=http://localhost:8080/v1/auth"
 
 interface Tokens {
   access_token: string,

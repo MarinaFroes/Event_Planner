@@ -1,4 +1,3 @@
-
 export const setLocalStorage = (name: string, data: any) => {
   localStorage.setItem(name, JSON.stringify(data))
 }

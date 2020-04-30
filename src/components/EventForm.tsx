@@ -5,7 +5,7 @@ import TextBox from './core/TextBox'
 import Btn from './core/Btn'
 import { getTodayDate, formatEvent, populateForm } from '../services/formServices'
 import { setLocalStorage } from '../utils/authDataRepository'
-import { isTokenProvided, path } from '../services/authServices'
+import { isTokenProvided, loginUrl } from '../services/authServices'
 
 const Form = styled.form`
   display: flex;
@@ -369,7 +369,7 @@ const EventForm: React.FC<FormProps> = ({ showImage, btnText, primaryBtn, headin
               btnWidth={btnWidth}
               btnType="button"
               onClick={() => {
-                window.location.assign(path)
+                window.location.assign(loginUrl)
               }}
             />
           )
