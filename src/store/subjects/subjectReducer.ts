@@ -1,4 +1,4 @@
-import { CREATE_SUBJECT, ICreateSubjectAction } from '../actions/types'
+import { CREATE_SUBJECT, ICreateSubjectAction } from './types'
 
 export default function events(state = {}, action: ICreateSubjectAction) {
   switch (action.type) {

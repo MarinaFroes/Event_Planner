@@ -1,11 +1,16 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
+import { useDispatch } from 'react-redux'
 
 import TextBox from './core/TextBox'
 import Btn from './core/Btn'
-import { getTodayDate, formatEvent, populateForm } from '../services/formServices'
+import { getTodayDate, formatEvent, populateForm, clearForm } from '../services/formServices'
 import { setLocalStorage } from '../utils/authDataRepository'
 import { isTokenProvided, loginUrl } from '../services/authServices'
+import { createSubjectAction } from '../store/subjects/subjectActions'
+import { createEventAction } from '../store/events/eventActions'
+import { IEvent } from '../store/events/types'
+import { ISubject } from '../store/subjects/types'
 
 const Form = styled.form`
   display: flex;
@@ -126,6 +131,20 @@ interface FormData {
   imageUrl: null | FileList;
 }
 
+// Initial Form Data
+const init: FormData = {
+  title: "",
+  additionalInfo: "",
+  address: "",
+  maxNumberGuests: 0,
+  totalCost: 0,
+  tasks: [],
+  date: "",
+  time: "00:00",
+  subjectName: "",
+  imageUrl: null,
+}
+
 // Custom hook 
 const usePersistentState = (init: FormData) => {
   
@@ -140,21 +159,14 @@ const usePersistentState = (init: FormData) => {
 
 const EventForm: React.FC<FormProps> = ({ showImage, btnText, primaryBtn, heading1, heading2, heading3, heading4, btnWidth }) => {
 
-  const [form, setForm] = usePersistentState({
-    title: "",
-    additionalInfo: "",
-    address: "",
-    maxNumberGuests: 0,
-    totalCost: 0,
-    tasks: [],
-    date: "",
-    time: "00:00",
-    subjectName: "",
-    imageUrl: null,
-  })
+  const [form, setForm] = usePersistentState(init)
 
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false)
   const [showAlert, setShowAlert] = useState<boolean>(false)
+
+  const dispatch = useDispatch()
+  const createEvent = (event: IEvent) => dispatch(createEventAction(event)) 
+  const createSubject = (subject: ISubject) => dispatch(createSubjectAction(subject))
 
   useEffect(() => {
     if (isTokenProvided(window.location)) {
@@ -166,6 +178,26 @@ const EventForm: React.FC<FormProps> = ({ showImage, btnText, primaryBtn, headin
     event.preventDefault()
     console.log(event)
     formatEvent(form);
+
+    const subject = createSubject({ name: form.subjectName, imageUrl: form.imageUrl})
+    console.log(subject)
+
+    const eventRes = createEvent({
+      title: form.title,
+      additionalInfo: form.additionalInfo,
+      address: form.address,
+      maxNumberGuests: form.maxNumberGuests,
+      totalCost: form.totalCost,
+      date: form.date,
+      subject: {
+        name: "fssdffd",
+        imageUrl: "sdfsdf"
+      }
+    })
+     console.log(eventRes)
+
+    clearForm()
+    setForm(init)
   }
 
   const updateFields = (event: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>) => {
