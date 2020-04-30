@@ -39,7 +39,6 @@ interface FormData {
   time: string;
   subjectName: string;
   imageUrl: null | FileList;
-  imagePreview: string;
 }
 
 export const formatEvent = (formData: FormData) => {
@@ -63,20 +62,6 @@ export const formatEvent = (formData: FormData) => {
   }
 
   console.log(formattedForm)
-}
-
-interface FormData {
-  title: string;
-  additionalInfo?: string;
-  address: string;
-  maxNumberGuests: number;
-  totalCost: number;
-  tasks: Task[];
-  date: string;
-  time: string;
-  subjectName: string;
-  imageUrl: null | FileList;
-  imagePreview: string;
 }
 
 export const populateForm = (init: FormData) => {

@@ -124,7 +124,6 @@ interface FormData {
   time: string;
   subjectName: string;
   imageUrl: null | FileList;
-  imagePreview: string;
 }
 
 // Custom hook 
@@ -152,10 +151,10 @@ const EventForm: React.FC<FormProps> = ({ showImage, btnText, primaryBtn, headin
     time: "00:00",
     subjectName: "",
     imageUrl: null,
-    imagePreview: "https://dummyimage.com/400x400/c4c4c4/ffffff.jpg&text=Add+meal+photo",
   })
 
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false)
+  const [showAlert, setShowAlert] = useState<boolean>(false)
 
   useEffect(() => {
     if (isTokenProvided(window.location)) {
@@ -178,21 +177,40 @@ const EventForm: React.FC<FormProps> = ({ showImage, btnText, primaryBtn, headin
 
   const updateImage = (event: React.ChangeEvent<HTMLInputElement>) => {
     
-    if (event.target.files) {
-      const imagePreview = Array.from(event.target.files).map(file => {
-        return URL.createObjectURL(file)
-      })[0]
+    if (event.target.files && event.target.files.length > 0) {
+      if (event.target.files[0]) {
+        var file = event.target.files[0];
+        var reader = new FileReader();
+        
+        reader.readAsDataURL(file)
+        
+        if (event.target.files[0].size > 1000000) {
+          setShowAlert(true)
+          setForm({
+            ...form,
+            imageUrl: null,
+          })
+          return
+        } else {
+          setShowAlert(false)
+        }
 
-      setForm({
-        ...form,
-        imageUrl: event.target.files,
-        imagePreview: imagePreview || "https://dummyimage.com/400x400/c4c4c4/ffffff.jpg&text=Image+not+available"
-      })
+        reader.onload = function (e) {
+          if (e.target) {
+            setForm({
+              ...form,
+              imageUrl: e.target.result,
+            })
+          }
+        };
+        
+      }
     } else {
       setForm({
         ...form,
-        imagePreview: "https://dummyimage.com/400x400/c4c4c4/ffffff.jpg&text=Image+not+available"
+        imageUrl: null,
       })
+      setShowAlert(false)
     }
   }
 
@@ -206,8 +224,8 @@ const EventForm: React.FC<FormProps> = ({ showImage, btnText, primaryBtn, headin
         />
 
         {
-          form.imagePreview
-            ? <Image src={form.imagePreview} alt="meal photo" />
+          form.imageUrl
+            ? <Image src={form.imageUrl} alt="meal photo" />
             : <Image src="https://dummyimage.com/400x400/c4c4c4/ffffff.jpg&text=Add+meal+photo" alt="meal photo" />
         }
 
@@ -222,6 +240,7 @@ const EventForm: React.FC<FormProps> = ({ showImage, btnText, primaryBtn, headin
             required
           />
         </Label>
+        {showAlert && <p style={{color: "red"}}>1MB maximum size</p>}
         <Label>
           Meal name
           <Input
