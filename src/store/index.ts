@@ -5,6 +5,8 @@ import taskReducer from './tasks/taskReducer'
 import thunk from 'redux-thunk'
 
 import logger from './middleware/logger'
+import { composeWithDevTools } from 'redux-devtools-extension'
+
 
 const rootReducer = combineReducers({
   event: eventReducer,
@@ -13,11 +15,12 @@ const rootReducer = combineReducers({
 })
 
 export type AppState = ReturnType<typeof rootReducer>
+const composeEnhancers = composeWithDevTools({});
 
 const configureStore = () => {
   const store = createStore(
     rootReducer,
-    applyMiddleware(thunk, logger)
+    composeEnhancers(applyMiddleware(thunk, logger))
   );
 
   return store;
