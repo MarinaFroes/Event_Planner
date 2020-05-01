@@ -4,13 +4,14 @@ import { useDispatch } from 'react-redux'
 
 import TextBox from './core/TextBox'
 import Btn from './core/Btn'
-import { getTodayDate, formatEvent, populateForm, clearForm } from '../services/formServices'
+import { getTodayDate, populateForm } from '../services/formServices'
 import { setLocalStorage } from '../utils/authDataRepository'
 import { isTokenProvided, loginUrl } from '../services/authServices'
-import { createSubjectAction } from '../store/subjects/subjectActions'
-import { createEventAction } from '../store/events/eventActions'
-import { IEvent } from '../store/events/types'
-import { ISubject } from '../store/subjects/types'
+import { handleCreateSubject } from '../store/subjects/subjectActions'
+// import { handleCreateEvent } from '../store/events/eventActions'
+// import { EventInput } from '../services/eventServicesTypes'
+import { SubjectInput } from '../services/subjectServicesTypes'
+
 
 const Form = styled.form`
   display: flex;
@@ -131,6 +132,29 @@ interface FormData {
   imageUrl: null | FileList;
 }
 
+export interface ISubject {
+  name: string;
+  imageUrl: string;
+}
+
+interface User {
+  name: string;
+  email: string;
+  id: string;
+}
+
+interface IEvent {
+  title: string;
+  host: string | User;
+  subject: string | ISubject;
+  additionalInfo?: string;
+  date: string;
+  time: string;
+  address: string;
+  maxNumberGuests: number;
+  totalCost: number;
+}
+
 // Initial Form Data
 const init: FormData = {
   title: "",
@@ -163,10 +187,13 @@ const EventForm: React.FC<FormProps> = ({ showImage, btnText, primaryBtn, headin
 
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false)
   const [showAlert, setShowAlert] = useState<boolean>(false)
+  // const [selectedSubject, setSelectedSubject] = useState<string>("")
 
   const dispatch = useDispatch()
-  const createEvent = (event: IEvent) => dispatch(createEventAction(event)) 
-  const createSubject = (subject: ISubject) => dispatch(createSubjectAction(subject))
+
+  
+  const createSubject = (subject: SubjectInput) => dispatch(handleCreateSubject(subject))
+  // const createEvent = (event: EventInput) => dispatch(handleCreateEvent(event))
 
   useEffect(() => {
     if (isTokenProvided(window.location)) {
@@ -174,29 +201,29 @@ const EventForm: React.FC<FormProps> = ({ showImage, btnText, primaryBtn, headin
     }
   }, [])
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     console.log(event)
-    formatEvent(form);
+    
 
-    const subject = createSubject({ name: form.subjectName, imageUrl: form.imageUrl})
+    const subject = await createSubject({ name: form.subjectName, imageUrl: form.imageUrl})
     console.log(subject)
 
-    const eventRes = createEvent({
-      title: form.title,
-      additionalInfo: form.additionalInfo,
-      address: form.address,
-      maxNumberGuests: form.maxNumberGuests,
-      totalCost: form.totalCost,
-      date: form.date,
-      subject: {
-        name: "fssdffd",
-        imageUrl: "sdfsdf"
-      }
-    })
-     console.log(eventRes)
+    // const eventRes = createEvent({
+    //   title: form.title,
+    //   additionalInfo: form.additionalInfo,
+    //   address: form.address,
+    //   maxNumberGuests: form.maxNumberGuests,
+    //   totalCost: form.totalCost,
+    //   date: form.date,
+    //   subject: {
+    //     name: "fssdffd",
+    //     imageUrl: "sdfsdf"
+    // //   }
+    // })
+    //  console.log(eventRes)
 
-    clearForm()
+    // clearForm()
     setForm(init)
   }
 

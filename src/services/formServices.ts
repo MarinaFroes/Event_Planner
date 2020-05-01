@@ -41,7 +41,7 @@ interface FormData {
   imageUrl: null | FileList;
 }
 
-export const formatEvent = (formData: FormData) => {
+export const formatEvent = (formData: FormData, subjectId: string) => {
   console.log(formData)
   const date = formatDate(formData.date, formData.time)
   
@@ -55,10 +55,7 @@ export const formatEvent = (formData: FormData) => {
     totalCost,
     tasks,
     date,
-    subject: {
-      name: formData.subjectName,
-      imageUrl: formData.imageUrl
-    }
+    subject: subjectId
   }
 
   console.log(formattedForm)

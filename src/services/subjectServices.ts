@@ -13,15 +13,17 @@ export const getSubject = async (subjectId: string) => {
 }
 
 export const createSubject = async (subject: SubjectInput) => {
+  console.log(subject)
+  
   const response = await fetch(`${endpoint}/subjects`, {
     method: 'POST',
     mode: 'cors',
     cache: 'no-cache',
-    credentials: 'same-origin',
+    // credentials: 'same-origin',
     headers: {
       'Content-Type': 'application/json',
       'Authorization': access_token,
-      'X-Id-Token': id_token
+      'X-Id-Token': id_token,
     },
     body: JSON.stringify(subject)
   })

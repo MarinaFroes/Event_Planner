@@ -6,3 +6,5 @@ interface CreateSubjectAction {
 }
 
 export type SubjectActionTypes = CreateSubjectAction 
+
+export type SubjectState = string[] | []
