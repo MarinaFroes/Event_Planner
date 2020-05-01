@@ -22,13 +22,13 @@ export const createSubject = async (subject: SubjectInput) => {
     // credentials: 'same-origin',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': access_token,
+      'Authorization': 'Bearer ' + access_token,
       'X-Id-Token': id_token,
     },
     body: JSON.stringify(subject)
   })
 
-  if (response.status === 200) {
+  if (response.ok) {
     let subjectId: string = await response.json()
     return subjectId
   }
