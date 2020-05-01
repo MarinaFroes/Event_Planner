@@ -1,16 +1,18 @@
 import { endpoint, access_token, id_token } from './api'
+import { SubjectInput, SubjectData } from './subjectServicesTypes'
 
-interface Subject {
-  name: string;
-  imageUrl: string;
-  details?: string;
+export const getSubject = async (subjectId: string) => {
+  const response = await fetch(`${endpoint}/subjects/${subjectId}`)
+
+  if (response.status === 200) {
+    let subject: SubjectData = await response.json()
+    return subject
+  }
+
+  throw new Error(`${response.status}`)
 }
 
-interface NewSubject extends Subject {
-  id: string;
-}
-
-export const saveSubject = async (subject: Subject) => {
+export const createSubject = async (subject: SubjectInput) => {
   const response = await fetch(`${endpoint}/subjects`, {
     method: 'POST',
     mode: 'cors',
@@ -25,8 +27,8 @@ export const saveSubject = async (subject: Subject) => {
   })
 
   if (response.status === 200) {
-    let createdSubject: NewSubject = await response.json()
-    return createdSubject
+    let subjectId: string = await response.json()
+    return subjectId
   }
 
   throw new Error(`${response.status}`)

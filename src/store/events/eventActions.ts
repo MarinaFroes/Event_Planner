@@ -1,11 +1,23 @@
-import { ICreateEventAction, CREATE_EVENT, IEvent } from './types'
+import { ThunkAction } from 'redux-thunk'
+import * as eventService from '../../services/eventServices'
 
-export const createEventAction = (event: IEvent): ICreateEventAction => {
+import { CREATE_EVENT, EventActionTypes, EventState } from './types'
+import { EventInput } from '../../services/eventServicesTypes'
+
+
+export const createEventAction = (eventId: string) => {
   return {
     type: CREATE_EVENT,
-    payload: {
-      ...event
-    }
+    eventId
   }
 }
 
+
+type Effect = ThunkAction<any, EventState, any, EventActionTypes>;
+
+export const handleCreateEvent = (eventInput: EventInput): Effect => (dispatch) => {
+  return eventService.createEvent(eventInput)
+    .then(eventId => eventService.getEvent(eventId))
+    .then(eventData => dispatch(createEventAction(eventData.id)))
+    .catch(() => new Error("Event was not created"))
+}

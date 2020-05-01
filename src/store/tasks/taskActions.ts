@@ -1,10 +1,8 @@
-import { ITask, ICreateTaskAction, CREATE_TASK } from './types'
+import { CREATE_TASK } from './types'
 
-export const createTaskAction = (task: ITask): ICreateTaskAction => {
+export const createTaskAction = (taskId: string) => {
   return {
     type: CREATE_TASK,
-    payload: {
-      ...task
-    }
+    taskId
   }
 }

@@ -1,11 +1,8 @@
 export const CREATE_TASK: string = 'CREATE_TASK'
 
-export interface ITask {
-  name: string;
-  event_id: string;
+interface CreateTaskAction {
+  type: typeof CREATE_TASK
+ taskId: string
 }
 
-export interface ICreateTaskAction {
-  type: typeof CREATE_TASK
-  payload: ITask
-}
+export type TaskActionTypes = CreateTaskAction 

@@ -1,12 +1,12 @@
-import { CREATE_EVENT, ICreateEventAction } from '../actions/types'
+import { CREATE_EVENT, EventActionTypes } from './types'
 
-export default function events(state = {}, action: ICreateEventAction) {
+export default function events(state = [], action: EventActionTypes) {
   switch (action.type) {
     case CREATE_EVENT:
-      return {
+      return [
         ...state,
-        ...action.payload
-      }
+        action.eventId
+      ]
     default:
       return state
   }

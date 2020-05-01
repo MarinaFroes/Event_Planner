@@ -1,18 +1,18 @@
 import { endpoint, access_token, id_token } from './api'
-import { Event, CreatedEvent } from './eventServicesTypes'
+import { EventInput, EventData } from './eventServicesTypes'
 
 export const getEvent = async (eventId: string) => {
   const response = await fetch(`${endpoint}/events/${eventId}`)
   
   if (response.status === 200) {
-    let eventData = await response.json()
+    let eventData: EventData = await response.json()
     return eventData
   }
 
   throw new Error(`${response.status}`)
 }
 
-export const saveEvent = async (event: Event) => {
+export const createEvent = async (event: EventInput) => {
   const response = await fetch(`${endpoint}/events`, {
     method: 'POST',
     mode: 'cors',
@@ -27,8 +27,30 @@ export const saveEvent = async (event: Event) => {
   })
 
   if (response.status === 200) {
-    let createdEvent: CreatedEvent = await response.json()
-    return createdEvent
+    let eventId: string = await response.json()
+    return eventId
+  }
+
+  throw new Error(`${response.status}`)
+}
+
+export const subscribeToEvent = async (guestId: string, eventId: string) => {
+  const response = await fetch(`${endpoint}/events/${eventId}/subscribe`, {
+    method: 'POST',
+    mode: 'cors',
+    cache: 'no-cache',
+    credentials: 'same-origin',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': access_token,
+      'X-Id-Token': id_token
+    },
+    body: JSON.stringify({ guestId })
+  })
+
+  if (response.status === 200) {
+    let res: {} = await response.json()
+    return res
   }
 
   throw new Error(`${response.status}`)

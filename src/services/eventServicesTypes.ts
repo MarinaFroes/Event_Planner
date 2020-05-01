@@ -1,20 +1,18 @@
-import { User } from './userServicesTypes'
-import { Subject } from './subjectServicesTypes'
+import { SubjectData } from './subjectServicesTypes'
 
 interface Guest {
   id: string;
   name: string;
   email: string;
-  status: "pending" | "Accept" | "Reject";
+  status: "Pending" | "Accept" | "Reject";
 }
 
-export interface Event {
+export interface EventInput {
   title: string;
-  host: string | User;
-  subject: string | Subject;
+  host: string;
+  subject: string;
   additionalInfo?: string;
   date: string;
-  time: string;
   address: string;
   maxNumberGuests: number;
   totalCost: number;
@@ -27,11 +25,25 @@ interface Task {
   eventId: string;
 }
 
-export interface CreatedEvent extends Event {
+interface Host {
   id: string;
-  guestsInEvents: Guest[] | [];
-  eventStatus: "open" | "close";
-  pricePerGuest: number;
+  name: string;
+  email: string;
+}
+
+export interface EventData {
+  id: string;
+  title: string;
+  host: Host;
+  subject: SubjectData;
+  date: string;
   createDate: string;
-  tasks: Task[] | [];
+  address: string;
+  maxNumberGuest: number;
+  tasks: [] | Task[];
+  guestInEvents: [] | Guest[];
+  totalCost: number;
+  additionalInfo: string;
+  eventStatus: "Open" | "Close";
+  pricePerGuest: number;
 }

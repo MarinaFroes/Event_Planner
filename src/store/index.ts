@@ -7,10 +7,12 @@ import thunk from 'redux-thunk'
 import logger from './middleware/logger'
 
 const rootReducer = combineReducers({
-  eventReducer,
-  subjectReducer,
-  taskReducer
+  event: eventReducer,
+  subject: subjectReducer,
+  task: taskReducer
 })
+
+export type AppState = ReturnType<typeof rootReducer>
 
 const configureStore = () => {
   const store = createStore(
