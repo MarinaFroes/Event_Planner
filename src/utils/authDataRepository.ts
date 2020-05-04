@@ -13,6 +13,5 @@ export const getLocalStorage = (name: string) => {
   } else {
     data = JSON.parse(localStorage.getItem(name) || '{}')
   }
-  
   return data
 }

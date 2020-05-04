@@ -1,4 +1,5 @@
-import { endpoint, access_token, id_token } from './api'
+import { endpoint } from './api'
+import { getTokensFromLocalStorage } from './authServices'
 import { SubjectInput, SubjectData } from './subjectServicesTypes'
 
 export const getSubject = async (subjectId: string) => {
@@ -13,8 +14,9 @@ export const getSubject = async (subjectId: string) => {
 }
 
 export const createSubject = async (subject: SubjectInput) => {
-  console.log(subject)
-  
+  const tokens = getTokensFromLocalStorage()
+  const [access_token, id_token] = tokens
+
   const response = await fetch(`${endpoint}/subjects`, {
     method: 'POST',
     mode: 'cors',

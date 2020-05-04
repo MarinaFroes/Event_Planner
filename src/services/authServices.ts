@@ -34,6 +34,17 @@ export const getTokensFromURL = (location: Location): Tokens | null => {
   }
 }
 
+export const getTokensFromLocalStorage = () => {
+  const access_token = getLocalStorage('access_token')
+  const id_token = getLocalStorage('id_token')
+
+  if (!id_token || !access_token) {
+    throw new Error('Missing token')
+  }
+
+  return [access_token, id_token]
+}
+
 const saveUserData = (data: any): void => {
   setLocalStorage('access_token', data.access_token)
   setLocalStorage('id_token', data.id_token)
@@ -46,7 +57,6 @@ export const saveAuthedUser = (location: Location): void  => {
   if (values === null) {
     return
   }
-
   const { access_token, id_token } = values
   const authedUserData = jwt_decode(JSON.stringify(id_token))
   saveUserData({ access_token, id_token, authedUserData })

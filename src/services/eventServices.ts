@@ -1,9 +1,10 @@
-import { endpoint, access_token, id_token } from './api'
+import { endpoint } from './api'
+import { getTokensFromLocalStorage } from './authServices'
+
 import { EventInput, EventData } from './eventServicesTypes'
 
 export const getEvent = async (eventId: string) => {
   const response = await fetch(`${endpoint}/events/${eventId}`)
-  
   if (response.status === 200) {
     let eventData: EventData = await response.json()
     return eventData
@@ -13,6 +14,9 @@ export const getEvent = async (eventId: string) => {
 }
 
 export const createEvent = async (event: EventInput) => {
+  const tokens = getTokensFromLocalStorage()
+  const [access_token, id_token] = tokens
+
   const response = await fetch(`${endpoint}/events`, {
     method: 'POST',
     mode: 'cors',
@@ -35,6 +39,9 @@ export const createEvent = async (event: EventInput) => {
 }
 
 export const subscribeToEvent = async (guestId: string, eventId: string) => {
+  const tokens = getTokensFromLocalStorage()
+  const [access_token, id_token] = tokens
+
   const response = await fetch(`${endpoint}/events/${eventId}/subscribe`, {
     method: 'POST',
     mode: 'cors',
