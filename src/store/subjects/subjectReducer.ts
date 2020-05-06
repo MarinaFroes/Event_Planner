@@ -1,6 +1,9 @@
-import { CREATE_SUBJECT, SubjectActionTypes } from './types'
+import { CREATE_SUBJECT, SubjectActionTypes, SubjectState } from './types'
 
-export default function events(state = [], action: SubjectActionTypes) {
+export default function subjectReducer(
+  state = [],
+  action: SubjectActionTypes
+): SubjectState {
   switch (action.type) {
     case CREATE_SUBJECT:
       return [
