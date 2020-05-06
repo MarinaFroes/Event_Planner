@@ -10,3 +10,14 @@ export const getUsers = async () => {
 
   throw new Error(`${response.status}`)
 }
+
+export const getUser = async (userId: string) => {
+  let response = await fetch(`${endpoint}/users/${userId}`)
+  
+  if (response.status === 200) {
+    let userData = await response.json()
+    return userData
+  }
+
+  throw new Error(`${response.status}`)
+}
