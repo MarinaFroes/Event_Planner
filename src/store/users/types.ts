@@ -1,12 +1,9 @@
-import { User } from '../../services/userServicesTypes'
+import { User, Tokens } from '../types'
 
 export const SET_AUTHED_USER: string = 'SET_AUTHED_USER'
 export const LOG_OUT: string = 'LOG_OUT'
 
-export interface Tokens {
-  access_token: string;
-  id_token: string;
-}
+export type TokensData = Tokens
 
 export interface DecodedUser {
   name: string;
@@ -20,15 +17,18 @@ export interface UserData extends Tokens {
   authedUserData: DecodedUser
 }
 
+// ACTIONS TYPES
 interface SetAuthedUserAction {
   type: typeof SET_AUTHED_USER
-  user: User
+  payload: User
 }
 
 interface LogOutAction {
   type: typeof LOG_OUT
+  payload: {}
 }
 
 export type UserActionTypes = SetAuthedUserAction | LogOutAction
 
+// STATE TYPE
 export type UserState = User

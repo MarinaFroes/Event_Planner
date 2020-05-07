@@ -1,10 +1,9 @@
 import jwt_decode from 'jwt-decode'
 
 import * as authService from '../../services/authServices'
-import { SET_AUTHED_USER, DecodedUser, Tokens } from './types'
+import { SET_AUTHED_USER, DecodedUser, TokensData } from './types'
 
-export const setAuthedUserAction = (tokens: Tokens) => {
-  
+export const setAuthedUserAction = (tokens: TokensData) => {
   const { access_token, id_token } = tokens
   const authedUserData: DecodedUser = jwt_decode(JSON.stringify(id_token))
   authService.saveUserData({ access_token, id_token, authedUserData })
@@ -12,7 +11,7 @@ export const setAuthedUserAction = (tokens: Tokens) => {
 
   return {
     type: SET_AUTHED_USER,
-    user: {
+    payload: {
       name, 
       id,
       email
