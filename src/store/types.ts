@@ -1,3 +1,8 @@
+import { EventState } from './events/types'
+import { TaskState} from './tasks/types'
+import { UserState} from './users/types'
+import { SubjectState } from './subjects/types'
+
 export interface Tokens {
   access_token: string;
   id_token: string;
@@ -71,3 +76,10 @@ export interface EventData {
 //   eventStatus: "Open" | "Close";
 //   pricePerGuest: number;
 // }
+
+export interface AppState {
+  event: EventState;
+  subject: SubjectState;
+  task: TaskState;
+  user: UserState;
+}
