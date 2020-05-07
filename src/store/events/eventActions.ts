@@ -5,7 +5,7 @@ import { CREATE_EVENT, EventActionTypes, EventState } from './types'
 import { EventInput } from '../../services/eventServicesTypes'
 
 
-export const createEventAction = (eventId: string) => {
+export const createEventAction = (eventId: string): EventActionTypes => {
   return {
     type: CREATE_EVENT,
     eventId
@@ -13,7 +13,7 @@ export const createEventAction = (eventId: string) => {
 }
 
 
-type Effect = ThunkAction<any, EventState, any, EventActionTypes>;
+type Effect = ThunkAction<void, EventState, unknown, EventActionTypes>;
 
 export const handleCreateEvent = (eventInput: EventInput): Effect => (dispatch) => {
   return eventService.createEvent(eventInput)

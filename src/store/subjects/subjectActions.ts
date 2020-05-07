@@ -5,7 +5,7 @@ import { SubjectInput } from '../../services/subjectServicesTypes'
 
 import { CREATE_SUBJECT, SubjectActionTypes, SubjectState } from './types'
 
-export const createSubjectAction = (subjectId: string) => {
+export const createSubjectAction = (subjectId: string): SubjectActionTypes => {
   return {
     type: CREATE_SUBJECT,
     subjectId
