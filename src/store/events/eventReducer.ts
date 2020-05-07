@@ -1,7 +1,9 @@
 import { CREATE_EVENT, EventActionTypes, EventState } from './types'
 
+const initialEventState: EventState = []
+
 export default function eventReducer(
-  state = [],
+  state = initialEventState,
   action: EventActionTypes
 ): EventState {
   switch (action.type) {

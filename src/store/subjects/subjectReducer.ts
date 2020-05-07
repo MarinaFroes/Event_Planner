@@ -1,7 +1,9 @@
 import { CREATE_SUBJECT, SubjectActionTypes, SubjectState } from './types'
 
+const initialSubjectState: SubjectState = []
+
 export default function subjectReducer(
-  state = [],
+  state = initialSubjectState,
   action: SubjectActionTypes
 ): SubjectState {
   switch (action.type) {
