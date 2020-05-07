@@ -21,13 +21,12 @@ const App: React.FC = () => {
     if (tokens !== null) {
       dispatch(setAuthedUserAction(tokens))
     }
-
   }, [dispatch])
 
   return (
     <div className="App">
       <Router>
-        <NavBar isLogged={true} user={""} />
+        <NavBar isLoggedIn={true} user={""} />
         <Switch>
           <Route exact path="/" component={CreateEvent} />
           <Route exact path="/users/:uid" component={ViewUser} />

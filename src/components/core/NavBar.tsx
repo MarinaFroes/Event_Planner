@@ -56,11 +56,11 @@ const Greeting = styled.p`
 `
 
 interface Props {
-  isLogged: boolean;
-  user?: string;
+  isLoggedIn: boolean;
+  user: string | undefined;
 }
 
-const NavBar: React.FC<Props> = ({isLogged, user = "there"}) => {
+const NavBar: React.FC<Props> = ({isLoggedIn, user = "there"}) => {
   return (
     <StyledNav>
       <LogoLink href="/">
@@ -69,7 +69,9 @@ const NavBar: React.FC<Props> = ({isLogged, user = "there"}) => {
       </LogoLink>
       <Hamburger>
         {
-          isLogged && <Greeting>Hello, {user}</Greeting>
+          isLoggedIn
+            ? <Greeting>Hello, {user}</Greeting>
+            : <Greeting>Please, sign in.</Greeting>
         }
         <FaBars/>
       </Hamburger>
