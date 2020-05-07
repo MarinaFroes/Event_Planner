@@ -25,10 +25,20 @@ interface SetAuthedUserAction {
 
 interface LogOutAction {
   type: typeof LOG_OUT
-  payload: {}
+  payload: null
 }
 
 export type UserActionTypes = SetAuthedUserAction | LogOutAction
 
 // STATE TYPE
-export type UserState = User
+export interface NotLoggedUser {
+  isLoggedIn: false;
+  user: null;
+}
+
+export interface LoggedUser {
+  isLoggedIn: true;
+  user: User;
+}
+
+export type UserState = NotLoggedUser | LoggedUser
