@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 // import { ThunkAction } from 'redux-thunk'
 
 import TextBox from './core/TextBox'
@@ -9,7 +9,7 @@ import Btn from './core/Btn'
 // SERVICES
 import { getTodayDate, populateForm } from '../services/formServices'
 import { setLocalStorage } from '../utils/authDataRepository'
-import { isTokenProvided, loginUrl } from '../services/authServices'
+import { loginUrl } from '../services/authServices'
 
 // ACTIONS
 import { handleCreateSubject } from '../store/subjects/subjectActions'
@@ -19,6 +19,7 @@ import { handleCreateEvent } from '../store/events/eventActions'
 import { EventInput } from '../services/eventServicesTypes'
 import { SubjectInput } from '../services/subjectServicesTypes'
 import { FormData } from '../services/formServicesTypes'
+import { AppState } from '../store/types'
 
 // STYLES
 const Form = styled.form`
@@ -149,7 +150,8 @@ const EventForm: React.FC<FormProps> = ({ showImage, btnText, primaryBtn, headin
 
   const [form, setForm] = usePersistentState(init)
 
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false)
+  const isLoggedIn = useSelector((state: AppState) => state.user.isLoggedIn)
+  
   const [showAlert, setShowAlert] = useState<boolean>(false)
   // const [selectedSubject, setSelectedSubject] = useState<string>("")
 
@@ -159,12 +161,6 @@ const EventForm: React.FC<FormProps> = ({ showImage, btnText, primaryBtn, headin
   const createSubject = (subject: SubjectInput) => dispatch(handleCreateSubject(subject))
   
   const createEvent = (event: EventInput) => dispatch(handleCreateEvent(event))
-
-  useEffect(() => {
-    if (isTokenProvided(window.location)) {
-      setIsLoggedIn(true)
-    }
-  }, [])
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault() 
@@ -268,21 +264,6 @@ const EventForm: React.FC<FormProps> = ({ showImage, btnText, primaryBtn, headin
             </datalist>
           )}
         </Label>
-        {/* <Label>
-          Meal name
-          <Input
-            id="meal-name"
-            type="text"
-            placeholder="What is your dish name"
-            name="subjectName"
-            value={form.subjectName}
-            onChange={updateFields}
-            required
-          />
-        </Label> */}
-
-
-
       </Sec>
       <Sec>
         <TextBox
