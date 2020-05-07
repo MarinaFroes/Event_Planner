@@ -1,11 +1,4 @@
-import { SubjectData } from './subjectServicesTypes'
-
-interface Guest {
-  id: string;
-  name: string;
-  email: string;
-  status: "Pending" | "Accept" | "Reject";
-}
+import { EventData } from '../store/types'
 
 export interface EventInput {
   title: string;
@@ -18,32 +11,4 @@ export interface EventInput {
   totalCost: number;
 }
 
-interface Task {
-  id: string;
-  details: string;
-  owner: string;
-  eventId: string;
-}
-
-interface Host {
-  id: string;
-  name: string;
-  email: string;
-}
-
-export interface EventData {
-  id: string;
-  title: string;
-  host: Host;
-  subject: SubjectData;
-  date: string;
-  createDate: string;
-  address: string;
-  maxNumberGuest: number;
-  tasks: [] | Task[];
-  guestInEvents: [] | Guest[];
-  totalCost: number;
-  additionalInfo: string;
-  eventStatus: "Open" | "Close";
-  pricePerGuest: number;
-}
+export type EventOutput = EventData

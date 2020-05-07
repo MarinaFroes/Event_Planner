@@ -1,5 +1,3 @@
-export interface User {
-  id: string;
-  name: string;
-  email: string;
-}
+import { User } from '../store/types'
+
+export type UserData = User 

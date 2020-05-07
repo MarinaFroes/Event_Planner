@@ -2,25 +2,9 @@ import queryString from 'query-string'
 import jwt_decode from 'jwt-decode'
 
 import { getLocalStorage, setLocalStorage } from '../utils/authDataRepository'
+import { TokensData, DecodedUser, UserData } from './authServicesTypes'
 
 export const loginUrl = "https://cheetos-eventplanner.auth.eu-central-1.amazoncognito.com/login?client_id=up5tc3aetd1skggbojedfjrqh&response_type=code&scope=email+openid+profile&redirect_uri=http://localhost:8080/v1/auth"
-
-interface Tokens {
-  access_token: string;
-  id_token: string;
-}
-
-interface DecodedUser {
-  name: string;
-  iss?: string;
-  id: string;
-  exp?: number;
-  email: string;
-}
-
-interface UserData extends Tokens {
-  authedUserData: DecodedUser;
-}
 
 export const isTokenProvided = (location: Location): boolean => {
   const values = getTokensFromURL(location)
@@ -35,7 +19,7 @@ export const isTokenProvided = (location: Location): boolean => {
   }
 }
 
-export const getTokensFromURL = (location: Location): Tokens | null => {
+export const getTokensFromURL = (location: Location): TokensData | null => {
   const values = queryString.parse(location.search)
   if (Object.keys(values).length <= 0) {
     return null

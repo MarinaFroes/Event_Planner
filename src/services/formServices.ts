@@ -1,5 +1,7 @@
 import { getLocalStorage } from '../utils/authDataRepository'
 
+import { FormData } from './formServicesTypes'
+
 export const getTodayDate = () => {
   const today = new Date()
   const day = today.getDate()
@@ -19,26 +21,6 @@ const formatDate = (date: string, time: string) => {
   const formattedDate = `${date.split("-").reverse().join("-")} ${time}:00`
   // formattedDate: "30-04-2020 12:12:00"
   return formattedDate
-}
-
-interface Task {
-  id: string;
-  details: string;
-  owner: string;
-  eventId: string;
-}
-
-interface FormData {
-  title: string;
-  additionalInfo?: string;
-  address: string;
-  maxNumberGuests: number;
-  totalCost: number;
-  tasks: Task[];
-  date: string;
-  time: string;
-  subjectName: string;
-  imageUrl: null | FileList;
 }
 
 export const formatEvent = (formData: FormData, subjectId: string) => {

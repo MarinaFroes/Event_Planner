@@ -12,9 +12,11 @@ export const createSubjectAction = (subjectId: string) => {
   }
 }
 
-type Effect = ThunkAction<any, SubjectState, any, SubjectActionTypes>;
+type Effect = ThunkAction<void, SubjectState, unknown, SubjectActionTypes>;
 
-export const handleCreateSubject = (subjectInput: SubjectInput): Effect => (dispatch) => {
+export const handleCreateSubject = (
+  subjectInput: SubjectInput
+): Effect => (dispatch) => {
   return subjectService.createSubject(subjectInput)
     .then(subjectId => dispatch(createSubjectAction(subjectId)))
     .catch(e => new Error(e))

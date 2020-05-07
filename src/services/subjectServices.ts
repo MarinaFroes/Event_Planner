@@ -1,12 +1,12 @@
 import { endpoint } from './api'
 import { getTokensFromLocalStorage } from './authServices'
-import { SubjectInput, SubjectData } from './subjectServicesTypes'
+import { SubjectInput, SubjectOutput } from './subjectServicesTypes'
 
 export const getSubject = async (subjectId: string) => {
   const response = await fetch(`${endpoint}/subjects/${subjectId}`)
 
   if (response.status === 200) {
-    let subject: SubjectData = await response.json()
+    let subject: SubjectOutput = await response.json()
     return subject
   }
 

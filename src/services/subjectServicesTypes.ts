@@ -1,9 +1,5 @@
-export interface SubjectInput {
-  name: string;
-  imageUrl?: string;
-  details?: string;
-}
+import { Subject, SubjectInfo } from '../store/types'
 
-export interface SubjectData extends SubjectInput {
-  id: string;
-}
+export type SubjectInput = SubjectInfo
+
+export type SubjectOutput = Subject
