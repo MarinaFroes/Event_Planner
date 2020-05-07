@@ -16,7 +16,8 @@ const rootReducer = combineReducers({
   user: userReducer
 })
 
-export type AppState = ReturnType<typeof rootReducer>
+export type RootState = ReturnType<typeof rootReducer>
+
 const composeEnhancers = composeWithDevTools({});
 
 const configureStore = () => {
