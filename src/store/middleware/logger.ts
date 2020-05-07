@@ -1,6 +1,6 @@
-import { Action } from 'redux'
+import { Action, Dispatch } from 'redux'
 
-const logger = (store: any) => (next: any)=> (action: Action) => {
+const logger = (store: any) => (next: Dispatch)=> (action: Action) => {
   console.group(action.type)
   console.log(action)
   const returnValue = next(action)
