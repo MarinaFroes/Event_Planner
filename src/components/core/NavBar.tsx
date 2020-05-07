@@ -69,9 +69,7 @@ const NavBar: React.FC<Props> = ({isLoggedIn, user = "there"}) => {
       </LogoLink>
       <Hamburger>
         {
-          isLoggedIn
-            ? <Greeting>Hello, {user}</Greeting>
-            : <Greeting>Please, sign in.</Greeting>
+          isLoggedIn && <Greeting>Hello, {user}</Greeting>
         }
         <FaBars/>
       </Hamburger>
