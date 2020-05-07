@@ -1,18 +1,26 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { useDispatch } from 'react-redux'
+// import { ThunkAction } from 'redux-thunk'
 
 import TextBox from './core/TextBox'
 import Btn from './core/Btn'
+
+// SERVICES
 import { getTodayDate, populateForm } from '../services/formServices'
 import { setLocalStorage } from '../utils/authDataRepository'
 import { isTokenProvided, loginUrl } from '../services/authServices'
+
+// ACTIONS
 import { handleCreateSubject } from '../store/subjects/subjectActions'
-// import { handleCreateEvent } from '../store/events/eventActions'
-// import { EventInput } from '../services/eventServicesTypes'
+import { handleCreateEvent } from '../store/events/eventActions'
+
+// TYPES
+import { EventInput } from '../services/eventServicesTypes'
 import { SubjectInput } from '../services/subjectServicesTypes'
+import { FormData } from '../services/formServicesTypes'
 
-
+// STYLES
 const Form = styled.form`
   display: flex;
   flex-direction: column;
@@ -112,49 +120,6 @@ interface FormProps {
   heading4?: string;
 }
 
-interface Task {
-  id: string;
-  details: string;
-  owner: string;
-  eventId: string;
-}
-
-interface FormData {
-  title: string;
-  additionalInfo?: string;
-  address: string;
-  maxNumberGuests: number;
-  totalCost: number;
-  tasks: Task[];
-  date: string;
-  time: string;
-  subjectName: string;
-  imageUrl: null | FileList;
-}
-
-export interface ISubject {
-  name: string;
-  imageUrl: string;
-}
-
-interface User {
-  name: string;
-  email: string;
-  id: string;
-}
-
-interface IEvent {
-  title: string;
-  host: string | User;
-  subject: string | ISubject;
-  additionalInfo?: string;
-  date: string;
-  time: string;
-  address: string;
-  maxNumberGuests: number;
-  totalCost: number;
-}
-
 // Initial Form Data
 const init: FormData = {
   title: "",
@@ -171,7 +136,6 @@ const init: FormData = {
 
 // Custom hook 
 const usePersistentState = (init: FormData) => {
-  
   const [value, setValue] = useState(populateForm(init))
   
   useEffect(() => {
@@ -193,7 +157,8 @@ const EventForm: React.FC<FormProps> = ({ showImage, btnText, primaryBtn, headin
 
   
   const createSubject = (subject: SubjectInput) => dispatch(handleCreateSubject(subject))
-  // const createEvent = (event: EventInput) => dispatch(handleCreateEvent(event))
+  
+  const createEvent = (event: EventInput) => dispatch(handleCreateEvent(event))
 
   useEffect(() => {
     if (isTokenProvided(window.location)) {
@@ -202,29 +167,13 @@ const EventForm: React.FC<FormProps> = ({ showImage, btnText, primaryBtn, headin
   }, [])
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-    console.log(event)
-    
+    event.preventDefault() 
 
-    const subject = await createSubject({ name: form.subjectName, imageUrl: form.imageUrl})
+    const subject = await createSubject({ name: form.subjectName, imageUrl: form.imageUrl })
     console.log(subject)
-
-    // const eventRes = createEvent({
-    //   title: form.title,
-    //   additionalInfo: form.additionalInfo,
-    //   address: form.address,
-    //   maxNumberGuests: form.maxNumberGuests,
-    //   totalCost: form.totalCost,
-    //   date: form.date,
-    //   subject: {
-    //     name: "fssdffd",
-    //     imageUrl: "sdfsdf"
-    // //   }
-    // })
-    //  console.log(eventRes)
-
+    
     // clearForm()
-    setForm(init)
+    // setForm(init)
   }
 
   const updateFields = (event: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -304,6 +253,25 @@ const EventForm: React.FC<FormProps> = ({ showImage, btnText, primaryBtn, headin
           Meal name
           <Input
             id="meal-name"
+            list="meal-names"
+            name="subjectName"
+            value={form.subjectName}
+            onChange={updateFields}
+            required
+          />
+          {isLoggedIn === true && (
+            <datalist id="meal-names">
+              <option value="Chocolate cake"/>
+              <option value="Feijoada"/>
+              <option value="Caranguejo"/>
+              <option value="Cuxa rice"/>
+            </datalist>
+          )}
+        </Label>
+        {/* <Label>
+          Meal name
+          <Input
+            id="meal-name"
             type="text"
             placeholder="What is your dish name"
             name="subjectName"
@@ -311,7 +279,10 @@ const EventForm: React.FC<FormProps> = ({ showImage, btnText, primaryBtn, headin
             onChange={updateFields}
             required
           />
-        </Label>
+        </Label> */}
+
+
+
       </Sec>
       <Sec>
         <TextBox
