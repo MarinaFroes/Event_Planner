@@ -4,8 +4,8 @@ import { UserState} from './users/types'
 import { SubjectState } from './subjects/types'
 
 export interface Tokens {
-  access_token: string;
-  id_token: string;
+  access_token: string | '';
+  id_token: string | '';
 }
 
 export interface User {
@@ -34,7 +34,7 @@ export interface Task {
 
 export interface SubjectInfo {
   name: string;
-  imageUrl?: string;
+  imageUrl?: FileList | null;
   details?: string;
 }
 

@@ -30,15 +30,30 @@ export const getTokensFromURL = (location: Location): TokensData | null => {
   }
 }
 
-export const getTokensFromLocalStorage = () => {
+export const getTokensFromLocalStorage = (): TokensData | null => {
   const access_token = getLocalStorage('access_token')
   const id_token = getLocalStorage('id_token')
 
   if (!id_token || !access_token) {
-    throw new Error('Missing token')
+    return null
   }
 
-  return [access_token, id_token]
+  return {
+    access_token,
+    id_token
+  }
+}
+
+export const getTokens = (location: Location): TokensData | null => {
+  if (getTokensFromURL(location)) {
+    return getTokensFromURL(location)
+  }
+
+  if (getTokensFromLocalStorage()) {
+    return getTokensFromLocalStorage()
+  }
+
+  return null
 }
 
 export const saveUserData = (data: UserData): void => {

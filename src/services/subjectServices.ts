@@ -15,8 +15,14 @@ export const getSubject = async (subjectId: string) => {
 
 export const createSubject = async (subject: SubjectInput) => {
   const tokens = getTokensFromLocalStorage()
-  const [access_token, id_token] = tokens
+  let access_token: string = ''
+  let id_token: string = ''
 
+  if (tokens) {
+    access_token = tokens.access_token
+    id_token = tokens.id_token
+  }
+ 
   const response = await fetch(`${endpoint}/subjects`, {
     method: 'POST',
     mode: 'cors',

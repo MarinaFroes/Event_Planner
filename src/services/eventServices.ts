@@ -15,7 +15,13 @@ export const getEvent = async (eventId: string) => {
 
 export const createEvent = async (event: EventInput) => {
   const tokens = getTokensFromLocalStorage()
-  const [access_token, id_token] = tokens
+  let access_token: string = ''
+  let id_token: string = ''
+
+  if (tokens) {
+    access_token = tokens.access_token
+    id_token = tokens.id_token
+  }
 
   const response = await fetch(`${endpoint}/events`, {
     method: 'POST',
@@ -39,7 +45,13 @@ export const createEvent = async (event: EventInput) => {
 
 export const subscribeToEvent = async (guestId: string, eventId: string) => {
   const tokens = getTokensFromLocalStorage()
-  const [access_token, id_token] = tokens
+  let access_token: string = ''
+  let id_token: string = ''
+
+  if (tokens) {
+    access_token = tokens.access_token
+    id_token = tokens.id_token
+  }
 
   const response = await fetch(`${endpoint}/events/${eventId}/subscribe`, {
     method: 'POST',
