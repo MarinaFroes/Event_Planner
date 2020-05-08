@@ -23,24 +23,29 @@ const formatDate = (date: string, time: string) => {
   return formattedDate
 }
 
-export const formatEvent = (formData: FormData, subjectId: string) => {
-  console.log(formData)
+export const formatEvent = (
+  formData: FormData,
+  subjectId: string,
+  hostEmail: string
+) => {
+
   const date = formatDate(formData.date, formData.time)
   
   const { title, additionalInfo, address, maxNumberGuests, totalCost, tasks } = formData
 
   const formattedForm = {
     title, 
-    additionalInfo,
+    host: hostEmail,
+    subject: subjectId,
+    date,
     address,
     maxNumberGuests,
     totalCost,
-    tasks,
-    date,
-    subject: subjectId
+    additionalInfo,
+    tasks
   }
 
-  console.log(formattedForm)
+  return formattedForm
 }
 
 export const populateForm = (init: FormData) => {
