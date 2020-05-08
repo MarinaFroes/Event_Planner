@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { useDispatch, useSelector } from 'react-redux'
-// import { ThunkAction } from 'redux-thunk'
 
+//  COMPONENTS
 import TextBox from './core/TextBox'
 import Btn from './core/Btn'
 
@@ -12,12 +12,9 @@ import { setLocalStorage } from '../utils/authDataRepository'
 import { loginUrl } from '../services/authServices'
 
 // ACTIONS
-import { handleCreateSubject } from '../store/subjects/subjectActions'
 import { handleCreateEvent } from '../store/events/eventActions'
 
 // TYPES
-import { EventInput } from '../services/eventServicesTypes'
-import { SubjectInput } from '../services/subjectServicesTypes'
 import { FormData } from '../services/formServicesTypes'
 import { AppState } from '../store/types'
 
@@ -153,20 +150,14 @@ const EventForm: React.FC<FormProps> = ({ showImage, btnText, primaryBtn, headin
   const isLoggedIn = useSelector((state: AppState) => state.user.isLoggedIn)
   
   const [showAlert, setShowAlert] = useState<boolean>(false)
-  // const [selectedSubject, setSelectedSubject] = useState<string>("")
 
   const dispatch = useDispatch()
-
   
-  const createSubject = (subject: SubjectInput) => dispatch(handleCreateSubject(subject))
-  
-  const createEvent = (event: EventInput) => dispatch(handleCreateEvent(event))
+  const createEvent = (formData: FormData) => dispatch(handleCreateEvent(formData))
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault() 
-
-    const subject = await createSubject({ name: form.subjectName, imageUrl: form.imageUrl })
-    console.log(subject)
+    await createEvent(form)
     
     // clearForm()
     // setForm(init)
