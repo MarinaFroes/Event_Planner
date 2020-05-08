@@ -19,7 +19,7 @@ const App: React.FC = () => {
   const dispatch = useDispatch() 
 
   useEffect(() => {
-    const tokens = authService.getTokensFromURL(window.location)
+    const tokens = authService.getTokens(window.location)
     if (tokens !== null) {
       dispatch(setAuthedUserAction(tokens))
     }
