@@ -21,16 +21,15 @@ export const createEvent = async (event: EventInput) => {
     method: 'POST',
     mode: 'cors',
     cache: 'no-cache',
-    credentials: 'same-origin',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': access_token,
+      'Authorization': 'Bearer ' + access_token,
       'X-Id-Token': id_token
     },
     body: JSON.stringify(event)
   })
 
-  if (response.status === 200) {
+  if (response.ok) {
     let eventId: string = await response.json()
     return eventId
   }
