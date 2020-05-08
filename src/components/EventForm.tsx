@@ -7,7 +7,7 @@ import TextBox from './core/TextBox'
 import Btn from './core/Btn'
 
 // SERVICES
-import { getTodayDate, populateForm } from '../services/formServices'
+import { getTodayDate, populateForm, clearForm } from '../services/formServices'
 import { setLocalStorage } from '../utils/authDataRepository'
 import { loginUrl } from '../services/authServices'
 
@@ -159,8 +159,8 @@ const EventForm: React.FC<FormProps> = ({ showImage, btnText, primaryBtn, headin
     event.preventDefault() 
     await createEvent(form)
     
-    // clearForm()
-    // setForm(init)
+    clearForm()
+    setForm(init)
   }
 
   const updateFields = (event: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>) => {
