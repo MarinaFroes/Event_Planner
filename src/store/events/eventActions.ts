@@ -1,12 +1,19 @@
 import { ThunkAction } from 'redux-thunk'
 import * as eventService from '../../services/eventServices'
 
-import { CREATE_EVENT, EventActionTypes, MultipleActionTypes } from './types'
+import { CREATE_EVENT, EventActionTypes, MultipleActionTypes, GET_EVENTS, Events } from './types'
 import { EventInput } from '../../services/eventServicesTypes'
 import { formatEvent } from '../../services/formServices'
 import { FormData } from '../../services/formServicesTypes'
 import { AppState, EventData } from '../types'
 import { handleCreateSubject } from '../subjects/subjectActions'
+
+export const getEvents = (events: Events): EventActionTypes => {
+  return {
+    type: GET_EVENTS,
+    events
+  }
+}
 
 export const createEventAction = (eventId: string): EventActionTypes => {
   return {
@@ -42,4 +49,13 @@ export const handleCreateEvent = (formData: FormData): Effect => async (dispatch
     console.log(err)
   }
 
+}
+
+export const handleGetEvents = (): Effect => async (dispatch) => {
+  try {
+    const events: Events = await eventService.getEvents()
+    dispatch(getEvents(events))
+  } catch (err) {
+    console.log(err)
+  }
 }
