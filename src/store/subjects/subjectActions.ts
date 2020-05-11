@@ -1,9 +1,7 @@
-import { ThunkAction } from 'redux-thunk'
-
 import * as subjectService from '../../services/subjectServices'
-import { SubjectInfo, AppState } from '../types'
+import { SubjectInfo, AppThunk } from '../types'
 import { CREATE_SUBJECT, SubjectActionTypes } from './types'
-import { MultipleActionTypes } from '../events/types'
+
 
 export const createSubjectAction = (subjectId: string): SubjectActionTypes => {
   return {
@@ -12,11 +10,9 @@ export const createSubjectAction = (subjectId: string): SubjectActionTypes => {
   }
 }
 
-type Effect = ThunkAction<void, AppState, unknown, MultipleActionTypes>;
-
 export const handleCreateSubject = (
   subjectInput: SubjectInfo
-): Effect => async (dispatch) => {
+): AppThunk => async (dispatch) => {
   try {
     const subjectId = await subjectService.createSubject(subjectInput)
     dispatch(createSubjectAction(subjectId))
