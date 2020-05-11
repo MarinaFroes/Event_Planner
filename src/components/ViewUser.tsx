@@ -1,47 +1,19 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
-import { UserState } from '../store/users/types'
-import { AppState } from '../store/types'
-import { EventState } from '../store/events/types'
-import EventCard from './EventCard'
-
+import ShowEvents from './ShowEvents'
+import MainHeader from './core/MainHeader'
+import HeaderImg from '../assets/images/kelsey-chance-ZrhtQyGFG6s-unsplash.jpg'
 
 const ViewUser: React.FC = () => {
-  let userName: string = ''
-  
-  const user: UserState = useSelector((state: AppState) => state.user)
-  const eventState: EventState = useSelector((state: AppState) => state.event)
 
-  if (user.isLoggedIn) {
-    userName = user.user.name
-  }
-  
   return (
-      <div>
-      <p>{userName}, here are your events</p>
-
-      {
-        eventState.length === 0 &&
-        <p>You don't have any event yet</p>
-      }
-      {
-        eventState.length > 0 &&
-        eventState.map(eventInfo => {
-          const eventText = {
-            description: eventInfo.title,
-            location: eventInfo.address,
-            date: eventInfo.date.split(' ')[0],
-            time: eventInfo.date.split(' ')[1],
-            participants: eventInfo.maxNumberGuest,
-            cost: eventInfo.pricePerGuest,
-          }
-          return (<EventCard
-            key={eventInfo.id}
-            eventText={eventText}
-          />
-          )
-        })
-      }
+    <div>
+      <MainHeader
+        title="My events"
+        subtitle="Here you can check all your past and upcoming event, as well as your meals list. Click on the event to see details."
+        imageUrl={HeaderImg}
+      />
+      <ShowEvents status="open" />
+      <ShowEvents status="closed"/>
       </div>
     );
 }
