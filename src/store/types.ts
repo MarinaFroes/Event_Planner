@@ -2,6 +2,8 @@ import { EventState } from './events/types'
 import { TaskState} from './tasks/types'
 import { UserState} from './users/types'
 import { SubjectState } from './subjects/types'
+import { ThunkAction } from 'redux-thunk'
+import { Action } from 'redux'
 
 export interface Tokens {
   access_token: string | '';
@@ -83,3 +85,10 @@ export interface AppState {
   task: TaskState;
   user: UserState;
 }
+
+export type AppThunk<ReturnType = void> = ThunkAction<
+  ReturnType,
+  AppState,
+  unknown,
+  Action<string>
+>
