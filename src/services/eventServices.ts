@@ -2,7 +2,7 @@ import { endpoint } from './api'
 import { getTokensFromLocalStorage } from './authServices'
 
 import { EventInput, EventOutput } from './eventServicesTypes'
-import { Events } from '../store/events/types'
+import { EventsFromServer } from '../store/events/types'
 
 export const getEvent = async (eventId: string) => {
   const response = await fetch(`${endpoint}/events/${eventId}`)
@@ -17,7 +17,7 @@ export const getEvent = async (eventId: string) => {
 export const getEvents = async () => {
   const response = await fetch(`${endpoint}/events`)
   if (response.status === 200) {
-    let events: Events = await response.json()
+    let events: EventsFromServer = await response.json()
     return events
   }
 

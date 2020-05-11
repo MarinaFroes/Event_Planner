@@ -1,31 +1,26 @@
-import { ThunkAction } from 'redux-thunk'
 import * as eventService from '../../services/eventServices'
-
-import { CREATE_EVENT, EventActionTypes, MultipleActionTypes, GET_EVENTS, Events } from './types'
+import { CREATE_EVENT, EventActionTypes, RECEIVE_EVENTS, Events, EventsFromServer } from './types'
 import { EventInput } from '../../services/eventServicesTypes'
 import { formatEvent } from '../../services/formServices'
 import { FormData } from '../../services/formServicesTypes'
-import { AppState, EventData } from '../types'
+import { EventData, AppThunk } from '../types'
 import { handleCreateSubject } from '../subjects/subjectActions'
 
-export const getEvents = (events: Events): EventActionTypes => {
+export const receiveEvents = (events: Events): EventActionTypes => {
   return {
-    type: GET_EVENTS,
-    events
+    type: RECEIVE_EVENTS,
+    payload: events
   }
 }
 
-export const createEventAction = (eventId: string): EventActionTypes => {
+export const createEventAction = (eventData: EventData): EventActionTypes => {
   return {
     type: CREATE_EVENT,
-    eventId
+    payload: eventData
   }
 }
 
-
-type Effect = ThunkAction<void, AppState, unknown, MultipleActionTypes>;
-
-export const handleCreateEvent = (formData: FormData): Effect => async (dispatch, getState) => {
+export const handleCreateEvent = (formData: FormData): AppThunk => async (dispatch, getState) => {
   try {
     await dispatch(handleCreateSubject({
       name: formData.subjectName,
@@ -44,17 +39,17 @@ export const handleCreateEvent = (formData: FormData): Effect => async (dispatch
     const eventId: string = await eventService.createEvent(eventInput)
     const eventData: EventData = await eventService.getEvent(eventId)
 
-    dispatch(createEventAction(eventData.id))
+    dispatch(createEventAction(eventData))
   } catch (err) {
     console.log(err)
   }
-
 }
 
-export const handleGetEvents = (): Effect => async (dispatch) => {
+export const handleGetEvents = (): AppThunk => async (dispatch, getState) => {
   try {
-    const events: Events = await eventService.getEvents()
-    dispatch(getEvents(events))
+    const events: EventsFromServer = await eventService.getEvents()
+        
+    dispatch(receiveEvents(events.items))
   } catch (err) {
     console.log(err)
   }

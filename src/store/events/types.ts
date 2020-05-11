@@ -1,28 +1,28 @@
-import { TaskActionTypes } from '../tasks/types'
-import { SubjectActionTypes } from '../subjects/types'
 import { EventData } from '../types'
 
-export const CREATE_EVENT: string = 'CREATE_EVENT'
-export const GET_EVENTS: string = 'GET_EVENTS'
+export const CREATE_EVENT = 'CREATE_EVENT'
+export const RECEIVE_EVENTS = 'RECEIVE_EVENTS'
 
 // OTHER TYPES
-export interface Events {
-  [eventId: string]: EventData
+export type Events = EventData[]
+
+export interface EventsFromServer {
+  items: Events;
+  [propName: string]: any;
 }
 
 // ACTION TYPES
-interface CreateEventAction {
+export interface CreateEventAction {
   type: typeof CREATE_EVENT
-  eventId: string
+  payload: EventData
 }
 
-interface GetEventsAction {
-  type: typeof GET_EVENTS
-  events: Events
+export interface ReceiveEventsAction {
+  type: typeof RECEIVE_EVENTS
+  payload: Events
 }
 
-export type EventActionTypes = CreateEventAction | GetEventsAction
+export type EventActionTypes = CreateEventAction | ReceiveEventsAction
 
-export type MultipleActionTypes = EventActionTypes | TaskActionTypes | SubjectActionTypes
 //  STATE TYPE
-export type EventState = string[] | []
+export type EventState = EventData[]
