@@ -1,4 +1,4 @@
-import { CREATE_SUBJECT, SubjectActionTypes, SubjectState } from './types'
+import { CREATE_SUBJECT, SubjectActionTypes, SubjectState, RECEIVE_SUBJECTS } from './types'
 
 const initialSubjectState: SubjectState = []
 
@@ -8,9 +8,16 @@ export default function subjectReducer(
 ): SubjectState {
   switch (action.type) {
     case CREATE_SUBJECT:
+      let subjectData = action.payload
       return [
         ...state,
-        action.subjectId
+        subjectData
+      ]
+    case RECEIVE_SUBJECTS:
+      let subjects = action.payload
+      return [
+        ...state,
+        ...subjects
       ]
     default:
       return state

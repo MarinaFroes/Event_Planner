@@ -37,11 +37,12 @@ export interface Task {
 export interface SubjectInfo {
   name: string;
   imageUrl?: FileList | null;
-  details?: string;
+  detail?: string;
 }
 
 export interface Subject extends SubjectInfo {
   id: string;
+  createdBy: string;
 }
 
 export interface EventData {
