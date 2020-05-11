@@ -5,12 +5,8 @@ export const LOG_OUT: string = 'LOG_OUT'
 
 export type TokensData = Tokens
 
-export interface DecodedUser {
-  name: string;
-  iss?: string;
-  id: string;
-  exp?: number;
-  email: string;
+export interface DecodedUser extends User {
+  [propName: string]: any;
 }
 
 export interface UserData extends Tokens {
