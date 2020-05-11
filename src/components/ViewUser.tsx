@@ -2,6 +2,7 @@ import React from 'react'
 import ShowEvents from './ShowEvents'
 import MainHeader from './core/MainHeader'
 import HeaderImg from '../assets/images/kelsey-chance-ZrhtQyGFG6s-unsplash.jpg'
+import ShowSubjects from './ShowSubjects'
 
 const ViewUser: React.FC = () => {
 
@@ -13,7 +14,8 @@ const ViewUser: React.FC = () => {
         imageUrl={HeaderImg}
       />
       <ShowEvents status="open" />
-      <ShowEvents status="closed"/>
+      <ShowEvents status="closed" />
+      <ShowSubjects />
       </div>
     );
 }
