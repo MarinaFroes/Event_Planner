@@ -56,7 +56,7 @@ There are 2 types of objects stored in the database:
 | date        | Date | The event's date |
 | time        | Time | The event's time |
 | address         | String           | The event’s location |
-| maxNumberGuests | Number | The max number of guests for the event|
+| maxNumberGuest | Number | The max number of guests for the event|
 | tasks | Array | Array containing tasks objects, including id, details, eventId and owner id, who is responsible for the task|
 | totalCost | Number | The event's total cost|
 | costPerGuest | Number | The cost per guest |
@@ -103,7 +103,7 @@ My code talks to the database via the methods listed bellow:
 | date        | Date | The event's date |
 | time        | Time | The event's time |
 | totalCost | Number | The event's total cost|
-| maxNumberGuests | Number | The max number of guests the event can support|
+| maxNumberGuest | Number | The max number of guests the event can support|
 | tasks | Array | Array containing task objects including only the details | 
 
 *Return Value*:  An object that has all the previous properties plus the following ones: `id`, `host`, `costPerGuest`, `timestamp` and `guests`. Each `task` object inside the `tasks` array will also include a task id and the event id. The `subject` object will also cointain a meal id. More details about these properties:
