@@ -31,7 +31,7 @@ export const formatEvent = (
 
   const date = formatDate(formData.date, formData.time)
   
-  const { title, additionalInfo, address, maxNumberGuests, totalCost, tasks } = formData
+  const { title, additionalInfo, address, maxNumberGuest, totalCost, tasks } = formData
 
   const formattedForm = {
     title, 
@@ -39,7 +39,7 @@ export const formatEvent = (
     subject: subjectId,
     date,
     address,
-    maxNumberGuests,
+    maxNumberGuest,
     totalCost,
     additionalInfo,
     tasks

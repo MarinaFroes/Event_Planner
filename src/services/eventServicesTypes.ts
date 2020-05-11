@@ -7,7 +7,7 @@ export interface EventInput {
   additionalInfo?: string;
   date: string;
   address: string;
-  maxNumberGuests: number;
+  maxNumberGuest: number;
   totalCost: number;
 }
 

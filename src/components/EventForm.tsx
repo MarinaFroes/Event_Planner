@@ -123,7 +123,7 @@ const init: FormData = {
   title: "",
   additionalInfo: "",
   address: "",
-  maxNumberGuests: 0,
+  maxNumberGuest: 0,
   totalCost: 0,
   tasks: [],
   date: "",
@@ -346,8 +346,8 @@ const EventForm: React.FC<FormProps> = ({ showImage, btnText, primaryBtn, headin
               id="max-guests"
               min="1"
               max="99999"
-              name="maxNumberGuests"
-              value={form.maxNumberGuests}
+              name="maxNumberGuest"
+              value={form.maxNumberGuest}
               onChange={updateFields}
               required
             />
