@@ -6,7 +6,7 @@ import { FormData } from '../../services/formServicesTypes'
 import { EventData, AppThunk } from '../types'
 import { handleCreateSubject } from '../subjects/subjectActions'
 
-export const receiveEvents = (events: Events): EventActionTypes => {
+export const receiveEventsAction = (events: Events): EventActionTypes => {
   return {
     type: RECEIVE_EVENTS,
     payload: events
@@ -29,7 +29,7 @@ export const handleCreateEvent = (formData: FormData): AppThunk => async (dispat
     )
 
     const { user, subject } = getState()
-    const subjectId: string = subject[0]
+    const subjectId: string = subject[0].id
     let hostEmail: string = ''
     if (user.isLoggedIn) {
       hostEmail = user.user.email
@@ -38,7 +38,6 @@ export const handleCreateEvent = (formData: FormData): AppThunk => async (dispat
     const eventInput: EventInput = formatEvent(formData, subjectId, hostEmail)
     const eventId: string = await eventService.createEvent(eventInput)
     const eventData: EventData = await eventService.getEvent(eventId)
-
     dispatch(createEventAction(eventData))
   } catch (err) {
     console.log(err)
@@ -54,7 +53,7 @@ export const handleGetEvents = (): AppThunk => async (dispatch, getState) => {
     }
     const events: EventsFromServer = await eventService.getEvents(userId)
         
-    dispatch(receiveEvents(events.items))
+    dispatch(receiveEventsAction(events.items))
   } catch (err) {
     console.log(err)
   }
