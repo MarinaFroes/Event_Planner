@@ -47,7 +47,12 @@ export const handleCreateEvent = (formData: FormData): AppThunk => async (dispat
 
 export const handleGetEvents = (): AppThunk => async (dispatch, getState) => {
   try {
-    const events: EventsFromServer = await eventService.getEvents()
+    const { user } = getState()
+    let userId = ''
+    if (user.isLoggedIn) {
+      userId = user.user.id
+    }
+    const events: EventsFromServer = await eventService.getEvents(userId)
         
     dispatch(receiveEvents(events.items))
   } catch (err) {

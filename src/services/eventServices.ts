@@ -14,8 +14,8 @@ export const getEvent = async (eventId: string) => {
   throw new Error(`${response.status}`)
 }
 
-export const getEvents = async () => {
-  const response = await fetch(`${endpoint}/events`)
+export const getEvents = async (userId: string) => {
+  const response = await fetch(`${endpoint}/events?hostId=${userId}&pageSize=100&page=1`)
   if (response.status === 200) {
     let events: EventsFromServer = await response.json()
     return events
