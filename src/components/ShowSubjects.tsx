@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import { MdDelete } from 'react-icons/md'
+import { TiDelete } from 'react-icons/ti'
 import { FaPlus, FaSave } from 'react-icons/fa'
 
 import TextBox from './core/TextBox'
@@ -55,6 +55,9 @@ const AddNew = styled.div`
 `
 
 const IconBtn = styled.button<{ isBlue: boolean }>`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background-color: var(--main-color-white, #fff);
   color: ${props => props.isBlue ? "var(--main-color-blue, #0c598A)" : "var(--main-color-red, #bd0b2b)"};
   height: 40px;
@@ -111,7 +114,7 @@ const ShowSubjects: React.FC = () => {
                 <IconBtn
                   isBlue={false}
                   onClick={() => console.log(`delete subject with id: ${subject.id}`)}>
-                  <MdDelete />
+                  <TiDelete />
                 </IconBtn>
               </MealItem>
             )
@@ -150,15 +153,3 @@ const ShowSubjects: React.FC = () => {
 }
 
 export default ShowSubjects
-
-/**
- * <Input
-            id="meal-name"
-            list="meal-names"
-            name="subjectName"
-            value={form.subjectName}
-            onChange={updateFields}
-            required
-          />
-
- */
