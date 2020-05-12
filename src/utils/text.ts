@@ -20,3 +20,14 @@ export const acceptInvite = {
   signUpHeading1: "Sign up to accept the invite",
   signUpHeading2: "After accepting the invite, the host will be notified. If the host confirms your participation on the event or updates any event info, you will receive a notification by email.",
 }
+
+export const myEvents = {
+  headerTitle: "My events",
+  headerSubtitle: "Here you can check all your past and upcoming events, as well as your meals list. Click on the event to see details.",
+  upcomingTitle: "Upcoming events",
+  upcomingSubtitle: "Here are the events there are coming soon",
+  pastTitle: "Past events",
+  pastSubtitle: "Here you can see all your past events",
+  subjectTitle: "My Meal List",
+  subjectSubtitle: "Here you can manage your meal list, adding new meals for future events or deleting old ones"
+}
