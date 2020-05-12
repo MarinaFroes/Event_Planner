@@ -7,7 +7,7 @@ import TextBox from './core/TextBox'
 import Btn from './core/Btn'
 
 // SERVICES
-import { getTodayDate, populateForm, clearForm } from '../services/formServices'
+import { todayDateForInput, populateForm, clearForm } from '../services/formServices'
 import { setLocalStorage } from '../utils/authDataRepository'
 import { loginUrl } from '../services/authServices'
 
@@ -303,7 +303,7 @@ const EventForm: React.FC<FormProps> = ({ showImage, btnText, primaryBtn, headin
             <SmallerInput
               id="event-date"
               type="date"
-              min={getTodayDate()}
+              min={todayDateForInput()}
               max="2999-12-31"
               name="date"
               value={form.date}
