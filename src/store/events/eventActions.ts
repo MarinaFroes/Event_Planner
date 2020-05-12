@@ -29,7 +29,7 @@ export const handleCreateEvent = (formData: FormData): AppThunk => async (dispat
     )
 
     const { user, subject } = getState()
-    const subjectId: string = subject[0].id
+    const subjectId: string = subject[subject.length - 1].id
     let hostEmail: string = ''
     if (user.isLoggedIn) {
       hostEmail = user.user.email
