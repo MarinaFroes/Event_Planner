@@ -6,6 +6,7 @@ import EventPreview from './EventPreview'
 import { AppState } from '../store/types'
 import { useSelector } from 'react-redux'
 import { EventState } from '../store/events/types'
+import { myEvents } from '../utils/text'
 
 const EventsContainer = styled.div<{ status: "open" | "closed"}>`
   display: flex;
@@ -40,20 +41,20 @@ const ShowEvents: React.FC<Props> = ({ status }) => {
 
   const eventState: EventState = useSelector((state: AppState) => state.event)
 
-  let heading1 = ''
-  let heading2 = ''
+  let title = ''
+  let subtitle = ''
 
   if (status === 'open') {
-    heading1 = 'Upcoming events'
-    heading2 = 'Here are the events there are coming soon'
+    title = myEvents.upcomingTitle
+    subtitle = myEvents.upcomingSubtitle
   } else {
-    heading1 = 'Past events'
-    heading2 = 'Here you can see all your past events'
+    title = myEvents.pastTitle
+    subtitle = myEvents.pastSubtitle
   }
 
   return (
     <EventsContainer status={status}>
-      <TextBox heading1={heading1} heading2={heading2} />
+      <TextBox heading1={title} heading2={subtitle} />
       <div style={{ maxWidth: "700px" }}>
         <Cards>
           {
