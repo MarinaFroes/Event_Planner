@@ -3,10 +3,11 @@ import styled from 'styled-components'
 
 import TextBox from './core/TextBox'
 import EventPreview from './EventPreview'
-import { AppState } from '../store/types'
+import { AppState, EventData } from '../store/types'
 import { useSelector } from 'react-redux'
 import { EventState } from '../store/events/types'
 import { myEvents } from '../utils/text'
+import { isBeforeToday } from '../services/formServices'
 
 const EventsContainer = styled.div<{ status: "open" | "closed"}>`
   display: flex;
@@ -57,9 +58,15 @@ const ShowEvents: React.FC<Props> = ({ status }) => {
       <TextBox heading1={title} heading2={subtitle} />
       <div style={{ maxWidth: "700px" }}>
         <Cards>
-          {
+          { 
             eventState.length > 0 &&
-            eventState.map(eventInfo => (
+            eventState.filter((eventInfo: EventData): boolean => {
+              if (status === 'closed') {
+                return isBeforeToday(eventInfo.date.split(' ')[0])
+              }
+              return !isBeforeToday(eventInfo.date.split(' ')[0])
+
+            }).map(eventInfo => (
               <EventPreview
                 key={eventInfo.id}
                 eventId={eventInfo.id}
@@ -69,8 +76,7 @@ const ShowEvents: React.FC<Props> = ({ status }) => {
                 time={eventInfo.date.split(' ')[1]}
                 status={status}
               />
-            )
-            )
+            ))
           }
         </Cards>
       </div>
