@@ -28,7 +28,7 @@ const Cards = styled.div`
   flex-direction: column;
   max-width: "700px";
 
-  @media only screen and (min-width: 1000px){
+  @media only screen and (min-width: 700px){
     flex-direction: row;
     justify-content: space-evenly;
     flex-wrap: wrap;

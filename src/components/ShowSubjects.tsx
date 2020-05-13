@@ -26,12 +26,6 @@ const SubjectsContainer = styled.div`
 const MealsList = styled.ul`
   display: flex;
   flex-direction: column;
-
-  @media only screen and (min-width: 1000px){
-    flex-direction: row;
-    justify-content: space-evenly;
-    flex-wrap: wrap;
-  }
 `
 
 const MealItem = styled.li`
