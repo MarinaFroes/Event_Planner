@@ -11,6 +11,7 @@ const StyledCard = styled.div<{ status: "open" | "closed" }>`
   height: 150px;
   border-radius: 5px;
   margin-bottom: 20px;
+  margin-left: 20px;
   -webkit-box-shadow: 4px 4px 10px 2px rgba(196,196,196,1);
   -moz-box-shadow: 4px 4px 10px 2px rgba(196,196,196,1);
   box-shadow: 4px 4px 10px 2px rgba(196,196,196,1);

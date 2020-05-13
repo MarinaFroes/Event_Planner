@@ -26,6 +26,7 @@ const EventsContainer = styled.div<{ status: "open" | "closed"}>`
 const Cards = styled.div`
   display: flex;
   flex-direction: column;
+  max-width: "700px";
 
   @media only screen and (min-width: 1000px){
     flex-direction: row;
