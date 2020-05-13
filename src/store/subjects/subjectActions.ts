@@ -1,35 +1,66 @@
 import * as subjectService from '../../services/subjectServices'
 import { SubjectInfo, AppThunk, Subject } from '../types'
-import { CREATE_SUBJECT, SubjectActionTypes, RECEIVE_SUBJECTS, SubjectsFromServer, Subjects } from './types'
+import { CREATE_SUBJECT_SUCCESS, SubjectActionTypes, RECEIVE_SUBJECTS_SUCCESS, SubjectsFromServer, Subjects, CREATE_SUBJECT_REQUEST, CREATE_SUBJECT_ERROR, RECEIVE_SUBJECTS_REQUEST, RECEIVE_SUBJECTS_ERROR } from './types'
 
+//  Create Subject Action Creators
+export const createSubjectRequest = (): SubjectActionTypes => {
+  return {
+    type: CREATE_SUBJECT_REQUEST
+  }
+}
 
 export const createSubjectAction = (subject: Subject): SubjectActionTypes => {
   return {
-    type: CREATE_SUBJECT,
+    type: CREATE_SUBJECT_SUCCESS,
     payload: subject
   }
 }
 
-export const receiveSubjectsAction = (subjects: Subjects): SubjectActionTypes => {
-  return { 
-    type: RECEIVE_SUBJECTS,
-    payload: subjects
+export const createSubjectError = (error: string): SubjectActionTypes => {
+  return {
+    type: CREATE_SUBJECT_ERROR,
+    error
   }
 }
 
 export const handleCreateSubject = (
   subjectInput: SubjectInfo
 ): AppThunk => async (dispatch) => {
+  dispatch(createSubjectRequest())
+
   try {
     const subjectId = await subjectService.createSubject(subjectInput)
     const subjectData: Subject = await subjectService.getSubject(subjectId)
     dispatch(createSubjectAction(subjectData))
   } catch (err) {
-    console.log(err)
+    dispatch(createSubjectError(err.message))
+  }
+}
+
+// Receive Subjects Action Creators
+export const receiveSubjectsRequest = (): SubjectActionTypes => {
+  return {
+    type: RECEIVE_SUBJECTS_REQUEST
+  }
+}
+
+export const receiveSubjectsAction = (subjects: Subjects): SubjectActionTypes => {
+  return {
+    type: RECEIVE_SUBJECTS_SUCCESS,
+    payload: subjects
+  }
+}
+
+export const receiveSubjectsError = (error: string): SubjectActionTypes => {
+  return {
+    type: RECEIVE_SUBJECTS_ERROR,
+    error
   }
 }
 
 export const handleGetSubjects = (): AppThunk => async (dispatch, getState) => {
+  dispatch(receiveSubjectsRequest())
+
   try {
     const { user } = getState()
     let userId = ''
@@ -40,6 +71,6 @@ export const handleGetSubjects = (): AppThunk => async (dispatch, getState) => {
 
     dispatch(receiveSubjectsAction(subjects.items))
   } catch (err) {
-    console.log(err)
+    dispatch(receiveSubjectsError(err.message))
   }
 }

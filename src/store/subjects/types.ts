@@ -1,7 +1,12 @@
 import { Subject } from '../../store/types'
 
-export const CREATE_SUBJECT = 'CREATE_SUBJECT'
-export const RECEIVE_SUBJECTS = 'RECEIVE_SUBJECTS'
+export const CREATE_SUBJECT_REQUEST = 'CREATE_SUBJECT_REQUEST'
+export const CREATE_SUBJECT_SUCCESS = 'CREATE_SUBJECT_SUCCESS'
+export const CREATE_SUBJECT_ERROR = 'CREATE_SUBJECT_ERROR'
+
+export const RECEIVE_SUBJECTS_REQUEST = 'RECEIVE_SUBJECTS_REQUEST'
+export const RECEIVE_SUBJECTS_SUCCESS = 'RECEIVE_SUBJECTS_SUCCESS'
+export const RECEIVE_SUBJECTS_ERROR = 'RECEIVE_SUBJECTS_ERROR'
 
 // OTHER TYPES
 export type Subjects = Subject[]
@@ -12,17 +17,37 @@ export interface SubjectsFromServer {
 }
 
 // ACTION TYPES
+// Create subject action types
+interface CreateSubjectRequest {
+  type: typeof CREATE_SUBJECT_REQUEST
+}
+
 interface CreateSubjectAction {
-  type: typeof CREATE_SUBJECT
+  type: typeof CREATE_SUBJECT_SUCCESS
   payload: Subject
 }
 
+interface CreateSubjectError {
+  type: typeof CREATE_SUBJECT_ERROR
+  error: string
+}
+
+// Receive Subjects action types
+interface ReceiveSubjectsRequest {
+  type: typeof RECEIVE_SUBJECTS_REQUEST
+}
+
 interface ReceiveSubjectsAction {
-  type: typeof RECEIVE_SUBJECTS
+  type: typeof RECEIVE_SUBJECTS_SUCCESS
   payload: Subjects
 }
 
-export type SubjectActionTypes = CreateSubjectAction | ReceiveSubjectsAction
+interface ReceiveSubjectsError {
+  type: typeof RECEIVE_SUBJECTS_ERROR
+  error: string
+}
+
+export type SubjectActionTypes = CreateSubjectRequest | CreateSubjectAction | CreateSubjectError | ReceiveSubjectsRequest | ReceiveSubjectsAction | ReceiveSubjectsError
 
 // STATE TYPE
 export type SubjectState = Subjects
