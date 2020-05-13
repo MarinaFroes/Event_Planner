@@ -21,7 +21,6 @@ const CreateEvent: React.FC = () => {
         subtitle={subtitle}
         imageUrl={MainImg}
       />
-      
       <EventForm
         heading1={formMainHeading1}
         heading2={formMealHeading2} 
