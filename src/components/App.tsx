@@ -11,7 +11,6 @@ import NavBar from './core/NavBar'
 import Footer from './core/Footer'
 import ViewUser from './ViewUser'
 import { setAuthedUserAction } from '../store/users/userActions'
-import { handleGetEvents } from '../store/events/eventActions'
 import { handleGetSubjects } from '../store/subjects/subjectActions'
 
 const App: React.FC = () => {
@@ -22,7 +21,6 @@ const App: React.FC = () => {
     const tokens = authService.getTokens(window.location)
     if (tokens !== null) {
       dispatch(setAuthedUserAction(tokens))
-      dispatch(handleGetEvents())
       dispatch(handleGetSubjects())
     }
   }, [dispatch])
