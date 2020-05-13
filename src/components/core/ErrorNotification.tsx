@@ -1,11 +1,11 @@
 import React from 'react'
 import styled from 'styled-components'
 import { FaWindowClose } from 'react-icons/fa'
-
-import { ErrorState } from '../store/error/types'
 import { useSelector, useDispatch } from 'react-redux'
-import { AppState } from '../store/types'
-import { hideErrorAction } from '../store/error/errorActions'
+
+import { AppState } from '../../store/types'
+import { hideErrorAction } from '../../store/error/errorActions'
+import { ErrorState } from '../../store/error/types'
 
 const ErrorContainer = styled.div`
   display: flex;
@@ -17,10 +17,6 @@ const ErrorContainer = styled.div`
 `
 
 const CloseBtn = styled.button`
-  justify-self: flex-end;
-  /* display: flex;
-  justify-content: center;
-  align-items: center; */
   background-color: transparent;
   color: var(--main-color-white, #fff);
   height: 40px;

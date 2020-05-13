@@ -5,7 +5,7 @@ import MainHeader from './core/MainHeader'
 import EventForm from './EventForm'
 import MainImg from '../assets/images/spencer-davis-vJsj-hgOEG0-unsplash.jpg'
 import { createEvent } from '../utils/text'
-import ErrorNotification from './ErrorNotification'
+import ErrorNotification from './core/ErrorNotification'
 
 const CreateEventContainer = styled.div`
   background-color: var(--main-color-grey, #eee);

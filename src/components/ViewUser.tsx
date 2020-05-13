@@ -4,6 +4,7 @@ import MainHeader from './core/MainHeader'
 import HeaderImg from '../assets/images/kelsey-chance-ZrhtQyGFG6s-unsplash.jpg'
 import ShowSubjects from './ShowSubjects'
 import { myEvents } from '../utils/text'
+import ErrorNotification from './core/ErrorNotification'
 
 const ViewUser: React.FC = () => {
 
@@ -14,6 +15,7 @@ const ViewUser: React.FC = () => {
         subtitle={myEvents.headerSubtitle}
         imageUrl={HeaderImg}
       />
+      <ErrorNotification />
       <ShowEvents status="open" />
       <ShowEvents status="closed" />
       <ShowSubjects />
