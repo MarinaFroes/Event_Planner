@@ -1,8 +1,9 @@
-import { ErrorState, ErrorActionTypes } from './types'
+import { ErrorState, ErrorActionTypes, HIDE_ERROR } from './types'
 
 
 const initialErrorState: ErrorState = {
-  error: null
+  error: null,
+  isOpen: false
 }
 
 export default function errorReducer(
@@ -11,9 +12,15 @@ export default function errorReducer(
 ): ErrorState {
   const { error } = action
 
-  if (error) {
+  if (action.error) {
     return {
-      error: error
+      error: error,
+      isOpen: true
+    }
+  } else if (action.type === HIDE_ERROR) {
+    return {
+      error: null,
+      isOpen: false
     }
   }
    

@@ -5,6 +5,7 @@ import MainHeader from './core/MainHeader'
 import EventForm from './EventForm'
 import MainImg from '../assets/images/spencer-davis-vJsj-hgOEG0-unsplash.jpg'
 import { createEvent } from '../utils/text'
+import ErrorNotification from './ErrorNotification'
 
 const CreateEventContainer = styled.div`
   background-color: var(--main-color-grey, #eee);
@@ -29,7 +30,8 @@ const CreateEvent: React.FC = () => {
         showImage={true}
         primaryBtn={true}
         btnText="Create Event"
-      />   
+      />  
+      <ErrorNotification />
     </CreateEventContainer>
   )
 }
