@@ -1,8 +1,14 @@
 import React from 'react'
 import styled from 'styled-components'
-import { FaBars } from 'react-icons/fa'
+import { FaRegUser } from 'react-icons/fa'
+import { useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
 
 import Logo from '../../assets/icons/logo.svg'
+import Btn from './Btn'
+import { loginUrl } from '../../services/authServices'
+import { AppState } from '../../store/types'
+import { UserState } from '../../store/users/types'
 
 const StyledNav = styled.nav`
   display: flex;
@@ -40,13 +46,17 @@ const LogoLink = styled.a`
   }
 `
 
-const Hamburger = styled.button`
+const UserConfig = styled(Link)`
   display: flex;
   align-items: center;
   padding-right: 10px;
-  font-size: 24px;
-  border: none;
-  background-color: transparent;
+  font-size: 22px;
+  text-decoration: none;
+  color: var(--main-color-orange, #f07422);
+
+  :hover {
+    cursor: pointer;
+  }
 `
 
 const Greeting = styled.p`
@@ -55,24 +65,42 @@ const Greeting = styled.p`
   padding-right: 10px;
 `
 
-interface Props {
-  isLoggedIn: boolean;
-  user: string | undefined;
-}
+const NavBar: React.FC = () => {
+  let userName: string = ''
+  let userId: string = ''
+  const userState: UserState = useSelector((state: AppState) => state.user)
+  if (userState.isLoggedIn) {
+    userName = userState.user.name
+    userId = userState.user.id
+  }
 
-const NavBar: React.FC<Props> = ({isLoggedIn, user = "there"}) => {
   return (
     <StyledNav>
       <LogoLink href="/">
         <StyledLogo src={Logo} alt="" />
         <Title>Event Planner</Title>
       </LogoLink>
-      <Hamburger>
         {
-          isLoggedIn && <Greeting>Hello, {user}</Greeting>
+          userState.isLoggedIn
+          ? (
+            <UserConfig to={`/users/${userId}`}>
+              <Greeting>
+                Hello, {userName || 'there'}
+              </Greeting>
+              <FaRegUser />
+            </UserConfig>
+          ) : (
+            <Btn
+              btnText="Login"
+              primaryBtn={false}
+              btnWidth="100px"
+              btnType="button"
+              onClick={() => {
+                window.location.assign(loginUrl)
+              }}
+            />
+          )
         }
-        <FaBars/>
-      </Hamburger>
     </StyledNav>
   )
 }

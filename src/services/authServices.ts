@@ -2,7 +2,9 @@ import queryString from 'query-string'
 import jwt_decode from 'jwt-decode'
 
 import { getLocalStorage, setLocalStorage } from '../utils/authDataRepository'
-import { TokensData, DecodedUser, UserData } from './authServicesTypes'
+import { TokensData, UserData } from './authServicesTypes'
+import { DecodedUser } from '../store/users/types'
+
 
 export const loginUrl = "https://cheetos-eventplanner.auth.eu-central-1.amazoncognito.com/login?client_id=up5tc3aetd1skggbojedfjrqh&response_type=code&scope=email+openid+profile&redirect_uri=http://localhost:8080/v1/auth"
 

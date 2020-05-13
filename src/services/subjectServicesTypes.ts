@@ -1,4 +1,4 @@
-import { Subject, SubjectInfo } from '../store/types'
+import { SubjectInfo, Subject } from '../store/types'
 
 export type SubjectInput = SubjectInfo
 

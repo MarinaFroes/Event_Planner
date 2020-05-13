@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { useDispatch, useSelector } from 'react-redux'
+import { Redirect } from 'react-router-dom'
 
 //  COMPONENTS
 import TextBox from './core/TextBox'
 import Btn from './core/Btn'
 
 // SERVICES
-import { getTodayDate, populateForm, clearForm } from '../services/formServices'
+import { formatDateForInput, getTodayDate, populateForm, clearForm } from '../services/formServices'
 import { setLocalStorage } from '../utils/authDataRepository'
 import { loginUrl } from '../services/authServices'
 
@@ -17,6 +18,8 @@ import { handleCreateEvent } from '../store/events/eventActions'
 // TYPES
 import { FormData } from '../services/formServicesTypes'
 import { AppState } from '../store/types'
+import { UserState } from '../store/users/types'
+import { ErrorState } from '../store/error/types'
 
 // STYLES
 const Form = styled.form`
@@ -123,7 +126,7 @@ const init: FormData = {
   title: "",
   additionalInfo: "",
   address: "",
-  maxNumberGuests: 0,
+  maxNumberGuest: 0,
   totalCost: 0,
   tasks: [],
   date: "",
@@ -146,10 +149,17 @@ const usePersistentState = (init: FormData) => {
 const EventForm: React.FC<FormProps> = ({ showImage, btnText, primaryBtn, heading1, heading2, heading3, heading4, btnWidth }) => {
 
   const [form, setForm] = usePersistentState(init)
+  
+  let userId: string = ''
+  const userState: UserState = useSelector((state: AppState) => state.user)
+  if (userState.isLoggedIn) {
+    userId = userState.user.id
+  }
 
-  const isLoggedIn = useSelector((state: AppState) => state.user.isLoggedIn)
+  const error: ErrorState = useSelector((state: AppState) => state.error)
   
   const [showAlert, setShowAlert] = useState<boolean>(false)
+  const [isCreated, setIsCreated] = useState(false)
 
   const dispatch = useDispatch()
   
@@ -158,9 +168,12 @@ const EventForm: React.FC<FormProps> = ({ showImage, btnText, primaryBtn, headin
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault() 
     await createEvent(form)
-    
-    clearForm()
-    setForm(init)
+
+    if (!error.isOpen) {
+      clearForm()
+      setForm(init)
+      setIsCreated(true)
+    }
   }
 
   const updateFields = (event: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -209,6 +222,10 @@ const EventForm: React.FC<FormProps> = ({ showImage, btnText, primaryBtn, headin
     }
   }
 
+  if (userState.isLoggedIn && isCreated) {
+    return <Redirect to={`/users/${userId}`} />
+  }
+
   return (
 
     <Form onSubmit={(event: React.FormEvent<HTMLFormElement>) => handleSubmit(event)}>
@@ -232,7 +249,6 @@ const EventForm: React.FC<FormProps> = ({ showImage, btnText, primaryBtn, headin
             accept="image/png, image/jpeg"
             name="imageUrl"
             onChange={updateImage}
-            required
           />
         </Label>
         {showAlert && <p style={{color: "red"}}>1MB maximum size</p>}
@@ -246,7 +262,7 @@ const EventForm: React.FC<FormProps> = ({ showImage, btnText, primaryBtn, headin
             onChange={updateFields}
             required
           />
-          {isLoggedIn === true && (
+          {userState.isLoggedIn === true && (
             <datalist id="meal-names">
               <option value="Chocolate cake"/>
               <option value="Feijoada"/>
@@ -303,7 +319,7 @@ const EventForm: React.FC<FormProps> = ({ showImage, btnText, primaryBtn, headin
             <SmallerInput
               id="event-date"
               type="date"
-              min={getTodayDate()}
+              min={formatDateForInput(getTodayDate())}
               max="2999-12-31"
               name="date"
               value={form.date}
@@ -346,15 +362,15 @@ const EventForm: React.FC<FormProps> = ({ showImage, btnText, primaryBtn, headin
               id="max-guests"
               min="1"
               max="99999"
-              name="maxNumberGuests"
-              value={form.maxNumberGuests}
+              name="maxNumberGuest"
+              value={form.maxNumberGuest}
               onChange={updateFields}
               required
             />
           </Label>
         </SmallerFieldsDiv>
         {
-          isLoggedIn && (
+          userState.isLoggedIn && (
             <Btn
               primaryBtn={primaryBtn}
               btnText={btnText}
@@ -364,7 +380,7 @@ const EventForm: React.FC<FormProps> = ({ showImage, btnText, primaryBtn, headin
           )
         }
         {
-          !isLoggedIn && (
+          !userState.isLoggedIn && (
             <Btn
               primaryBtn={primaryBtn}
               btnText="Login to create the event"

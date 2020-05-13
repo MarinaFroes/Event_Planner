@@ -2,6 +2,9 @@ import { EventState } from './events/types'
 import { TaskState} from './tasks/types'
 import { UserState} from './users/types'
 import { SubjectState } from './subjects/types'
+import { ThunkAction } from 'redux-thunk'
+import { Action } from 'redux'
+import { ErrorState } from './error/types'
 
 export interface Tokens {
   access_token: string | '';
@@ -35,11 +38,12 @@ export interface Task {
 export interface SubjectInfo {
   name: string;
   imageUrl?: FileList | null;
-  details?: string;
+  detail?: string;
 }
 
 export interface Subject extends SubjectInfo {
   id: string;
+  createdBy: string;
 }
 
 export interface EventData {
@@ -82,4 +86,12 @@ export interface AppState {
   subject: SubjectState;
   task: TaskState;
   user: UserState;
+  error: ErrorState;
 }
+
+export type AppThunk<ReturnType = void> = ThunkAction<
+  ReturnType,
+  AppState,
+  unknown,
+  Action<string>
+>

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import '../styles/App.css'
 
@@ -11,8 +11,7 @@ import NavBar from './core/NavBar'
 import Footer from './core/Footer'
 import ViewUser from './ViewUser'
 import { setAuthedUserAction } from '../store/users/userActions'
-import { AppState } from '../store/types'
-import { UserState } from '../store/users/types'
+import { handleGetSubjects } from '../store/subjects/subjectActions'
 
 const App: React.FC = () => {
   
@@ -22,19 +21,14 @@ const App: React.FC = () => {
     const tokens = authService.getTokens(window.location)
     if (tokens !== null) {
       dispatch(setAuthedUserAction(tokens))
+      dispatch(handleGetSubjects())
     }
   }, [dispatch])
-
-  let userName: string = '';
-  const userState: UserState = useSelector((state: AppState) => state.user)
-  if (userState.isLoggedIn) {
-    userName = userState.user.name
-  }
 
   return (
     <div className="App">
       <Router>
-        <NavBar isLoggedIn={userState.isLoggedIn} user={userName} />
+        <NavBar/>
         <Switch>
           <Route exact path="/" component={CreateEvent} />
           <Route exact path="/users/:uid" component={ViewUser} />

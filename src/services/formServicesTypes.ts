@@ -4,7 +4,7 @@ export interface FormData {
   title: string;
   additionalInfo?: string;
   address: string;
-  maxNumberGuests: number;
+  maxNumberGuest: number;
   totalCost: number;
   tasks: Task[];
   date: string;

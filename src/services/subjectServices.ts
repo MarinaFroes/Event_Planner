@@ -1,6 +1,7 @@
 import { endpoint } from './api'
 import { getTokensFromLocalStorage } from './authServices'
 import { SubjectInput, SubjectOutput } from './subjectServicesTypes'
+import { SubjectsFromServer } from '../store/subjects/types'
 
 export const getSubject = async (subjectId: string) => {
   const response = await fetch(`${endpoint}/subjects/${subjectId}`)
@@ -8,6 +9,16 @@ export const getSubject = async (subjectId: string) => {
   if (response.status === 200) {
     let subject: SubjectOutput = await response.json()
     return subject
+  }
+
+  throw new Error(`${response.status}`)
+}
+
+export const getSubjects = async (userId: string) => {
+  const response = await fetch(`${endpoint}/subjects?userId=${userId}&pageSize=100&page=1`)
+  if (response.status === 200) {
+    let subjects: SubjectsFromServer = await response.json()
+    return subjects
   }
 
   throw new Error(`${response.status}`)

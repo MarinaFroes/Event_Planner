@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { Task } from '../store/types'
 
 const Item = styled.span`
   font-size: 18px;
@@ -97,12 +98,6 @@ const StyledOption = styled.option`
   font-weight:normal;
 `
 
-interface Task {
-  id: string,
-  details: string,
-  owner: string,
-  eventId: string
-}
 
 interface EventText {
   description: string,
