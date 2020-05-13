@@ -33,8 +33,7 @@ const MealItem = styled.li`
   flex-direction: row;
   margin: 0;
   padding: 0;
-  width: 100%;
-  max-width: 300px;
+  width: 300px;
 `
 
 const AddNew = styled.div`
