@@ -7,13 +7,15 @@ import thunk from 'redux-thunk'
 
 import logger from './middleware/logger'
 import { composeWithDevTools } from 'redux-devtools-extension'
+import errorReducer from './error/errorReducer'
 
 
 const rootReducer = combineReducers({
   event: eventReducer,
   subject: subjectReducer,
   task: taskReducer,
-  user: userReducer
+  user: userReducer,
+  error: errorReducer
 })
 
 export type RootState = ReturnType<typeof rootReducer>

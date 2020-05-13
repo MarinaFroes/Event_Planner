@@ -1,5 +1,5 @@
 import * as eventService from '../../services/eventServices'
-import { CREATE_EVENT, EventActionTypes, RECEIVE_EVENTS, Events, EventsFromServer } from './types'
+import { CREATE_EVENT_REQUEST, CREATE_EVENT_SUCCESS, CREATE_EVENT_ERROR, EventActionTypes, RECEIVE_EVENTS, Events, EventsFromServer } from './types'
 import { EventInput } from '../../services/eventServicesTypes'
 import { formatEvent } from '../../services/formServices'
 import { FormData } from '../../services/formServicesTypes'
@@ -13,14 +13,29 @@ export const receiveEventsAction = (events: Events): EventActionTypes => {
   }
 }
 
+export const createEventRequest = (): EventActionTypes => {
+  return {
+    type: CREATE_EVENT_REQUEST
+  }
+}
+
 export const createEventAction = (eventData: EventData): EventActionTypes => {
   return {
-    type: CREATE_EVENT,
+    type: CREATE_EVENT_SUCCESS,
     payload: eventData
   }
 }
 
+export const createEventError = (error: string): EventActionTypes => {
+  return {
+    type: CREATE_EVENT_ERROR,
+    error
+  }
+}
+
 export const handleCreateEvent = (formData: FormData): AppThunk => async (dispatch, getState) => {
+  dispatch(createEventRequest())
+
   try {
     await dispatch(handleCreateSubject({
       name: formData.subjectName,
@@ -36,11 +51,15 @@ export const handleCreateEvent = (formData: FormData): AppThunk => async (dispat
     }
     
     const eventInput: EventInput = formatEvent(formData, subjectId, hostEmail)
+
     const eventId: string = await eventService.createEvent(eventInput)
     const eventData: EventData = await eventService.getEvent(eventId)
+
     dispatch(createEventAction(eventData))
+
   } catch (err) {
-    console.log(err)
+    console.log(err.message)
+    dispatch(createEventError(err.message))
   }
 }
 
