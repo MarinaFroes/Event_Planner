@@ -2,7 +2,7 @@ import { getLocalStorage } from '../utils/authDataRepository'
 
 import { FormData } from './formServicesTypes'
 
-const getTodayDate = (): string => {
+export const getTodayDate = (): string => {
   const today = new Date()
   const day = today.getDate()
   const month = today.getMonth() + 1
@@ -10,9 +10,7 @@ const getTodayDate = (): string => {
   return `${year}-${month}-${day}`
 }
 
-export const todayDateForInput = (): string => {
-  const date: string = getTodayDate()
-
+export const formatDateForInput = (date: string): string => {
   const dateArray = date.split("-")
   const [ yearString, monthString, dayString ] = dateArray
   const month = Number(monthString)
