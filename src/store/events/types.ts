@@ -4,7 +4,9 @@ export const CREATE_EVENT_REQUEST = 'CREATE_EVENT_REQUEST'
 export const CREATE_EVENT_SUCCESS = 'CREATE_EVENT_SUCCESS'
 export const CREATE_EVENT_ERROR = 'CREATE_EVENT_ERROR'
 
-export const RECEIVE_EVENTS = 'RECEIVE_EVENTS'
+export const RECEIVE_EVENTS_REQUEST = 'RECEIVE_EVENTS_REQUEST'
+export const RECEIVE_EVENTS_SUCCESS = 'RECEIVE_EVENTS_SUCCESS'
+export const RECEIVE_EVENTS_ERROR = 'RECEIVE_EVENTS_ERROR'
 
 // OTHER TYPES
 export type Events = EventData[]
@@ -31,13 +33,21 @@ export interface CreateEventError {
 }
 
 // RECEIVE EVENT ACTIONS
+export interface ReceiveEventsRequest {
+  type: typeof RECEIVE_EVENTS_REQUEST
+}
+
 export interface ReceiveEventsAction {
-  type: typeof RECEIVE_EVENTS
+  type: typeof RECEIVE_EVENTS_SUCCESS
   payload: Events
 }
 
+export interface ReceiveEventsError {
+  type: typeof RECEIVE_EVENTS_ERROR
+  error: string
+}
 
-export type EventActionTypes = CreateEventRequest | CreateEventAction | CreateEventError | ReceiveEventsAction 
+export type EventActionTypes = CreateEventRequest | CreateEventAction | CreateEventError | ReceiveEventsRequest | ReceiveEventsAction | ReceiveEventsError
 
 //  STATE TYPE
 export type EventState = EventData[]

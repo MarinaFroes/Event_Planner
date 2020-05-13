@@ -1,4 +1,4 @@
-import { EventActionTypes, EventState, RECEIVE_EVENTS, CREATE_EVENT_SUCCESS } from './types'
+import { EventActionTypes, EventState, RECEIVE_EVENTS_SUCCESS, CREATE_EVENT_SUCCESS } from './types'
 
 const initialEventState: EventState = []
 
@@ -13,7 +13,7 @@ export default function eventReducer(
         ...state,
         eventData
       ]
-    case RECEIVE_EVENTS:
+    case RECEIVE_EVENTS_SUCCESS:
       let events = action.payload
       return [
         ...state,
