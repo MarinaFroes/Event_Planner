@@ -8,7 +8,7 @@ import TextBox from './core/TextBox'
 import Btn from './core/Btn'
 
 // SERVICES
-import { todayDateForInput, populateForm, clearForm } from '../services/formServices'
+import { formatDateForInput, getTodayDate, populateForm, clearForm } from '../services/formServices'
 import { setLocalStorage } from '../utils/authDataRepository'
 import { loginUrl } from '../services/authServices'
 
@@ -19,6 +19,7 @@ import { handleCreateEvent } from '../store/events/eventActions'
 import { FormData } from '../services/formServicesTypes'
 import { AppState } from '../store/types'
 import { UserState } from '../store/users/types'
+import { ErrorState } from '../store/error/types'
 
 // STYLES
 const Form = styled.form`
@@ -154,9 +155,11 @@ const EventForm: React.FC<FormProps> = ({ showImage, btnText, primaryBtn, headin
   if (userState.isLoggedIn) {
     userId = userState.user.id
   }
+
+  const error: ErrorState = useSelector((state: AppState) => state.error)
   
   const [showAlert, setShowAlert] = useState<boolean>(false)
-  const [toUserPage, setToUserPage] = useState(false)
+  const [isCreated, setIsCreated] = useState(false)
 
   const dispatch = useDispatch()
   
@@ -165,9 +168,12 @@ const EventForm: React.FC<FormProps> = ({ showImage, btnText, primaryBtn, headin
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault() 
     await createEvent(form)
-    clearForm()
-    setForm(init)
-    setToUserPage(true)
+
+    if (!error.isOpen) {
+      clearForm()
+      setForm(init)
+      setIsCreated(true)
+    }
   }
 
   const updateFields = (event: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -216,7 +222,7 @@ const EventForm: React.FC<FormProps> = ({ showImage, btnText, primaryBtn, headin
     }
   }
 
-  if (userState.isLoggedIn && toUserPage) {
+  if (userState.isLoggedIn && isCreated) {
     return <Redirect to={`/users/${userId}`} />
   }
 
@@ -313,7 +319,7 @@ const EventForm: React.FC<FormProps> = ({ showImage, btnText, primaryBtn, headin
             <SmallerInput
               id="event-date"
               type="date"
-              min={todayDateForInput()}
+              min={formatDateForInput(getTodayDate())}
               max="2999-12-31"
               name="date"
               value={form.date}
