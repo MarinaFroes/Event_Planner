@@ -81,7 +81,7 @@ const Input = styled.input`
 `
 
 const ShowSubjects: React.FC = () => {
-  const [count, setCount] = useState(0)
+  const [showInputSubject, setShowInputSubject] = useState(false)
   const [newSubject, setNewSubject] = useState('')
   const subjectState: SubjectState = useSelector((state: AppState) => state.subject)
   
@@ -113,7 +113,7 @@ const ShowSubjects: React.FC = () => {
             )
           }
           {
-            count === 1 && (
+            showInputSubject && (
             <MealItem>
               <Input
                 name="subjectName"
@@ -129,17 +129,17 @@ const ShowSubjects: React.FC = () => {
             </MealItem>
           )}
         </MealsList>
-        {count === 0 && (
+        {
+          !showInputSubject && (
           <AddNew>
             <p>Add new meal</p>
             <PlusIconBtn
               isBlue={true}
-              onClick={() => count === 0 && setCount(count + 1)}>
+              onClick={() => setShowInputSubject(true)}>
               <FaPlus />
             </PlusIconBtn>
           </AddNew>
         )}
-        
       </div>
     </SubjectsContainer>
   )
