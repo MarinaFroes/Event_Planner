@@ -5,7 +5,7 @@ This app aims to provide an easy way to plan events and invite friends sharing t
 <!-- TODO: Describe how it works -->
 
 ## Overview
-<p align="center"><img src="./src/assets/images/Create Event.png" align="center" /></p>
+<p align="center"><img src="./src/assets/images/CreateEventPage.png" align="center" /></p>
 
 ## Tech stack
 
