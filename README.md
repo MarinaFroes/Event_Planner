@@ -25,6 +25,8 @@ There are 2 types of objects stored in the database:
 
 * Users
 * Events
+* Subjects
+* Tasks
 
 #### Users
 
