@@ -42,6 +42,7 @@ interface Props {
 const ShowEvents: React.FC<Props> = ({ status }) => {
 
   const eventState: EventState = useSelector((state: AppState) => state.event)
+  const eventsList = eventState.eventsList
 
   let title = ''
   let subtitle = ''
@@ -60,8 +61,8 @@ const ShowEvents: React.FC<Props> = ({ status }) => {
       <div style={{ maxWidth: "700px" }}>
         <Cards>
           { 
-            eventState.length > 0 &&
-            eventState.filter((eventInfo: EventData): boolean => {
+            eventsList.length > 0 &&
+            eventsList.filter((eventInfo: EventData): boolean => {
               if (status === 'closed') {
                 return isBeforeToday(eventInfo.date.split(' ')[0])
               }
