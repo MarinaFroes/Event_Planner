@@ -24,12 +24,12 @@ For the backend information, you can check the Magno Ferreira's [event-planner-s
 
 ### Available data
 
-There are 2 types of objects stored in the database:
+There are 4 types of objects stored in the database:
 
-* Users
-* Events
-* Subjects
-* Tasks
+* User
+* Event
+* Subject
+* Task
 
 #### User
 
@@ -67,6 +67,29 @@ There are 2 types of objects stored in the database:
 | eventStatus | String | Status of the event: "Open" or "Close" |
 | pricePerGuest | Number | The cost per guest |
 
+#### Subject
+
+- Subject object includes:
+
+| Attribute    | Type             | Description                  |
+|--------------|------------------|------------------------------|
+| id           | String           | The subject’s unique identifier |
+| name         | String           | The subject’s name              |
+| imageUrl     | FileList         | Image url (optional)         |
+| detail       | String           | Additional info (optional)   |
+| createdBy    | String           | Creator id                   |
+
+#### Task
+
+- Subject object includes:
+
+| Attribute    | Type             | Description                  |
+|--------------|------------------|------------------------------|
+| id           | String           | The task’s unique identifier |
+| eventId      | String           | Event id                     |
+| details      | String           | Additional info (optional)   |
+| owner        | String           | Owner id                     |
+
 ### Services
 <!-- TODO: Review services -->
 [ SERVICES NEED UPDATE ]
@@ -83,10 +106,13 @@ EVENT METHODS
 * `subscribeToEvent(guestId, eventId)`
 * `acceptGuestInEvent(guestId, status)`
 
-SUBJECT SERVICES
+SUBJECT METHODS
 * `getSubject(subjectId)`
 * `getSubjects(userId)`
 * `createSubject(subjectInput)`
+
+TASK METHODS
+[ ADD TASK METHODS ]
 
 1) `getUser(userId)` Method
 
