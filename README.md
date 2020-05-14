@@ -13,7 +13,7 @@ Frontend:
 - React for the UI
 - Redux for state management
 - Typescript for type checking
-<!-- TODO: Add the rest of the tech stack -->
+
 IN PROGRESS
 
 For the backend information, you can check the Magno Ferreira's [event-planner-service](https://github.com/JMagnoJunior/event-planner-service) repository.
