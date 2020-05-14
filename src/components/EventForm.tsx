@@ -111,7 +111,6 @@ const Sec = styled.div`
 `
 
 interface FormProps {
-  showImage: boolean;
   btnText: string;
   primaryBtn: boolean;
   btnWidth?: string;
@@ -146,7 +145,7 @@ const usePersistentState = (init: FormData) => {
   return [value, setValue]
 }
 
-const EventForm: React.FC<FormProps> = ({ showImage, btnText, primaryBtn, heading1, heading2, heading3, heading4, btnWidth }) => {
+const EventForm: React.FC<FormProps> = ({ btnText, primaryBtn, heading1, heading2, heading3, heading4, btnWidth }) => {
 
   const [form, setForm] = usePersistentState(init)
   
