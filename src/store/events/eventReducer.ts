@@ -1,6 +1,14 @@
-import { EventActionTypes, EventState, RECEIVE_EVENTS_SUCCESS, CREATE_EVENT_SUCCESS } from './types'
+import {
+  EventActionTypes,
+  EventState,
+  RECEIVE_EVENTS_SUCCESS, CREATE_EVENT_SUCCESS,
+  SELECT_EVENT_SUCCESS
+} from './types'
 
-const initialEventState: EventState = []
+const initialEventState: EventState = {
+  selectedEvent: null,
+  eventsList: []
+}
 
 export default function eventReducer(
   state = initialEventState,
@@ -9,16 +17,24 @@ export default function eventReducer(
   switch (action.type) {
     case CREATE_EVENT_SUCCESS:
       let eventData = action.payload
-      return [
+      return {
         ...state,
-        eventData
-      ]
+        selectedEvent: eventData,
+        eventsList: state.eventsList.concat(eventData)
+      }
+    case SELECT_EVENT_SUCCESS:
+      let selectedEvent = action.payload
+      return {
+        ...state,
+        selectedEvent: selectedEvent,
+      }
     case RECEIVE_EVENTS_SUCCESS:
       let events = action.payload
-      return [
+      return {
         ...state,
-        ...events
-      ]
+        selectedEvent: null,
+        eventsList: events
+      }
     default:
       return state
   }
