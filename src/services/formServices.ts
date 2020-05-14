@@ -1,6 +1,7 @@
 import { getLocalStorage } from '../utils/authDataRepository'
 
 import { FormData } from './formServicesTypes'
+import { EventOutput } from './eventServicesTypes'
 
 export const getTodayDate = (): string => {
   const today = new Date()
@@ -72,6 +73,25 @@ export const formatEvent = (
   }
 
   return formattedForm
+}
+
+export const formatFormData = (eventOutput: EventOutput) => {
+  const { title, additionalInfo, address, maxNumberGuest, tasks, date, totalCost, subject } = eventOutput
+  console.log(eventOutput)
+  const formData: FormData = {
+    title,
+    additionalInfo,
+    address,
+    maxNumberGuest,
+    totalCost,
+    tasks,
+    date: (date.split(' ')[0]).split('-').reverse().join('-'),
+    time: date.split(' ')[1],
+    subjectName: subject.name,
+    imageUrl: subject.imageUrl || null
+  }
+
+  return formData
 }
 
 export const populateForm = (init: FormData) => {
