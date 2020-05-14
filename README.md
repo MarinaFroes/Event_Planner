@@ -112,31 +112,42 @@ SUBJECT METHODS
 * `createSubject(subjectInput)`
 
 TASK METHODS
+* `getTask(taskId)`
+* `getTasks(userId)`
+* `createTask(taskInput)`
+* `subscribeToTask(ownerId, eventId)`
 [ ADD TASK METHODS ]
+
+#### Methods description
 
 1) `getUser(userId)` Method
 
 *Description*: Get the user based on the user id.
+
 *Return Value*: User object with the following properties: `id`, `name` and `email` of the user.
 
 2) `getUsers()` Method
 
-*Description*: Get all of the existing users from the database.  
+*Description*: Get all of the existing users from the database. 
+
 *Return Value*: Paginated object where there is a property called `items` with an array of User objects as value. It also has `currentPage` and `totalPages` properties.
 
 3) `getEvent(eventId)` Method
 
 *Description*: Get all an specific event based on the event id.  
+
 *Return Value*: Event object including the following properties: `id`, `title`, `host`, `subject`, `date`, `createDate`, `address`, `maxNumberGuest`, `tasks`, `guestInEvents`, `totalCost`, `additionalInfo`, `eventStatus` and `pricePerGuest`.
 
 4) `getEvents(userId)` Method
 
-*Description*: Get all events for an specific user.  
+*Description*: Get all events for an specific user.
+
 *Return Value*: Paginated object where there is a property called `items` with an array of Event objects as value. It also has `currentPage` and `totalPages` properties.
 
 5) `createEvent(eventInput)` Method
 
 *Description*: Create a new event and store it on the database.  
+
 *Parameters*:  Object that includes the following properties: `title`, `host`, `subject`, `additionalInfo`, `address`, `date`, `total_cost`, `maxNumberGuest`. More details about these properties:
 
 | Attribute | Type | Description |
@@ -155,6 +166,7 @@ TASK METHODS
 6) `subscribeToEvent(guestId, eventId)` Method
 
 *Description*: Add a guest to a particular event in the database, by adding the guest object to the `guestInEvents` array inside the Event object. The guest object includes and `id`, `name`, `email` and `status` for the guest, which starts as 'pending' and can be changed by the host to 'approved'.
+
 *Parameters*: The event id and the guest id is the authed user id. More details about these properties:
 
 *Return Value*:  This method doesn't return anything.
@@ -162,6 +174,7 @@ TASK METHODS
 7) `acceptGuestInEvent(guestId, status)` Method
 
 *Description*: Update the guest status for a particular event and guest object in the Event object.
+
 *Parameters*: The guest id and the new status `approved`. 
 
 *Return Value*:  This method doesn't return anything.
@@ -169,16 +182,19 @@ TASK METHODS
 8) `getSubject(subjectId)`
 
 *Description*: Get the subejct based on the subject id.
+
 *Return Value*: Subject object with the following properties: `id`, `name`, `imageUrl` (optional), `detail` (optional) and `createdBy` with the creator id.
 
 9) `getSubjects(userId)`
 
-*Description*: Get all subjects for an specific user.  
+*Description*: Get all subjects for an specific user. 
+
 *Return Value*: Paginated object where there is a property called `items` with an array of Subject objects as value. It also has `currentPage` and `totalPages` properties.
 
 10) `createSubject(subjectInput)`
 
 *Description*: Create a new subject and store it on the database.  
+
 *Parameters*:  Object that includes the following properties: `name`, `imageUrl` (optional) and `detail` (optional). More details about these properties:
 
 | Attribute | Type | Description |
