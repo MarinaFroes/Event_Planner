@@ -1,19 +1,32 @@
 import * as eventService from '../../services/eventServices'
-import { CREATE_EVENT_REQUEST, CREATE_EVENT_SUCCESS, CREATE_EVENT_ERROR, EventActionTypes, RECEIVE_EVENTS_SUCCESS, Events, EventsFromServer, RECEIVE_EVENTS_REQUEST, RECEIVE_EVENTS_ERROR } from './types'
+import {
+  CREATE_EVENT_REQUEST,
+  CREATE_EVENT_SUCCESS,
+  CREATE_EVENT_ERROR,
+  RECEIVE_EVENTS_SUCCESS,
+  RECEIVE_EVENTS_REQUEST, RECEIVE_EVENTS_ERROR,
+  SELECT_EVENT_REQUEST,
+  SELECT_EVENT_SUCCESS,
+  SELECT_EVENT_ERROR,
+  Events,
+  EventActionTypes,
+  EventsFromServer
+} from './types'
 import { EventInput } from '../../services/eventServicesTypes'
-import { formatEvent } from '../../services/formServices'
+import { formatEvent, formatFormData } from '../../services/formServices'
 import { FormData } from '../../services/formServicesTypes'
 import { EventData, AppThunk } from '../types'
 import { handleCreateSubject } from '../subjects/subjectActions'
+import { setLocalStorage } from '../../utils/authDataRepository'
 
-// Create Event Action Creators
+// CREATE EVENT ACTION CREATORS
 export const createEventRequest = (): EventActionTypes => {
   return {
     type: CREATE_EVENT_REQUEST
   }
 }
 
-export const createEventAction = (eventData: EventData): EventActionTypes => {
+export const createEventSuccess = (eventData: EventData): EventActionTypes => {
   return {
     type: CREATE_EVENT_SUCCESS,
     payload: eventData
@@ -49,14 +62,50 @@ export const handleCreateEvent = (formData: FormData): AppThunk => async (dispat
     const eventId: string = await eventService.createEvent(eventInput)
     const eventData: EventData = await eventService.getEvent(eventId)
 
-    dispatch(createEventAction(eventData))
+    dispatch(createEventSuccess(eventData))
 
   } catch (err) {
     dispatch(createEventError(err.message))
   }
 }
 
-// Receive Events action creators
+// SELECT EVENT ACTION CREATORS
+export const selectEventRequest = (): EventActionTypes => {
+  return {
+    type: SELECT_EVENT_REQUEST
+  }
+}
+
+export const selectEventSuccess = (event: EventData): EventActionTypes => {
+  return {
+    type: SELECT_EVENT_SUCCESS,
+    payload: event
+  }
+}
+
+export const selectEventError = (error: string): EventActionTypes => {
+  return {
+    type: SELECT_EVENT_ERROR,
+    error
+  }
+}
+
+export const handleSelectEvent = (eventId: string): AppThunk => async (dispatch) => {
+  dispatch(selectEventRequest())
+
+  try {
+    const eventData: EventData = await eventService.getEvent(eventId)
+
+    setLocalStorage('formData', formatFormData(eventData))
+    console.log(formatFormData(eventData))
+    dispatch(selectEventSuccess(eventData))
+
+  } catch (err) {
+    dispatch(selectEventError(err.message))
+  }
+}
+
+// RECEIVE EVENTS ACTION CREATORS
 export const receiveEventsRequest = (): EventActionTypes => {
   return {
     type: RECEIVE_EVENTS_REQUEST

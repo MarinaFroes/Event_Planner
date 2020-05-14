@@ -4,6 +4,10 @@ export const CREATE_EVENT_REQUEST = 'CREATE_EVENT_REQUEST'
 export const CREATE_EVENT_SUCCESS = 'CREATE_EVENT_SUCCESS'
 export const CREATE_EVENT_ERROR = 'CREATE_EVENT_ERROR'
 
+export const SELECT_EVENT_REQUEST = 'SELECT_EVENT_REQUEST'
+export const SELECT_EVENT_SUCCESS = 'SELECT_EVENT_SUCCESS'
+export const SELECT_EVENT_ERROR = 'SELECT_EVENT_ERROR'
+
 export const RECEIVE_EVENTS_REQUEST = 'RECEIVE_EVENTS_REQUEST'
 export const RECEIVE_EVENTS_SUCCESS = 'RECEIVE_EVENTS_SUCCESS'
 export const RECEIVE_EVENTS_ERROR = 'RECEIVE_EVENTS_ERROR'
@@ -17,12 +21,12 @@ export interface EventsFromServer {
 }
 
 // ACTION TYPES
-// CREATE EVENT ACTIONS
+// CREATE EVENT ACTION TYPES
 export interface CreateEventRequest {
   type: typeof CREATE_EVENT_REQUEST
 }
 
-export interface CreateEventAction {
+export interface CreateEventSuccess {
   type: typeof CREATE_EVENT_SUCCESS
   payload: EventData
 }
@@ -32,12 +36,31 @@ export interface CreateEventError {
   error: string
 }
 
-// RECEIVE EVENT ACTIONS
+type CreateEventActions = CreateEventRequest | CreateEventSuccess | CreateEventError
+
+// GET SINGLE EVENT ACTION TYPES
+export interface SelectEventRequest {
+  type: typeof SELECT_EVENT_REQUEST
+}
+
+export interface SelectEventSuccess {
+  type: typeof SELECT_EVENT_SUCCESS
+  payload: EventData
+}
+
+export interface SelectEventError {
+  type: typeof SELECT_EVENT_ERROR
+  error: string
+}
+
+type SelectEventActions = SelectEventRequest | SelectEventSuccess | SelectEventError
+
+// RECEIVE EVENT ACTION TYPES
 export interface ReceiveEventsRequest {
   type: typeof RECEIVE_EVENTS_REQUEST
 }
 
-export interface ReceiveEventsAction {
+export interface ReceiveEventsSuccess {
   type: typeof RECEIVE_EVENTS_SUCCESS
   payload: Events
 }
@@ -47,7 +70,13 @@ export interface ReceiveEventsError {
   error: string
 }
 
-export type EventActionTypes = CreateEventRequest | CreateEventAction | CreateEventError | ReceiveEventsRequest | ReceiveEventsAction | ReceiveEventsError
+type ReceiveEventsActions = ReceiveEventsRequest | ReceiveEventsSuccess | ReceiveEventsError
+
+// ALL EVENT ACTION TYPES 
+export type EventActionTypes = CreateEventActions | SelectEventActions | ReceiveEventsActions 
 
 //  STATE TYPE
-export type EventState = EventData[]
+export type EventState = {
+  selectedEvent: null | EventData;
+  eventsList: Events;
+}

@@ -55,31 +55,14 @@ export interface EventData {
   createDate: string;
   address: string;
   maxNumberGuest: number;
-  tasks: [] | Task[];
-  guestInEvents: [] | Guest[];
+  tasks: Task[];
+  guestInEvents: Guest[];
   totalCost: number;
   additionalInfo: string;
   eventStatus: "Open" | "Close";
   pricePerGuest: number;
 }
 
-// TODO - No nested states - change to:
-// export interface EventData {
-//   id: string;
-//   title: string;
-//   host: string;
-//   subject: string;
-//   date: string;
-//   createDate: string;
-//   address: string;
-//   maxNumberGuest: number;
-//   tasks: string[];
-//   guestInEvents: [] | Guest[];
-//   totalCost: number;
-//   additionalInfo: string;
-//   eventStatus: "Open" | "Close";
-//   pricePerGuest: number;
-// }
 
 export interface AppState {
   event: EventState;

@@ -1,6 +1,5 @@
 import { endpoint } from './api'
 import { getTokensFromLocalStorage } from './authServices'
-
 import { EventInput, EventOutput } from './eventServicesTypes'
 import { EventsFromServer } from '../store/events/types'
 
@@ -11,7 +10,7 @@ export const getEvent = async (eventId: string) => {
     return eventData
   }
 
-  throw new Error(`${response.status}`)
+  throw new Error(`Response status ${response.status}: It could not get event id ${eventId}`)
 }
 
 export const getEvents = async (userId: string) => {
