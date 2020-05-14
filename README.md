@@ -1,19 +1,22 @@
 <p align="center"><a href="https://github.com/MarinaFroes/Event_Planner" target="_blank"><img src="./src/assets/icons/logo.svg" alt="logo" title="logo" width="80"></a></p>
 <h1 align="center">Event Planner Web App</h1>
 
-This app aims to provide an easy way to plan events and invite friends sharing the costs with them.
-<!-- TODO: Describe how it works -->
+This web app is a work in progress and aims to provide an easy way to plan events and invite friends sharing the costs with them. The main reason I started this project was to apply my frontend skills using React + Redux while learning Typescript on the way.
+If you want to learn more about how I have been planning this project from scratch, you can read the [My Journey](./MyJourney.md) file.
 
 ## Overview
 <p align="center"><img src="./src/assets/images/CreateEventPage.png" align="center" /></p>
 
 ## Tech stack
 
-- React
-- Redux
-- Typescript
+Frontend:
+- React for the UI
+- Redux for state management
+- Typescript for type checking
 <!-- TODO: Add the rest of the tech stack -->
 IN PROGRESS
+
+For the backend information, you can check the Magno Ferreira's [event-planner-service](https://github.com/JMagnoJunior/event-planner-service) repository.
  
 ## Frontend
 
@@ -28,9 +31,9 @@ There are 2 types of objects stored in the database:
 * Subjects
 * Tasks
 
-#### Users
+#### User
 
-- Users include:
+- User object includes:
 
 | Attribute    | Type             | Description                  |
 |--------------|------------------|------------------------------|
@@ -40,114 +43,125 @@ There are 2 types of objects stored in the database:
 
 <!-- TODO: Add avatarUrl, events, phone
 | avatarURL  | String           | The path to the image file |
-| events | Array | A list of ids of the events this user created|
 | phone  | String | The user’s phone number (optional) |
  -->
 
-#### Events
+#### Event
 
-- Events include:
+- Event object includes:
 
 | Attribute | Type | Description |
 |-----------------|------------------|-------------------|
 | id              | String | The event’s unique identifier |
 | title          | String           | The event’s name |
 | host | Object | Object containing the host id, name and email  |
-| subject         | Object           | Object containing the meal id, name and url of the meal photo |
-| additionalInfo  | String     | Additional info (optional) |
-| date        | Date | The event's date |
-| time        | Time | The event's time |
+| subject         | Object           | Object containing the meal id, name, details (optional), the creator id and url of the meal photo (optional) |
+| date        | String | The date and time the event will take place in the format "14-05-2020 12:44:22"|
+| createDate | String | The event's creation date and time in the format "14-05-2020 12:44:22"|
 | address         | String           | The event’s location |
 | maxNumberGuest | Number | The max number of guests for the event|
 | tasks | Array | Array containing tasks objects, including id, details, eventId and owner id, who is responsible for the task|
+| guestInEvents | Array | Array of guest objects, including id, name, email and status of the guests who registered for the event |
 | totalCost | Number | The event's total cost|
-| costPerGuest | Number | The cost per guest |
-| guests | Array | Array of guest objects, including id, name and email of the guests who registered for the event |
-| timestamp | String | The time when the event was created |
-
-<!-- TODO: Calculate cost per guest on the frontend
-| cost_per_guest | Number | The cost per each guest|
- -->
+| additionalInfo  | String     | Additional info (optional) |
+| eventStatus | String | Status of the event: "Open" or "Close" |
+| pricePerGuest | Number | The cost per guest |
 
 ### Services
 <!-- TODO: Review services -->
 [ SERVICES NEED UPDATE ]
 My code talks to the database via the methods listed bellow:
 
-* `_getUsers()`
-* `_getEvents()`
-* `_saveEvent(event)`
-* `_registerToEvent(guest)`
-* `_updateGuestStatus(action, eid, gid)`
-<!-- TODO: _addUser(user) -->
+USER METHODS
+* `getUser(userId)`
+* `getUsers()`
 
-1) `_getUsers()` Method
+EVENT METHODS
+* `getEvent(eventId)`
+* `getEvents(userId)`
+* `createEvent(eventInput)`
+* `subscribeToEvent(guestId, eventId)`
+* `acceptGuestInEvent(guestId, status)`
+
+SUBJECT SERVICES
+* `getSubject(subjectId)`
+* `getSubjects(userId)`
+* `createSubject(subjectInput)`
+
+1) `getUser(userId)` Method
+
+*Description*: Get the user based on the user id.
+*Return Value*: User object with the following properties: `id`, `name` and `email` of the user.
+
+2) `getUsers()` Method
 
 *Description*: Get all of the existing users from the database.  
-*Return Value*: Object where the key is the user’s id and the value is the user object.
+*Return Value*: Paginated object where there is a property called `items` with an array of User objects as value. It also has `currentPage` and `totalPages` properties.
 
-2) `_getEvents()` Method
+3) `getEvent(eventId)` Method
 
-*Description*: Get all of the existing events from the database.  
-*Return Value*: Object where the key is the event’s id and the value is the event object.
+*Description*: Get all an specific event based on the event id.  
+*Return Value*: Event object including the following properties: `id`, `title`, `host`, `subject`, `date`, `createDate`, `address`, `maxNumberGuest`, `tasks`, `guestInEvents`, `totalCost`, `additionalInfo`, `eventStatus` and `pricePerGuest`.
 
-3) `_saveEvent(event)` Method
+4) `getEvents(userId)` Method
 
-*Description*: Save the event in the database.  
-*Parameters*:  Object that includes the following properties: `title`, `subject`, `additionalInfo`, `address`, `date`, `time`, `total_cost`, `max_guests`. More details about these properties:
+*Description*: Get all events for an specific user.  
+*Return Value*: Paginated object where there is a property called `items` with an array of Event objects as value. It also has `currentPage` and `totalPages` properties.
+
+5) `createEvent(eventInput)` Method
+
+*Description*: Create a new event and store it on the database.  
+*Parameters*:  Object that includes the following properties: `title`, `host`, `subject`, `additionalInfo`, `address`, `date`, `total_cost`, `maxNumberGuest`. More details about these properties:
 
 | Attribute | Type | Description |
 |-----------------|------------------|-------------------|
 | title          | String           | The event’s name |
-| subject | Object | Object containing the name of the meal and meal photo url|
+| subject | string | Subject id |
 | additionalInfo  | String     | Additional info (optional) |
 | address         | String           | The event’s location |
-| date        | Date | The event's date |
-| time        | Time | The event's time |
+| date        | Date | The event's date and time in the format  "14-05-2020 12:44:22" |
 | totalCost | Number | The event's total cost|
 | maxNumberGuest | Number | The max number of guests the event can support|
-| tasks | Array | Array containing task objects including only the details | 
+| tasks | Array | Array containing task objects including only the details (optional)| 
 
-*Return Value*:  An object that has all the previous properties plus the following ones: `id`, `host`, `costPerGuest`, `timestamp` and `guests`. Each `task` object inside the `tasks` array will also include a task id and the event id. The `subject` object will also cointain a meal id. More details about these properties:
+*Return Value*:  The created event id. 
+
+6) `subscribeToEvent(guestId, eventId)` Method
+
+*Description*: Add a guest to a particular event in the database, by adding the guest object to the `guestInEvents` array inside the Event object. The guest object includes and `id`, `name`, `email` and `status` for the guest, which starts as 'pending' and can be changed by the host to 'approved'.
+*Parameters*: The event id and the guest id is the authed user id. More details about these properties:
+
+*Return Value*:  This method doesn't return anything.
+
+7) `acceptGuestInEvent(guestId, status)` Method
+
+*Description*: Update the guest status for a particular event and guest object in the Event object.
+*Parameters*: The guest id and the new status `approved`. 
+
+*Return Value*:  This method doesn't return anything.
+
+8) `getSubject(subjectId)`
+
+*Description*: Get the subejct based on the subject id.
+*Return Value*: Subject object with the following properties: `id`, `name`, `imageUrl` (optional), `detail` (optional) and `createdBy` with the creator id.
+
+9) `getSubjects(userId)`
+
+*Description*: Get all subjects for an specific user.  
+*Return Value*: Paginated object where there is a property called `items` with an array of Subject objects as value. It also has `currentPage` and `totalPages` properties.
+
+10) `createSubject(subjectInput)`
+
+*Description*: Create a new subject and store it on the database.  
+*Parameters*:  Object that includes the following properties: `name`, `imageUrl` (optional) and `detail` (optional). More details about these properties:
 
 | Attribute | Type | Description |
 |-----------------|------------------|-------------------|
-| id              | String | The event’s unique identifier |
-| host | Object | Object containing the authed user id, name and email  |
-| costPerGuest | Number | The cost per guest|
-| timestamp | String | The time when the event was created |
-| guests | Array | Array of guest objects, including id, name and email of the guests who registered for the event. It starts as an empty object. |
-| subject  | Object  | Object containing the meal id, name and url of the meal photo |
-| tasks | Array | Array containing tasks objects, including id, details, eventId and owner id, who is responsible for the task|
+| name          | String           | The subject's name |
+| imageUrl | FileList | Image url |
+| detail  | String     | Additional info (optional) |
 
-<!-- Status only on frontend? 
-| status | String | The event's status, which can be 'upcoming', 'finished' or 'cancelled'. It starts as 'upcoming' |
- -->
-
-4) `_registerToEvent(guest, id)` Method
-
-*Description*: Add a guest to a particular event in the database.
-*Parameters*: The event id and the guest object is the authed user object, containing `id`, `name` and `email`. More details about these properties:
-
-| Attribute    | Type             | Description                  |
-|--------------|------------------|------------------------------|
-| id           | String           | The user’s unique identifier |
-| name         | String           | The user’s name              |
-| email        | String           | The user’s e-email address   |
-
-*Return Value*:  The event object updated including the guest object on the guests array with the `id`, `name` and `email` properties plus a `status` property. More details about these properties:
-
-| Attribute | Type | Description |
-|-----------|------|-------------|
-| status | String | Registration status, which can be: 'pending', 'approved' or 'rejected'. It starts as 'pending'.|
-
-5) `_updateGuestStatus(action, eid, gid)` Method
-
-*Description*: Update the guest registration status for a particular event in the database.
-*Parameters*: The event id, the guest id and the action, which can be: `approve` or `reject`. 
-
-*Return Value*:  The event object with the `status` property for the specific guest object updated to `approved` or `rejected`.
-
+*Return Value*:  The created subject id. 
 
 ## How to install and use the frontend
 <!-- TODO: Update install and use instructions -->
@@ -159,12 +173,13 @@ $ npm install
 # Run the app
 $ npm start
 ```  
+[ ADD INSTRUCTIONS ON HOW TO RUN IT WITH THE BACKEND ]
 
 ## References and Resources
 
 - This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 - [Typescript Documentation](https://www.typescriptlang.org/docs/home)
-- Icons: [React Icons](https://react-icons.netlify.com/#/icons/fa)
+- [React Icons](https://react-icons.netlify.com/#/icons/fa)
 - [React Documentation](https://reactjs.org)
 - [Redux Documentation](https://redux.js.org/)
 - [MDN Documentation](https://developer.mozilla.org)
