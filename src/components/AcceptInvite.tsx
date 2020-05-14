@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 import Header from './core/Header'
-import EventImg from '../assets/images/tuva-mathilde-loland-4rfVL3NNGrA-unsplash.jpg'
+import EventImg from '../assets/images/edgar-castrejon-bG5rhvRH0JM-unsplash.jpg'
 import TextBox from './core/TextBox'
 import Btn from './core/Btn'
 import EventCard from './EventCard'
