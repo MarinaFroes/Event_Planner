@@ -13,10 +13,13 @@ If you have a great UX designer as a friend, she/he could maybe send you some ni
 
 It’s important to make note that if you’re creating a web app, you’ll probably need to create a mobile wireframe as well. And I suggest you to adopt the mobile first principle, it’s so much easier to create a web layout after defining the mobile version, than doing the opposite. Have I done this for this project? Nope. But I was wrong. Don’t do this, start with the mobile version and if you’re not convinced, maybe you should watch this [Kevin Powell video](https://www.youtube.com/watch?v=0ohtVzCSHqs) to understand why it’s better.
 
+<p align="center"><img src="./src/assets/images/wireframePages.png" align="center" /></p>
+
 ### UI Layout
 
 Then, after getting a satisfactory wireframe, I moved on to the UI, still using Figma and the previous wireframe. Here, I would suggest that, unless you know what you’re doing, don’t try to do something too fancy, with many colours, fonts and animations.
 Less is more, specially if you’re not a professional. Just because you are a CSS master and know how to add tons of animations, doesn’t mean you need to showcase all your abilities on the same project.
+
 
 #### Style Tile
 
@@ -32,10 +35,17 @@ Before starting the UI definition, I created a Style Tile based on a [Jesse Show
 
 - UI elements: well, I confess I didn’t invest much time on this. I decided I would use [material UI](https://material-ui.com/pt/) or [semantic react](https://react.semantic-ui.com/) if necessary, but I didn’t search about this in upfront. 
 
+<p align="center"><img src="./src/assets/images/styleTile.png" align="center" /></p>
+
 #### Creating the layout
 
 After having defined the wireframe and the style tile, I found it pretty easy to mesh them together to create a simple layout with a few adjustments. I know the result is not sophisticated, but again, I’m not a UX/UI designer and I’m happy with the results.
 It was enough to finally move on to start coding.
+
+<p align="center"><img src="./src/assets/images/layoutPages.png" align="center" /></p>
+
+
+<p align="center"><img src="./src/assets/images/mobilePages.png" align="center" /></p>
 
 ### Defining the stack
 
@@ -61,7 +71,7 @@ The [Redux style guide](https://redux.js.org/style-guide/style-guide), for insta
 To start a React app, the [Thinking in React](https://reactjs.org/docs/thinking-in-react.html) section of the React Documentation suggest you to follow these steps:
 
 #### Break the UI into a component hierarchy: 
-Considering you already have a wireframe, it will be really easy for you to do this step. Draw boxes around components and subcomponents based on the single responsibility principle. If you had created a few react apps before, maybe you don’t need to actually draw the boxes, you can just visualize it and maybe scratch a component tree
+ Draw boxes around components and subcomponents based on the single responsibility principle.Considering you already have a wireframe, it will be really easy for you to do this step. But if you have already had created a few react apps before, maybe you don’t need to actually draw the boxes, you can just visualize it and maybe scratch a component tree
 
 #### Build a static version in React: 
 Don’t use state at all, only hard-coded info passed via props and styles. When I did this step, I didn’t add Redux right away, I just created the pages for each of my previously defined Figma layout. 
