@@ -2,7 +2,7 @@
 <h1 align="center">My journey creating the Event Planner Web App</h1>
 
 ## Introduction
-This article is to explain how I created the event planner web app. No, actually, it is about how I think I should have created it, after learning from my own mistakes during the process. But it is a work in progress, considering I'm still working on this app.
+I wrote this article to explain how I created the event planner web app. No, actually, it is about how I think I should have created it, after learning from my own mistakes during the process. But it is a work in progress, considering I'm still working on this app.
 
 ### Wireframing
 
@@ -17,8 +17,9 @@ It’s important to make note that if you’re creating a web app, you’ll prob
 
 ### UI Layout
 
-Then, after getting a satisfactory wireframe, I moved on to the UI, still using Figma and the previous wireframe. Here, I would suggest that, unless you know what you’re doing, don’t try to do something too fancy, with many colours, fonts and animations.
-Less is more, specially if you’re not a professional. Just because you are a CSS master and know how to add tons of animations, doesn’t mean you need to showcase all your abilities on the same project.
+Then, after getting a satisfactory wireframe, I moved on to the layout, still using Figma and the previous wireframe. Here, I would suggest that, unless you know what you’re doing, don’t try to do something too fancy, with many colours, fonts and animations.
+
+Less is more, specially if you’re not a professional. Just because you are a CSS master and know how to add tons of animations, doesn’t mean you need to showcase all your abilities on the same project. Here follow the steps I did in order to create my layout:
 
 
 #### Style Tile
@@ -66,6 +67,7 @@ For the backend information, you can check the Magno Ferreira's [event-planner-s
 ### Starting the project
 
 I know many people struggle to understand documentation, but it should be your best friend. That and the forums, of course, where you can get help from peers. But I found out that the React documentation is really helpful, but Redux’s is even more. 
+
 The [Redux style guide](https://redux.js.org/style-guide/style-guide), for instance, helped me a lot to understand many things that were done in courses I’ve taken before, but also showed me I could improve some parts of my code that I learned superficially before.
 
 To start a React app, the [Thinking in React](https://reactjs.org/docs/thinking-in-react.html) section of the React Documentation suggest you to follow these steps:
@@ -74,26 +76,33 @@ To start a React app, the [Thinking in React](https://reactjs.org/docs/thinking-
  Draw boxes around components and subcomponents based on the single responsibility principle.Considering you already have a wireframe, it will be really easy for you to do this step. But if you have already had created a few react apps before, maybe you don’t need to actually draw the boxes, you can just visualize it and maybe scratch a component tree
 
 #### Build a static version in React: 
-Don’t use state at all, only hard-coded info passed via props and styles. When I did this step, I didn’t add Redux right away, I just created the pages for each of my previously defined Figma layout. 
-But I did include React Router Dom on this step to make it easier to browse to different pages while coding and had to include Typescript because I used the create-react-app with the flag —typescript. To be honest, I didn’t think it was a good choice at first, because Typescript was really holding me back, making me stop all the time and try to understand why the types I was adding were not correct, but it was the best way to do it. Adding typescript after finishing the project would be possible but I would have to change everything at once and, considering I was just starting to learn it, it was better to add it along the way. Slower, yes, but easier. 
+Don’t use state at all, only hard-coded info passed via props and styles. When I did this step, I didn’t add Redux right away, I just created the pages for each of my previously defined Figma layout. But I did include React Router Dom on this step to make it easier to browse to different pages while coding and had to include Typescript because I used the create-react-app with the flag -—typescript. 
+
+To be honest, I didn’t think it was a good choice at first, because Typescript was really holding me back, making me stop all the time and try to understand why the types I was adding were not correct, but it was the best way to do it. Adding typescript after finishing the project would be possible but I would have to change everything at once and, considering I was just starting to learn it, it was better to add it along the way. Slower, yes, but easier. 
+
 And after starting using Typescript I’d say you start to truly understand what’s going on on your app and what kind of data you get from each operation. So I’d totally recommend to learn it to enhance your javascript applications in general. 
+
 I personally like to build the static version top-down, but you can also build it bottom-up if you think it’s better. As I said before, I recommend the mobile first approach when styling your web app. And, don’t forget the principle of single responsibility. If your component does more than one task, maybe you should separate it in more components.
 
 #### Identify the minimal representation of UI State: 
-This is not so simple as it sounds. Specially when you decide to incorporate Redux to your project. The React documentation gives you 3 questions you should ask yourself to identify wether an information should be a prop or a state, if the answer is yes, probably it isn’t state: 
+This is not as simple as it sounds. Specially when you decide to incorporate Redux to your project. The React documentation gives you 3 questions you should ask yourself to identify wether an information should be a prop or a state, if the answer is yes, probably it isn’t state: 
 - Is it passed in from a parent via props?
 - Does it remain unchanged over time?
 - Can you compute it based on any other state or props in your component? 
+
 I used to skip this step and create the state while I was coding, but when you start using Redux, it’s a little bit different. But for this current project I’m working on, I tried to define the state tree upfront, but I ended up changing it over time, when I realized I was missing many necessary information. Probably a more experienced developer can make a better prediction on this step, but if you’re just starting out, you should know that you’ll probably change your state tree along the way, but you still should to define a basic state tree here to help you to plan your architecture better.
 
 #### Identify where your state should live. 
-React has a one-way data flow down the component hierarchy and it’s important to define which components will need some piece of state, because it would determine where the state should live. 
-But, if you’re using Redux, this is also something you should think about. At first, I thought if I was using Redux, all my state would be on the store and considering all the components can have access to the store directly, that was it. But that’s not completely true. I mean, you still can do that, but that’s not necessary. Some states you’ll only need in a component level, so it doesn’t make sense to have them on the store. 
+React has a one-way data flow down the component hierarchy and it’s important to define which components will need some piece of state, because it would determine where the state should live. But, if you’re using Redux, this is also something you should think about. 
+
+At first, I thought if I was using Redux, all my state would be on the store and considering all the components can have access to the store directly, that was it. But that’s not completely true. I mean, you still can do that, but that’s not necessary. Some states you’ll only need in a component level, so it doesn’t make sense to have them on the store. 
+
 I was trying to understand where each piece of state should live and I found a very nice explanation on the [Redux documentation](https://redux.js.org/faq/organizing-state#do-i-have-to-put-all-my-state-into-redux-should-i-ever-use-reacts-setstate). So keep in mind that, even though one of the three principles of Redux say "the state of your whole application is stored in a single tree”, still make sense to have form data stored in a component level state, for instance. And some data could also be stored on the local storage, depending on the situation. That’s why you should really take some time to understand this and plan it ahead.
 
 ### Adding Redux 
 
 After having created the static version of the app using React and then adding some local states and passing info via props, including hooks which I didn’t know a lot about, I started to include the Redux part.
+
 Although I already understood the three principles of Redux applications, I admit I still struggle to define the state tree, the actions and the reducers. Specially when it comes to asynchronous operations to communicate with the server and you have to add some kind of middleware like Thunk. And now, using Typescript, I thought it was even more challenger. 
 
 [ CONTINUE... ]
