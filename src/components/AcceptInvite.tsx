@@ -11,6 +11,7 @@ import { acceptInvite } from '../utils/text'
 import { EventData, AppState } from '../store/types'
 import { useSelector, useDispatch } from 'react-redux'
 import { handleSelectEvent } from '../store/events/eventActions'
+import { loginUrl } from '../services/authServices'
 
 const AcceptInviteContainer = styled.div`
   background-color: var(--main-color-white, #fff);
@@ -92,6 +93,9 @@ const AcceptInvite: React.FC<RouteComponentProps<TParams>> = ({ match }) => {
             btnText="Sign up"
             btnWidth="90%"
             btnType="button"
+            onClick={() => {
+              window.location.assign(loginUrl)
+            }}
           />
         </SignUpSection>
       </AcceptInviteContainer>
