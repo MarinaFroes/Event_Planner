@@ -58,7 +58,7 @@ Before actually starting coding, I defined the stack and created a [Trello](http
 
 - [Typescript](https://www.typescriptlang.org/): for the type checking. Typescript is in high demand and it’s been a while that I tried to use it, but I didn’t learn it so well, then I decided to give it another shot.
 
-- Git: for version control. Adding the project to GitHub is essential, so as having a really good README.md file providing all the necessary information about your code
+- Git: for version control. Adding the project to GitHub is essential, so as having a really [good README.md](https://gist.github.com/PurpleBooth/109311bb0361f32d87a2) file providing all the necessary information about your code
 
 - Tests: I haven't decided on how to proceed with the tests. Although I've had some experience with Jest and Enzyme before, I don't know if they're the best option for this project. And I do think I should have started testing this app from the beginning, but I haven't. Mainly because I was already trying to make the hooks work well with Redux and Typescript at the same time and I thought it will be overwhelming for now. I'll have to work on that later.
 
@@ -74,7 +74,7 @@ The [Redux style guide](https://redux.js.org/style-guide/style-guide), for insta
 To start a React app, the [Thinking in React](https://reactjs.org/docs/thinking-in-react.html) section of the React Documentation suggest you to follow these steps:
 
 #### Break the UI into a component hierarchy: 
- Draw boxes around components and subcomponents based on the single responsibility principle.Considering you already have a wireframe, it will be really easy for you to do this step. But if you have already had created a few react apps before, maybe you don’t need to actually draw the boxes, you can just visualize it and maybe scratch a component tree
+ Draw boxes around components and subcomponents based on the single responsibility principle. Considering you already have a wireframe, it will be really easy for you to do this step. But if you have had created a few react apps before, maybe you don’t need to actually draw the boxes, you can just visualize it and maybe scratch a component tree.
 
 #### Build a static version in React: 
 Don’t use state at all, only hard-coded info passed via props and styles. When I did this step, I didn’t add Redux right away, I just created the pages for each of my previously defined Figma layout. But I did include React Router Dom on this step to make it easier to browse to different pages while coding and had to include Typescript because I used the create-react-app with the flag -—typescript. 
@@ -96,14 +96,71 @@ I used to skip this step and create the state while I was coding, but when you s
 #### Identify where your state should live. 
 React has a one-way data flow down the component hierarchy and it’s important to define which components will need some piece of state, because it would determine where the state should live. But, if you’re using Redux, this is also something you should think about. 
 
-At first, I thought if I was using Redux, all my state would be on the store and considering all the components can have access to the store directly, that was it. But that’s not completely true. I mean, you still can do that, but that’s not necessary. Some states you’ll only need in a component level, so it doesn’t make sense to have them on the store. 
+At first, I thought if I was using Redux, all my state would be on the store and considering all the components can have access to the store directly, that was it. But that’s not completely true. I mean, you still can do that, but that’s not necessary. Some states you’ll only need in a component level, so it doesn’t make sense to have them on the store.
 
-I was trying to understand where each piece of state should live and I found a very nice explanation on the [Redux documentation](https://redux.js.org/faq/organizing-state#do-i-have-to-put-all-my-state-into-redux-should-i-ever-use-reacts-setstate). So keep in mind that, even though one of the three principles of Redux say "the state of your whole application is stored in a single tree”, still make sense to have form data stored in a component level state, for instance. And some data could also be stored on the local storage, depending on the situation. That’s why you should really take some time to understand this and plan it ahead.
+I was trying to understand where each piece of state should live and I found a very nice explanation on the [Redux documentation](https://redux.js.org/faq/organizing-state#do-i-have-to-put-all-my-state-into-redux-should-i-ever-use-reacts-setstate). 
+
+So keep in mind that, even though one of the [three principles of Redux](https://redux.js.org/introduction/three-principles) say "the state of your whole application is stored in a single tree”, still make sense to have [form state](https://redux.js.org/style-guide/style-guide#avoid-putting-form-state-in-redux) stored in a component level state, for instance. 
+
+And some data could also be stored on the local storage, depending on the situation. That’s why you should really take some time to understand this and plan it ahead.
 
 ### Adding Redux 
 
 After having created the static version of the app using React and then adding some local states and passing info via props, including hooks which I didn’t know a lot about, I started to include the Redux part.
 
-Although I already understood the three principles of Redux applications, I admit I still struggle to define the state tree, the actions and the reducers. Specially when it comes to asynchronous operations to communicate with the server and you have to add some kind of middleware like Thunk. And now, using Typescript, I thought it was even more challenger. 
+Although I'd already understood the whole concept behind Redux after doing a few projects using it, I admit I still struggle to define the state tree, the actions and the reducers. 
+
+Specially when it comes to asynchronous operations to communicate with the server and you have to add some kind of middleware like [Thunk](https://github.com/reduxjs/redux-thunk). And now, using Typescript, I thought it was even more challenger. 
+
+For the [asynchronous actions](https://redux.js.org/advanced/async-actions), I learned that you actually need 3 action types, one for the request, when you can set a isLoading state to true, for instance, so you can have some UI feedback to the user (let's say a spinner or loading bar). The second would be for the successful response from the server and the last one would be for the error handling. Bellow, a piece of my createEvent actions to ilustrate those cases (but the createEventRequest doesn't set isLoading to true yet):
+
+```
+export const createEventRequest = (): EventActionTypes => {
+  return {
+    type: CREATE_EVENT_REQUEST
+  }
+}
+
+export const createEventSuccess = (eventData: EventData): EventActionTypes => {
+  return {
+    type: CREATE_EVENT_SUCCESS,
+    payload: eventData
+  }
+}
+
+export const createEventError = (error: string): EventActionTypes => {
+  return {
+    type: CREATE_EVENT_ERROR,
+    error
+  }
+}
+```
+
+When I was searching about error handling, I came across this [Centralized Error Handling with React and Redux article](https://www.pluralsight.com/guides/centralized-error-handing-with-react-and-redux) that I found interesting. 
+
+Using this centralized error handling, for instance, I have an error reducer that takes care of ANY action that have a action.error payload as you can see below:
+
+```
+export default function errorReducer(
+  state = initialErrorState,
+  action: ErrorActionTypes
+): ErrorState {
+  const { error } = action
+
+  if (action.error) {
+    return {
+      error: error,
+      isOpen: true
+    }
+  } else if (action.type === HIDE_ERROR) {
+    return {
+      error: null,
+      isOpen: false
+    }
+  }
+   
+  return state
+}
+```
 
 [ CONTINUE... ]
