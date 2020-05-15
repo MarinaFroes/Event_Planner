@@ -124,7 +124,9 @@ const EditEvent: React.FC<RouteComponentProps<TParams>> = ({ match }) => {
             </>
           )
         }
-        <AlertButton onClick={() => alert('Are you sure you want to cancel this event?')}>
+        <AlertButton onClick={() => {
+          window.confirm('Are you sure you want to cancel this event?')
+        }}>
           Cancel event
         </AlertButton>
         <ShowGuests guests={guests} />
