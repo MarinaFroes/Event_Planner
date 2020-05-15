@@ -48,7 +48,7 @@ It was enough to finally move on to start coding.
 
 <p align="center"><img src="./src/assets/images/mobilePages.png" align="center" /></p>
 
-### Defining the stack
+### Defining the stack and tools
 
 Before actually starting coding, I defined the stack and created a [Trello](https://trello.com/) board, to help me plan the steps and tasks. Here follows the tools I decided to use:
 
@@ -57,8 +57,10 @@ Before actually starting coding, I defined the stack and created a [Trello](http
 - [Redux](https://redux.js.org/): for state management. I know using Redux is not always necessary, considering it add some complexity to the project that is not always beneficial, specially for small projects, but I decided to go for it to learn in more depth.
 
 - [Typescript](https://www.typescriptlang.org/): for the type checking. Typescript is in high demand and it’s been a while that I tried to use it, but I didn’t learn it so well, then I decided to give it another shot.
-Git: for version control. Adding the project to GitHub is essential, so as having a really good README.md file providing all the necessary information about your code
-Tests???
+
+- Git: for version control. Adding the project to GitHub is essential, so as having a really good README.md file providing all the necessary information about your code
+
+- Tests: I haven't decided on how to proceed with the tests. Although I've had some experience with Jest and Enzyme before, I don't know if they're the best option for this project. And I do think I should have started testing this app from the beginning, but I haven't. Mainly because I was already trying to make the hooks work well with Redux and Typescript at the same time and I thought it will be overwhelming for now. I'll have to work on that later.
 
 If you’re building a frontend project alone, you can easily mock up a backend, but if you have the chance, I’d suggest to partner up with a backend developer to create the project. I learned a lot by working with a partner, many things started making sense to me after I did this project, specially because he’s more experienced than me and could clarify many of my questions. And it was also gratifying to realize that I also had some things to teach him, even thought I’m still a junior.
 
