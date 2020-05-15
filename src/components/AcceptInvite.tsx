@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components'
+import { RouteComponentProps } from 'react-router-dom'
 
 import Header from './core/Header'
 import EventImg from '../assets/images/edgar-castrejon-bG5rhvRH0JM-unsplash.jpg'
@@ -7,6 +8,9 @@ import TextBox from './core/TextBox'
 import Btn from './core/Btn'
 import EventCard from './EventCard'
 import { acceptInvite } from '../utils/text'
+import { EventData, AppState } from '../store/types'
+import { useSelector, useDispatch } from 'react-redux'
+import { handleSelectEvent } from '../store/events/eventActions'
 
 const AcceptInviteContainer = styled.div`
   background-color: var(--main-color-white, #fff);
@@ -37,77 +41,65 @@ const SignUpSection = styled.div`
   width: 100%;
 `
 
-interface Task {
-  id: string;
-  details: string;
-  owner: string;
-  eventId: string;
+type TParams = {
+  eid: string
 }
 
-const AcceptInvite: React.FC = () => {
-  
+const AcceptInvite: React.FC<RouteComponentProps<TParams>> = ({ match }) => {
 
-  const tasks: Task[] = [
-    {
-      id: "task1",
-      details: "Bring soda",
-      owner: "",
-      eventId: "11332252452453453"
-    },
-    {
-      id: "task2",
-      details: "Buy balloons",
-      owner: "",
-      eventId: "11332252452453453"
-    },
-    {
-      id: "task3",
-      details: "Buy disposable dishes and forks",
-      owner: "",
-      eventId: "11332252452453453"
-    },
-    {
-      id: "task4",
-      details: "Buy disposable glasses",
-      owner: "",
-      eventId: "11332252452453453"
+  let isLoggedIn: boolean = useSelector((state: AppState) => state.user.isLoggedIn)
+
+  let selectedEvent: EventData | null = useSelector((state: AppState) => state.event.selectedEvent)
+
+  const dispatch = useDispatch()
+  let eventId = match.params.eid 
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      dispatch(handleSelectEvent(eventId))
     }
-  ]
+  }, [dispatch, isLoggedIn, eventId])
 
-  const eventText = {
-    description: "Chocolate cake",
-    additionalInfo: "Snacks and drinks are included",
-    location: "Bundesallee 198A",
-    date: "04/26/2020",
-    time: "19:00",
-    participants: 5,
-    cost: 20.00,
-    tasks: tasks,
-  }
-  const { eventName, subtitle, eventHeading1, eventHeading2, signUpHeading1, signUpHeading2 } = acceptInvite
   
-  return (
-    <AcceptInviteContainer>
-      <Header
-        title={eventName}
-        subtitle={subtitle}
-        imageUrl={EventImg}
-      />
-      <EventInfoSection>
-        <TextBox heading1={eventHeading1} heading2={eventHeading2} />
-        <EventCard eventText={eventText} />
-      </EventInfoSection>
-      <SignUpSection>
-        <TextBox heading1={signUpHeading1} heading2={signUpHeading2} />
-        <Btn
-          primaryBtn={true}
-          btnText="Sign up"
-          btnWidth="90%"
-          btnType="button"
+  const { eventHeading1, eventHeading2, signUpHeading1, signUpHeading2 } = acceptInvite
+
+  if (selectedEvent !== null) {
+    const { title, host, subject,  additionalInfo, maxNumberGuest, pricePerGuest, tasks, address, date } = selectedEvent
+    return (
+      <AcceptInviteContainer>
+        <Header
+          title={title}
+          subtitle={`${host.name} invited you to take part on ${title}. Check the vent info bellow.`}
+          imageUrl={EventImg}
         />
-      </SignUpSection>
-    </AcceptInviteContainer>
-  )
+        <EventInfoSection>
+          <TextBox heading1={eventHeading1} heading2={eventHeading2} />
+          <EventCard 
+            address={address}
+            cost={pricePerGuest}
+            participants={maxNumberGuest}
+            tasks={tasks.length > 0 ? tasks : undefined}
+            date={date.split(' ')[0]}
+            time={date.split(' ')[1]}
+            subjectName={subject.name}
+            additionalInfo={additionalInfo}
+          />
+        </EventInfoSection>
+        <SignUpSection>
+          <TextBox heading1={signUpHeading1} heading2={signUpHeading2} />
+          <Btn
+            primaryBtn={true}
+            btnText="Sign up"
+            btnWidth="90%"
+            btnType="button"
+          />
+        </SignUpSection>
+      </AcceptInviteContainer>
+    )
+  }
+
+  return <p>These event was cancelled</p>
+  
 }
 
 export default AcceptInvite

@@ -13,8 +13,6 @@ export const editEvent = {
 }
 
 export const acceptInvite = {
-  eventName: "My Birthday",
-  subtitle:"You were invited to take part on My Birthday. Check the event info below:",
   eventHeading1: "Check the event info and select a task",
   eventHeading2: "If the host defined tasks for the guests, here you can select which one you want to do. Don't worry, they're optional.",
   signUpHeading1: "Sign up to accept the invite",

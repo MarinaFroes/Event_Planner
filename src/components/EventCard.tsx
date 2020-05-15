@@ -98,51 +98,46 @@ const StyledOption = styled.option`
   font-weight:normal;
 `
 
-
-interface EventText {
-  description: string,
-  location: string,
-  date: string,
-  time: string,
-  participants: number,
-  cost: number,
-  additionalInfo?: string,
-  tasks?: Task[]
+interface EventCardProps {
+  subjectName: string;
+  additionalInfo?: string;
+  address: string;
+  tasks?: Task[];
+  date: string;
+  time: string;
+  participants: number;
+  cost: number;
 }
 
-interface Props {
-  eventText: EventText;
-}
-
-const EventCard: React.FC<Props> = ({ eventText }) => {
+const EventCard: React.FC<EventCardProps> = ({ subjectName, additionalInfo, address, tasks, date, time, participants, cost }) => {
   return (
     <StyledEventCard>
       <StyledP>
-        <Item>Meal:</Item> {eventText.description}
+        <Item>Meal:</Item> {subjectName}
       </StyledP>
         {
-          eventText.additionalInfo !== undefined && (
-          <StyledP><Item>Additional Info:</Item> {eventText.additionalInfo}</StyledP>)
+          additionalInfo !== undefined && (
+          <StyledP><Item>Additional Info:</Item> {additionalInfo}</StyledP>)
         }
       <StyledP>
-        <Item>Location:</Item> {eventText.location}
+        <Item>Location:</Item> {address}
       </StyledP>
       <StyledP>
-        <Item>Date:</Item> {eventText.date}
+        <Item>Date:</Item> {date}
       </StyledP>
       <StyledP>
-        <Item>Time:</Item> {eventText.time}
+        <Item>Time:</Item> {time}
       </StyledP>
       <StyledP>
-        <Item>Participants:</Item> {eventText.participants}
+        <Item>Participants:</Item> {participants}
       </StyledP>
       <StyledP>
-        <Item>Cost per participant:</Item> {eventText.cost}
+        <Item>Cost per participant:</Item> {cost}
       </StyledP>
       <StyledSelect>
-        <StyledOption>{eventText.tasks ? "Choose one task" : "No tasks available"}</StyledOption>
-        { eventText.tasks && (
-          eventText.tasks.map((task: Task) => (
+        <StyledOption>{tasks ? "Choose one task" : "No tasks available"}</StyledOption>
+        { tasks && (
+          tasks.map((task: Task) => (
             <StyledOption key={task.id} value={task.details}>{task.details}</StyledOption>))
         )}
       </StyledSelect>
