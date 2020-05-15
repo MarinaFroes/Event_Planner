@@ -32,10 +32,10 @@ const formatDate = (date: string) => {
 }
 
 export const isBeforeToday = (date: string) => {
-  const eventDate: any = new Date(formatDate(date))
-  const todayDate: any = new Date(getTodayDate())
+  const eventDate: Date = new Date(formatDate(date))
+  const todayDate: Date = new Date(getTodayDate())
 
-  if ( todayDate - eventDate < 0) {
+  if ( Number(todayDate) - Number(eventDate) < 0) {
     return false
   } else {
     return true
