@@ -14,10 +14,15 @@ Frontend:
 - Redux for state management
 - Typescript for type checking
 
-IN PROGRESS
+[ **IN PROGRESS** ]
 
 For the backend information, you can check the Magno Ferreira's [event-planner-service](https://github.com/JMagnoJunior/event-planner-service) repository.
- 
+
+## Contributors
+
+- Frontend: [Marina Costa](https://github.com/MarinaFroes)
+- Backend: [Magno Ferreira](https://github.com/JMagnoJunior)
+
 ## Frontend
 
 - I built a React/Redux front end for the application using the [Create React App](https://github.com/facebook/create-react-app) to bootstrap the project.
@@ -221,10 +226,29 @@ $ npm start
 
 - This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 - [Typescript Documentation](https://www.typescriptlang.org/docs/home)
-- [React Icons](https://react-icons.netlify.com/#/icons/fa)
 - [React Documentation](https://reactjs.org)
 - [Redux Documentation](https://redux.js.org/)
 - [MDN Documentation](https://developer.mozilla.org)
+
+- [React Icons](https://react-icons.netlify.com/#/icons/fa)
+
+- [Redux style guide](https://redux.js.org/style-guide/style-guide)
+- [Type Checking Actions & Action Creators](https://redux.js.org/recipes/usage-with-typescript#type-checking-actions--action-creators)
+
+- [Figma](https://www.figma.com/)
+- [Colour Lovers](https://www.colourlovers.com/)
+- [Unsplash](https://unsplash.com/)
+- [Noun project](https://thenounproject.com/)
+
+- [Session Storage and Local Storage in React by Robin Wieruch](https://www.robinwieruch.de/local-storage-react)
+- [Centralized Error Handling with React and Redux by Manujith Pallewatte](https://www.pluralsight.com/guides/centralized-error-handing-with-react-and-redux)
+- Custom hook for persistent state: [Using React Hooks with canvas by Koen van Gilst](https://blog.koenvangilst.nl/react-hooks-with-canvas/)
+- Style Tile creation: [4 - Design & Code a Responsive Landing Page from Start to Finish by Jesse Showalter](https://www.youtube.com/watch?v=3xWViyhRGd4)
+- [How to Use React Router in Typescript by Eli Yukelzon](https://www.pluralsight.com/guides/react-router-typescript)
+- [React + Redux - User Registration and Login Tutorial & Example by Jason Watmore](https://jasonwatmore.com/post/2017/09/16/react-redux-user-registration-and-login-tutorial-example)
+- [File input with React JS and TypeScript by Darren](https://medium.com/front-end-weekly/file-input-with-react-js-and-typescript-64dcea4b0a86)
+- [React 16+ Single and Multiple Images Upload Preview by Digamber](https://www.positronx.io/react-single-and-multiple-images-upload-preview/)
+
 
 <!-- TODO: Add reference to images and icons -->
 ### Image and Icons References
