@@ -164,3 +164,82 @@ export default function errorReducer(
 ```
 
 [ CONTINUE... ]
+
+### Storing images into localStorage
+
+The public route on the app allows the user to see the CreateEvent page, where they can add info about the event even before logging in. But, to actually create the event, the user is redirected to sign in / login page and, after that, they will be redirected to CreateEvent page again, but they won’t loose any unsaved data, because the previously inserted information was stored into localStorage temporarily. 
+
+Reading [Robin Wieruch article](https://www.robinwieruch.de/local-storage-react), I found out that the best way to store the user input into localStorage would actually be in a custom hook that does that right after storing the information into the component state as well. As I mentioned when discussing the state shape, form state is not saved on Redux store, but rather in a local component state.
+
+In my case, this custom hook looks like this:
+
+```
+const usePersistentState = (init: FormData) => {
+  const [value, setValue] = useState(populateForm(init))
+  
+  useEffect(() => {
+    setLocalStorage('formData', value)
+  }, [value])
+
+  return [value, setValue]
+}
+```
+
+But I still have one problem, the user can add a photo of the meal they are going to offer to the guests. And the local storage has just a limited space available (5MB) and it’s not really meant for storing images as it only supports strings. 
+
+To deal with that, first I decided to limit the image size to just 1MB. Considering this is just for an optional meal photo, that doesn’t need lots of details, high resolution or anything and it will be displayed in a 300px wide image element, that’s more than enough. 
+
+To do that, I used the File API, which was added to HTML5 and allowed the user to select and read local files using either an input type file or by drag and drop. On a change event, I had access to the selected files via the files attribute (event.target.files) of the input type file, which returns a FileList object. 
+FileLists contains File objects with information about the file, like the size and type, for instance. By checking the size property of the file object, I could prevent files larger than 1MB to be loaded.
+
+I also needed to show a thumbnail for the selected image. For that, I used a [FileReader object](https://developer.mozilla.org/en-US/docs/Web/API/FileReader), which allows us to read the contents of files asynchronously. 
+
+To show the thumbnail of the selected image, I created a new FileReader object, then define an onload handler function to set the image url as the e.target.result when the reading operation is successfully completed. For the reading, I used the .readAsDataURL() method of the FileReader passing the file (accessed via File object) as the argument.
+
+Now, I can store the image into the localStorage, setting the form state by using the setForm hook I created previously.
+
+
+```
+const updateImage = (event: React.ChangeEvent<HTMLInputElement>) => {
+    
+    if (event.target.files && event.target.files.length > 0) {
+      if (event.target.files[0]) {
+        let file = event.target.files[0];
+        let reader = new FileReader();
+        
+        reader.readAsDataURL(file)
+        
+        if (file.size > 1000000) {
+          setShowAlert(true)
+          setForm({
+            ...form,
+            imageUrl: null,
+          })
+          return
+        } else {
+          setShowAlert(false)
+        }
+
+        reader.onload = function (e) {
+          if (e.target) {
+            setForm({
+              ...form,
+              imageUrl: e.target.result,
+            })
+          }
+        };
+        
+      }
+    } else {
+      setForm({
+        ...form,
+        imageUrl: null,
+      })
+      setShowAlert(false)
+    }
+  }
+```
+
+[ CONTINUE... ]
+
+
