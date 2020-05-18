@@ -185,6 +185,19 @@ const usePersistentState = (init: FormData) => {
 }
 ```
 
+Just to clarify, setLocalStorage() is a helper function created by me that you can check bellow:
+
+```
+export const setLocalStorage = (name: string, data: any) => {
+  if (typeof data === 'string') {
+    localStorage.setItem(name, data)
+  } else {
+    localStorage.setItem(name, JSON.stringify(data))
+  }
+}
+```
+
+
 But I still have one problem, the user can add a photo of the meal they are going to offer to the guests. And the local storage has just a limited space available (5MB) and it’s not really meant for storing images as it only supports strings. 
 
 To deal with that, first I decided to limit the image size to just 1MB. Considering this is just for an optional meal photo, that doesn’t need lots of details, high resolution or anything and it will be displayed in a 300px wide image element, that’s more than enough. 
