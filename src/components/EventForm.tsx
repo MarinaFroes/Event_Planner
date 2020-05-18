@@ -186,12 +186,12 @@ const EventForm: React.FC<FormProps> = ({ btnText, primaryBtn, heading1, heading
     
     if (event.target.files && event.target.files.length > 0) {
       if (event.target.files[0]) {
-        var file = event.target.files[0];
-        var reader = new FileReader();
+        let file = event.target.files[0];
+        let reader = new FileReader();
         
         reader.readAsDataURL(file)
         
-        if (event.target.files[0].size > 1000000) {
+        if (file.size > 1000000) {
           setShowAlert(true)
           setForm({
             ...form,
