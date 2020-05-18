@@ -65,11 +65,11 @@ const AcceptInvite: React.FC<RouteComponentProps<TParams>> = ({ match }) => {
   const { eventHeading1, eventHeading2, signUpHeading1, signUpHeading2 } = acceptInvite
 
   if (selectedEvent !== null) {
-    const { title, host, subject,  additionalInfo, maxNumberGuest, pricePerGuest, tasks, address, date } = selectedEvent
+    const { title, host, subject, additionalInfo, maxNumberGuest, pricePerGuest, tasks, address, date } = selectedEvent
     return (
       <AcceptInviteContainer>
         <Header
-          title={title}
+          title={`${title[0].toUpperCase() + title.slice(1)} Details` }
           subtitle={`${host.name} invited you to take part on ${title}. Check the vent info bellow.`}
           imageUrl={EventImg}
         />
