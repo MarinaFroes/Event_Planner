@@ -9,7 +9,7 @@ export const createSubjectRequest = (): SubjectActionTypes => {
   }
 }
 
-export const createSubjectAction = (subject: Subject): SubjectActionTypes => {
+export const createSubjectSuccess = (subject: Subject): SubjectActionTypes => {
   return {
     type: CREATE_SUBJECT_SUCCESS,
     payload: subject
@@ -31,7 +31,7 @@ export const handleCreateSubject = (
   try {
     const subjectId = await subjectService.createSubject(subjectInput)
     const subjectData: Subject = await subjectService.getSubject(subjectId)
-    dispatch(createSubjectAction(subjectData))
+    dispatch(createSubjectSuccess(subjectData))
   } catch (err) {
     dispatch(createSubjectError(err.message))
   }
