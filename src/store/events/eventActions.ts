@@ -97,7 +97,6 @@ export const handleSelectEvent = (eventId: string): AppThunk => async (dispatch)
     const eventData: EventData = await eventService.getEvent(eventId)
 
     setLocalStorage('formData', formatFormData(eventData))
-    console.log(formatFormData(eventData))
     dispatch(selectEventSuccess(eventData))
 
   } catch (err) {
