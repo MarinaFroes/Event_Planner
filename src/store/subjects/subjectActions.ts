@@ -84,8 +84,17 @@ export const handleGetSubjects = (): AppThunk => async (dispatch, getState) => {
       userId = user.user.id
     }
     const subjects: SubjectsFromServer = await subjectService.getSubjects(userId)
+    const subjectsList: Subjects = subjects.items
 
-    dispatch(receiveSubjectsAction(subjects.items))
+    await subjectsList.forEach(async (subject: Subject) => {
+      if (subject.imageUrl) {
+        const imageLink: string = await subjectService.getImageLink(subject.id)
+       
+        subject.imageLink = imageLink
+      }
+    })
+    
+    dispatch(receiveSubjectsAction(subjectsList))
   } catch (err) {
     dispatch(receiveSubjectsError(err.message))
   }
