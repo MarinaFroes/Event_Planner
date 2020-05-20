@@ -35,17 +35,16 @@ export const handleCreateSubject = (
 
     if (subjectInput.imageUrl) {
       const saveImageLink = await subjectService.getSaveImageLink(subjectId)
-      console.log(saveImageLink)
+      
       const imageBlob: Blob = formService.dataUrlToBlob(subjectInput.imageUrl)
-      console.log(imageBlob)
+      
       await subjectService.saveImage(saveImageLink, imageBlob)
 
       const imageLink: string = await subjectService.getImageLink(subjectId)
-      console.log(imageLink)
+      
       if (imageLink) {
         subjectData.imageLink = imageLink
       }
-      console.log(subjectData)
     }
       
     dispatch(createSubjectSuccess(subjectData))
