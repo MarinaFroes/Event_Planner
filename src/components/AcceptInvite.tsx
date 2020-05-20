@@ -102,7 +102,7 @@ const AcceptInvite: React.FC<RouteComponentProps<TParams>> = ({ match }) => {
     )
   }
 
-  return <p>These event was cancelled</p>
+  return <p>Event not found</p>
   
 }
 
