@@ -1,4 +1,5 @@
 import * as eventService from '../../services/eventServices'
+import * as subjectService from '../../services/subjectServices'
 import {
   CREATE_EVENT_REQUEST,
   CREATE_EVENT_SUCCESS,
@@ -95,8 +96,10 @@ export const handleSelectEvent = (eventId: string): AppThunk => async (dispatch)
 
   try {
     const eventData: EventData = await eventService.getEvent(eventId)
+    const imageLink: string = await subjectService.getImageLink(eventData.subject.id)
 
-    setLocalStorage('formData', formatFormData(eventData))
+    setLocalStorage('formData', formatFormData(eventData, imageLink))
+
     dispatch(selectEventSuccess(eventData))
 
   } catch (err) {

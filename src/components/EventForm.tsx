@@ -17,7 +17,7 @@ import { handleCreateEvent } from '../store/events/eventActions'
 
 // TYPES
 import { FormData } from '../services/formServicesTypes'
-import { AppState, Subject } from '../store/types'
+import { AppState } from '../store/types'
 import { UserState } from '../store/users/types'
 import { ErrorState } from '../store/error/types'
 
@@ -132,7 +132,6 @@ const init: FormData = {
   time: "00:00",
   subjectName: "",
   imagePreview: null,
-  imageLink: null,
 }
 
 // Custom hook 
@@ -156,16 +155,7 @@ const EventForm: React.FC<FormProps> = ({ btnText, primaryBtn, heading1, heading
     userId = userState.user.id
   }
 
-  const selectedEvent = useSelector((state: AppState) => state.event.selectedEvent)
-  const subjectList = useSelector((state: AppState) => state.subject)
 
-  let selectedSubject: Subject | null = null
-  
-  if (selectedEvent) {
-    const subjectId = selectedEvent.subject.id
-    selectedSubject = subjectList.filter(subject => subject.id === subjectId)[0]
-  }
-  
   const error: ErrorState = useSelector((state: AppState) => state.error)
   
   const [showAlert, setShowAlert] = useState<boolean>(false)
@@ -246,8 +236,8 @@ const EventForm: React.FC<FormProps> = ({ btnText, primaryBtn, heading1, heading
         />
 
         {
-          form.imagePreview ? <Image src={form.imagePreview} alt="meal photo" />
-            : selectedSubject ? <Image src={selectedSubject.imageLink} alt="meal photo" /> 
+          form.imagePreview
+            ? <Image src={form.imagePreview} alt="meal photo" />
             : <Image src="https://dummyimage.com/400x400/c4c4c4/ffffff.jpg&text=Add+meal+photo" alt="no meal photo added sign" />
         }
         <Label>

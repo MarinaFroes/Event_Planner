@@ -74,9 +74,9 @@ export const formatEvent = (
   return formattedForm
 }
 
-export const formatFormData = (eventOutput: EventOutput) => {
+export const formatFormData = (eventOutput: EventOutput, imageLink: string) => {
   const { title, additionalInfo, address, maxNumberGuest, tasks, date, totalCost, subject } = eventOutput
-  
+ 
   const formData: FormData = {
     title,
     additionalInfo,
@@ -86,7 +86,8 @@ export const formatFormData = (eventOutput: EventOutput) => {
     tasks,
     date: (date.split(' ')[0]).split('-').reverse().join('-'),
     time: date.split(' ')[1],
-    subjectName: subject.name,
+    subjectName: subject.name, 
+    imagePreview: imageLink
   }
 
   return formData
