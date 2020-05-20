@@ -1,4 +1,5 @@
 import * as subjectService from '../../services/subjectServices'
+import * as formService from '../../services/formServices'
 import { SubjectInfo, AppThunk, Subject } from '../types'
 import { CREATE_SUBJECT_SUCCESS, SubjectActionTypes, RECEIVE_SUBJECTS_SUCCESS, SubjectsFromServer, Subjects, CREATE_SUBJECT_REQUEST, CREATE_SUBJECT_ERROR, RECEIVE_SUBJECTS_REQUEST, RECEIVE_SUBJECTS_ERROR } from './types'
 
@@ -31,6 +32,22 @@ export const handleCreateSubject = (
   try {
     const subjectId = await subjectService.createSubject(subjectInput)
     const subjectData: Subject = await subjectService.getSubject(subjectId)
+
+    if (subjectInput.imageUrl) {
+      const saveImageLink = await subjectService.getSaveImageLink(subjectId)
+      console.log(saveImageLink)
+      const imageBlob: Blob = formService.dataUrlToBlob(subjectInput.imageUrl)
+      console.log(imageBlob)
+      await subjectService.saveImage(saveImageLink, imageBlob)
+
+      const imageLink: string = await subjectService.getImageLink(subjectId)
+      console.log(imageLink)
+      if (imageLink) {
+        subjectData.imageLink = imageLink
+      }
+      console.log(subjectData)
+    }
+      
     dispatch(createSubjectSuccess(subjectData))
   } catch (err) {
     dispatch(createSubjectError(err.message))

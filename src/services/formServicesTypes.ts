@@ -10,5 +10,5 @@ export interface FormData {
   date: string;
   time: string;
   subjectName: string;
-  imageUrl: null | FileList;
+  imageUrl: null | string;
 }
