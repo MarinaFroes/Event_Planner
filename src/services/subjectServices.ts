@@ -87,6 +87,8 @@ export const getSaveImageLink = async (subjectId: string) => {
 export const saveImage = async (saveLink: string, imageBlob: Blob) => {
   const response = await fetch(`${saveLink}`, {
     method: 'PUT',
+    mode: 'cors',
+    cache: 'no-cache',
     body: imageBlob
   })
 
