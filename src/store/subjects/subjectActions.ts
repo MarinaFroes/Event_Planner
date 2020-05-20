@@ -33,10 +33,10 @@ export const handleCreateSubject = (
     const subjectId = await subjectService.createSubject(subjectInput)
     const subjectData: Subject = await subjectService.getSubject(subjectId)
 
-    if (subjectInput.imageUrl) {
+    if (subjectInput.imagePreview) {
       const saveImageLink = await subjectService.getSaveImageLink(subjectId)
       
-      const imageBlob: Blob = formService.dataUrlToBlob(subjectInput.imageUrl)
+      const imageBlob: Blob = formService.dataUrlToBlob(subjectInput.imagePreview)
       
       await subjectService.saveImage(saveImageLink, imageBlob)
 
@@ -93,7 +93,7 @@ export const handleGetSubjects = (): AppThunk => async (dispatch, getState) => {
         subject.imageLink = imageLink
       }
     })
-    
+    console.log(subjectsList)
     dispatch(receiveSubjectsAction(subjectsList))
   } catch (err) {
     dispatch(receiveSubjectsError(err.message))

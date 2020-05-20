@@ -57,7 +57,6 @@ export const formatEvent = (
 ) => {
 
   const date = formatServerDate(formData.date, formData.time)
-  
   const { title, additionalInfo, address, maxNumberGuest, totalCost, tasks } = formData
 
   const formattedForm = {
@@ -88,7 +87,6 @@ export const formatFormData = (eventOutput: EventOutput) => {
     date: (date.split(' ')[0]).split('-').reverse().join('-'),
     time: date.split(' ')[1],
     subjectName: subject.name,
-    imageUrl: subject.imageUrl || null
   }
 
   return formData

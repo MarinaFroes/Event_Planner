@@ -10,6 +10,6 @@ export interface FormData {
   date: string;
   time: string;
   subjectName: string;
-  imageUrl: null | string;
+  imagePreview?: null | string;
   imageLink?: null | string;
 }

@@ -46,7 +46,7 @@ export const handleCreateEvent = (formData: FormData): AppThunk => async (dispat
   try {
     await dispatch(handleCreateSubject({
       name: formData.subjectName,
-      imageUrl: formData.imageUrl
+      imagePreview: formData.imagePreview
       })
     )
 

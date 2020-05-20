@@ -131,7 +131,7 @@ const init: FormData = {
   date: "",
   time: "00:00",
   subjectName: "",
-  imageUrl: null,
+  imagePreview: null,
   imageLink: null,
 }
 
@@ -158,15 +158,12 @@ const EventForm: React.FC<FormProps> = ({ btnText, primaryBtn, heading1, heading
 
   const selectedEvent = useSelector((state: AppState) => state.event.selectedEvent)
   const subjectList = useSelector((state: AppState) => state.subject)
-  console.log(selectedEvent)
 
   let selectedSubject: Subject | null = null
   
   if (selectedEvent) {
     const subjectId = selectedEvent.subject.id
-    console.log(subjectId)
     selectedSubject = subjectList.filter(subject => subject.id === subjectId)[0]
-    console.log(selectedSubject)
   }
   
   const error: ErrorState = useSelector((state: AppState) => state.error)
@@ -209,7 +206,7 @@ const EventForm: React.FC<FormProps> = ({ btnText, primaryBtn, heading1, heading
           setShowAlert(true)
           setForm({
             ...form,
-            imageUrl: null,
+            imagePreview: null,
           })
           return
         } else {
@@ -220,7 +217,7 @@ const EventForm: React.FC<FormProps> = ({ btnText, primaryBtn, heading1, heading
           if (e.target) {
             setForm({
               ...form,
-              imageUrl: e.target.result,
+              imagePreview: e.target.result,
             })
           }
         };
@@ -229,7 +226,7 @@ const EventForm: React.FC<FormProps> = ({ btnText, primaryBtn, heading1, heading
     } else {
       setForm({
         ...form,
-        imageUrl: null,
+        imagePreview: null,
       })
       setShowAlert(false)
     }
@@ -249,7 +246,7 @@ const EventForm: React.FC<FormProps> = ({ btnText, primaryBtn, heading1, heading
         />
 
         {
-          form.imageUrl ? <Image src={form.imageUrl} alt="meal photo" />
+          form.imagePreview ? <Image src={form.imagePreview} alt="meal photo" />
             : selectedSubject ? <Image src={selectedSubject.imageLink} alt="meal photo" /> 
             : <Image src="https://dummyimage.com/400x400/c4c4c4/ffffff.jpg&text=Add+meal+photo" alt="no meal photo added sign" />
         }
@@ -259,7 +256,7 @@ const EventForm: React.FC<FormProps> = ({ btnText, primaryBtn, heading1, heading
             id="event-image"
             type="file"
             accept="image/png, image/jpeg"
-            name="imageUrl"
+            name="imagePreview"
             onChange={updateImage}
           />
         </Label>
