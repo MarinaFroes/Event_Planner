@@ -71,7 +71,7 @@ const AcceptInvite: React.FC<RouteComponentProps<TParams>> = ({ match }) => {
         <Header
           title={`${title[0].toUpperCase() + title.slice(1)} Details` }
           subtitle={`${host.name} invited you to take part on ${title}. Check the vent info bellow.`}
-          imageUrl={EventImg}
+          imageSrc={EventImg}
         />
         <EventInfoSection>
           <TextBox heading1={eventHeading1} heading2={eventHeading2} />

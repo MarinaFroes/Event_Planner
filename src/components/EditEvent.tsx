@@ -100,7 +100,7 @@ const EditEvent: React.FC<RouteComponentProps<TParams>> = ({ match }) => {
         <Header
           title={`${selectedEvent.title[0].toUpperCase() + selectedEvent.title.slice(1)} Details`}
           subtitle={editEvent.subtitle}
-          imageUrl={EventImg}
+          imageSrc={EventImg}
         />
 
         <EventForm
