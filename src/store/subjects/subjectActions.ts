@@ -93,7 +93,6 @@ export const handleGetSubjects = (): AppThunk => async (dispatch, getState) => {
         subject.imageLink = imageLink
       }
     })
-    console.log(subjectsList)
     dispatch(receiveSubjectsAction(subjectsList))
   } catch (err) {
     dispatch(receiveSubjectsError(err.message))
