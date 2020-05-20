@@ -222,6 +222,11 @@ const EventForm: React.FC<FormProps> = ({ btnText, primaryBtn, heading1, heading
     }
   }
 
+  // TODO: fix type any
+  const addFallbackSrc = (event: any) => {
+    event.target.src = "https://dummyimage.com/400x400/c4c4c4/ffffff.jpg&text=Add+meal+photo"
+  }
+
   if (userState.isLoggedIn && isCreated) {
     return <Redirect to={`/users/${userId}`} />
   }
@@ -237,8 +242,11 @@ const EventForm: React.FC<FormProps> = ({ btnText, primaryBtn, heading1, heading
 
         {
           form.imagePreview
-            ? <Image src={form.imagePreview} alt="meal photo" />
-            : <Image src="https://dummyimage.com/400x400/c4c4c4/ffffff.jpg&text=Add+meal+photo" alt="no meal photo added sign" />
+            && <Image
+              onError={(e) => addFallbackSrc(e)}
+              src={form.imagePreview}
+              alt="meal photo"
+            />
         }
         <Label>
           Add your meal photo
