@@ -12,6 +12,10 @@ export const RECEIVE_EVENTS_REQUEST = 'RECEIVE_EVENTS_REQUEST'
 export const RECEIVE_EVENTS_SUCCESS = 'RECEIVE_EVENTS_SUCCESS'
 export const RECEIVE_EVENTS_ERROR = 'RECEIVE_EVENTS_ERROR'
 
+export const SUBSCRIBE_REQUEST = 'SUBSCRIBE_REQUEST'
+export const SUBSCRIBE_SUCCESS = 'SUBSCRIBE_SUCCESS'
+export const SUBSCRIBE_ERROR = 'SUBSCRIBE_ERROR'
+
 // OTHER TYPES
 export type Events = EventData[]
 
@@ -72,8 +76,25 @@ export interface ReceiveEventsError {
 
 type ReceiveEventsActions = ReceiveEventsRequest | ReceiveEventsSuccess | ReceiveEventsError
 
+// SUBSCRIBE TO EVENT ACTION TYPES
+export interface SubscribeRequest {
+  type: typeof SUBSCRIBE_REQUEST
+}
+
+export interface SubscribeSuccess {
+  type: typeof SUBSCRIBE_SUCCESS
+  payload: EventData
+}
+
+export interface SubscribeError {
+  type: typeof SUBSCRIBE_ERROR
+  error: string
+}
+
+type SubscribeActionTypes = SubscribeRequest | SubscribeSuccess | SubscribeError
+
 // ALL EVENT ACTION TYPES 
-export type EventActionTypes = CreateEventActions | SelectEventActions | ReceiveEventsActions 
+export type EventActionTypes = CreateEventActions | SelectEventActions | ReceiveEventsActions | SubscribeActionTypes
 
 //  STATE TYPE
 export type EventState = {

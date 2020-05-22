@@ -5,10 +5,14 @@ import {
   CREATE_EVENT_SUCCESS,
   CREATE_EVENT_ERROR,
   RECEIVE_EVENTS_SUCCESS,
-  RECEIVE_EVENTS_REQUEST, RECEIVE_EVENTS_ERROR,
+  RECEIVE_EVENTS_REQUEST,
+  RECEIVE_EVENTS_ERROR,
   SELECT_EVENT_REQUEST,
   SELECT_EVENT_SUCCESS,
   SELECT_EVENT_ERROR,
+  SUBSCRIBE_REQUEST,
+  SUBSCRIBE_SUCCESS,
+  SUBSCRIBE_ERROR,
   Events,
   EventActionTypes,
   EventsFromServer
@@ -142,5 +146,44 @@ export const handleGetEvents = (): AppThunk => async (dispatch, getState) => {
 
   } catch (err) {
     dispatch(receiveEventsError(err.message))
+  }
+}
+
+// SUBSCRIBE TO EVENT ACTION CREATORS
+export const subscribeRequest = (): EventActionTypes => {
+  return {
+    type: SUBSCRIBE_REQUEST
+  }
+}
+
+export const subscribeSuccess = (eventData: EventData): EventActionTypes => {
+  return {
+    type: SUBSCRIBE_SUCCESS,
+    payload: eventData
+  }
+}
+
+export const subscribeError = (error: string): EventActionTypes => {
+  return {
+    type: SUBSCRIBE_ERROR,
+    error
+  }
+}
+
+export const handleSubscribe = (eventId: string): AppThunk => async(dispatch, getState) => {
+  dispatch(subscribeRequest())
+
+  try {
+    const { user } = getState()
+    let userId = ''
+    if (user.isLoggedIn) {
+      userId = user.user.id
+    }
+    await eventService.subscribeToEvent(eventId, userId)
+    const eventData: EventData = await eventService.getEvent(eventId)
+    
+    dispatch(subscribeSuccess(eventData))
+  } catch (err) {
+    dispatch(subscribeError(err.message))
   }
 }
