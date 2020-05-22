@@ -94,6 +94,13 @@ const TextArea = styled.textarea`
   width: 100%;
 `
 
+const ClearButton = styled.button`
+  background-color: transparent;
+  border: none;
+  color: var(--main-color-red, #bd0b2b);
+  margin-bottom: 20px;
+`
+
 const SmallerFieldsDiv = styled.div`
   display: flex;
   justify-content: space-between;
@@ -378,12 +385,23 @@ const EventForm: React.FC<FormProps> = ({ btnText, primaryBtn, heading1, heading
         </SmallerFieldsDiv>
         {
           userState.isLoggedIn && (
-            <Btn
-              primaryBtn={primaryBtn}
-              btnText={btnText}
-              btnWidth={btnWidth}
-              btnType="submit"
-            />
+            <>
+              <Btn
+                primaryBtn={primaryBtn}
+                btnText={btnText}
+                btnWidth={btnWidth}
+                btnType="submit"
+              />
+              <ClearButton
+                type="button"
+                onClick={() => {
+                  clearForm()
+                  setForm(init)
+                }}
+              >
+                Clear form
+              </ClearButton>
+            </>
           )
         }
         {

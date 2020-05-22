@@ -52,7 +52,7 @@ export const createEvent = async (event: EventInput) => {
     throw new Error(`Response status ${response.status}: Event was not created`)
 }
 
-export const subscribeToEvent = async (guestId: string, eventId: string) => {
+export const subscribeToEvent = async (eventId: string, guestId: string) => {
   const tokens = getTokensFromLocalStorage()
   let access_token: string = ''
   let id_token: string = ''
@@ -61,23 +61,20 @@ export const subscribeToEvent = async (guestId: string, eventId: string) => {
     access_token = tokens.access_token
     id_token = tokens.id_token
   }
-
+  
   const response = await fetch(`${endpoint}/events/${eventId}/subscribe`, {
     method: 'POST',
     mode: 'cors',
     cache: 'no-cache',
-    credentials: 'same-origin',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': access_token,
+      'Authorization': 'Bearer ' + access_token,
       'X-Id-Token': id_token
     },
     body: JSON.stringify({ guestId })
   })
-
-  if (response.status === 200) {
-    let res: {} = await response.json()
-    return res
+  if (response.status === 202) {
+    return 
   }
 
   throw new Error(`Response status ${response.status}: It could not subscribe to event`)

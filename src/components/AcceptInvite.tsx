@@ -10,9 +10,10 @@ import EventCard from './EventCard'
 import { acceptInvite } from '../utils/text'
 import { EventData, AppState } from '../store/types'
 import { useSelector, useDispatch } from 'react-redux'
-import { handleSelectEvent } from '../store/events/eventActions'
+import { handleSelectEvent, handleSubscribe } from '../store/events/eventActions'
 import { loginUrl } from '../services/authServices'
 import { getLocalStorage, setLocalStorage } from '../utils/authDataRepository'
+import ErrorNotification from './core/ErrorNotification'
 
 const AcceptInviteContainer = styled.div`
   background-color: var(--main-color-white, #fff);
@@ -55,33 +56,40 @@ type TParams = {
 }
 
 const AcceptInvite: React.FC<RouteComponentProps<TParams>> = ({ match }) => {
+  let isLoggedIn: boolean = useSelector((state: AppState) => state.user.isLoggedIn)
 
+  const [subscribe, setSubscribe] = useState(false)
 
   let selectedEvent: EventData | null = useSelector((state: AppState) => state.event.selectedEvent)
   const [imagePreview, setImagePreview] = useState('')
   
   const dispatch = useDispatch()
   let eventId = match.params.eid 
-
+  
   useEffect(() => {
-    
     dispatch(handleSelectEvent(eventId))
     
     let data = getLocalStorage('formData')
     data.imagePreview && setImagePreview(data.imagePreview)
 
-    setLocalStorage('lastUrl', `/invite/${eventId}`)
+    localStorage.removeItem('lastUrl')
   }, [dispatch, eventId])
+
+  useEffect(() => {
+    if (subscribe) {
+      dispatch(handleSubscribe(eventId))
+    }
+  }, [dispatch, subscribe, eventId])
 
   const addFallbackSrc = (event: any) => {
     event.target.src = "https://dummyimage.com/400x400/c4c4c4/ffffff.jpg&text=Add+meal+photo"
   }
 
-  const { eventHeading1, eventHeading2, signUpHeading1, signUpHeading2 } = acceptInvite
+  const { eventHeading1, eventHeading2, signUpHeading1, signUpHeading2, subscribeHeading1, subscribeHeading2 } = acceptInvite
 
   if (selectedEvent !== null) {
     const { title, host, subject, additionalInfo, maxNumberGuest, pricePerGuest, tasks, address, date } = selectedEvent
-    console.log(imagePreview)
+    
     return (
       <AcceptInviteContainer>
         <Header
@@ -89,6 +97,7 @@ const AcceptInvite: React.FC<RouteComponentProps<TParams>> = ({ match }) => {
           subtitle={`${host.name} invited you to take part on ${title}. Check the event info bellow.`}
           imageSrc={EventImg}
         />
+        <ErrorNotification />
         <EventInfoSection>
           <TextBox heading1={eventHeading1} heading2={eventHeading2} />
           {
@@ -110,18 +119,40 @@ const AcceptInvite: React.FC<RouteComponentProps<TParams>> = ({ match }) => {
             additionalInfo={additionalInfo}
           />
         </EventInfoSection>
-        <SignUpSection>
-          <TextBox heading1={signUpHeading1} heading2={signUpHeading2} />
-          <Btn
-            primaryBtn={true}
-            btnText="Sign up"
-            btnWidth="90%"
-            btnType="button"
-            onClick={() => {
-              window.location.assign(loginUrl)
-            }}
-          />
-        </SignUpSection>
+          {
+            isLoggedIn ? (
+              <SignUpSection>
+                <TextBox
+                  heading1={subscribeHeading1}
+                  heading2={subscribeHeading2}
+                />
+                <Btn
+                  primaryBtn={true}
+                  btnText="Subscribe to event"
+                  btnWidth="90%"
+                  btnType="button"
+                  onClick={() => setSubscribe(true)}
+                />
+              </SignUpSection>
+            ): (
+              <SignUpSection>
+                <TextBox 
+                  heading1={signUpHeading1} 
+                  heading2={signUpHeading2} 
+                />
+                <Btn
+                  primaryBtn={true}
+                  btnText="Sign up"
+                  btnWidth="90%"
+                  btnType="button"
+                  onClick={() => {
+                    setLocalStorage('lastUrl', `/invite/${eventId}`)
+                    window.location.assign(loginUrl)
+                  }}
+                />
+              </SignUpSection>
+            )
+        }
       </AcceptInviteContainer>
     )
   }
