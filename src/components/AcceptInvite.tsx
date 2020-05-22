@@ -12,7 +12,7 @@ import { EventData, AppState } from '../store/types'
 import { useSelector, useDispatch } from 'react-redux'
 import { handleSelectEvent } from '../store/events/eventActions'
 import { loginUrl } from '../services/authServices'
-import { getLocalStorage } from '../utils/authDataRepository'
+import { getLocalStorage, setLocalStorage } from '../utils/authDataRepository'
 
 const AcceptInviteContainer = styled.div`
   background-color: var(--main-color-white, #fff);
@@ -56,6 +56,7 @@ type TParams = {
 
 const AcceptInvite: React.FC<RouteComponentProps<TParams>> = ({ match }) => {
 
+
   let selectedEvent: EventData | null = useSelector((state: AppState) => state.event.selectedEvent)
   const [imagePreview, setImagePreview] = useState('')
   
@@ -67,8 +68,9 @@ const AcceptInvite: React.FC<RouteComponentProps<TParams>> = ({ match }) => {
     dispatch(handleSelectEvent(eventId))
     
     let data = getLocalStorage('formData')
-    console.log(data.imagePreview)
     data.imagePreview && setImagePreview(data.imagePreview)
+
+    setLocalStorage('lastUrl', `/invite/${eventId}`)
   }, [dispatch, eventId])
 
   const addFallbackSrc = (event: any) => {
