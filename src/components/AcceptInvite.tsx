@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { RouteComponentProps } from 'react-router-dom'
 
@@ -12,6 +12,7 @@ import { EventData, AppState } from '../store/types'
 import { useSelector, useDispatch } from 'react-redux'
 import { handleSelectEvent } from '../store/events/eventActions'
 import { loginUrl } from '../services/authServices'
+import { getLocalStorage } from '../utils/authDataRepository'
 
 const AcceptInviteContainer = styled.div`
   background-color: var(--main-color-white, #fff);
@@ -33,6 +34,13 @@ const EventInfoSection = styled.div`
   }
 `
 
+const Image = styled.img`
+  width: 300px;
+  height: 300px;
+  align-self: center;
+  object-fit: cover;
+`
+
 const SignUpSection = styled.div`
   display: flex;
   flex-direction: column;
@@ -48,33 +56,47 @@ type TParams = {
 
 const AcceptInvite: React.FC<RouteComponentProps<TParams>> = ({ match }) => {
 
-  let isLoggedIn: boolean = useSelector((state: AppState) => state.user.isLoggedIn)
-
   let selectedEvent: EventData | null = useSelector((state: AppState) => state.event.selectedEvent)
-
+  const [imagePreview, setImagePreview] = useState('')
+  
   const dispatch = useDispatch()
   let eventId = match.params.eid 
 
   useEffect(() => {
-    if (isLoggedIn) {
-      dispatch(handleSelectEvent(eventId))
-    }
-  }, [dispatch, isLoggedIn, eventId])
+    
+    dispatch(handleSelectEvent(eventId))
+    
+    let data = getLocalStorage('formData')
+    console.log(data.imagePreview)
+    data.imagePreview && setImagePreview(data.imagePreview)
+  }, [dispatch, eventId])
 
-  
+  const addFallbackSrc = (event: any) => {
+    event.target.src = "https://dummyimage.com/400x400/c4c4c4/ffffff.jpg&text=Add+meal+photo"
+  }
+
   const { eventHeading1, eventHeading2, signUpHeading1, signUpHeading2 } = acceptInvite
 
   if (selectedEvent !== null) {
     const { title, host, subject, additionalInfo, maxNumberGuest, pricePerGuest, tasks, address, date } = selectedEvent
+    console.log(imagePreview)
     return (
       <AcceptInviteContainer>
         <Header
           title={`${title[0].toUpperCase() + title.slice(1)} Details` }
-          subtitle={`${host.name} invited you to take part on ${title}. Check the vent info bellow.`}
+          subtitle={`${host.name} invited you to take part on ${title}. Check the event info bellow.`}
           imageSrc={EventImg}
         />
         <EventInfoSection>
           <TextBox heading1={eventHeading1} heading2={eventHeading2} />
+          {
+            imagePreview
+            && <Image
+              onError={(e) => addFallbackSrc(e)}
+              src={imagePreview}
+              alt="meal photo"
+            />
+          }
           <EventCard 
             address={address}
             cost={pricePerGuest}
