@@ -16,7 +16,9 @@ export const acceptInvite = {
   eventHeading1: "Check the event info and select a task",
   eventHeading2: "If the host defined tasks for the guests, here you can select which one you want to do. Don't worry, they're optional.",
   signUpHeading1: "Sign up to accept the invite",
-  signUpHeading2: "After accepting the invite, the host will be notified. If the host confirms your participation on the event or updates any event info, you will receive a notification by email.",
+  signUpHeading2: "After signing up, you will be able to subscribe to event for the host approval.",
+  subscribeHeading1: "Subscribe to event",
+  subscribeHeading2: "After accepting the invite, the host will be notified. If the host confirms your participation on the event or updates any event info, you will receive a notification by email."
 }
 
 export const myEvents = {

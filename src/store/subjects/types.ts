@@ -22,7 +22,7 @@ interface CreateSubjectRequest {
   type: typeof CREATE_SUBJECT_REQUEST
 }
 
-interface CreateSubjectAction {
+interface CreateSubjectSuccess {
   type: typeof CREATE_SUBJECT_SUCCESS
   payload: Subject
 }
@@ -31,6 +31,8 @@ interface CreateSubjectError {
   type: typeof CREATE_SUBJECT_ERROR
   error: string
 }
+
+type CreateSubject = CreateSubjectRequest | CreateSubjectSuccess | CreateSubjectError
 
 // Receive Subjects action types
 interface ReceiveSubjectsRequest {
@@ -47,7 +49,9 @@ interface ReceiveSubjectsError {
   error: string
 }
 
-export type SubjectActionTypes = CreateSubjectRequest | CreateSubjectAction | CreateSubjectError | ReceiveSubjectsRequest | ReceiveSubjectsAction | ReceiveSubjectsError
+type ReceiveSubjects = ReceiveSubjectsRequest | ReceiveSubjectsAction | ReceiveSubjectsError
+
+export type SubjectActionTypes = CreateSubject | ReceiveSubjects
 
 // STATE TYPE
 export type SubjectState = Subjects

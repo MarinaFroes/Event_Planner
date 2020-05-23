@@ -2,7 +2,8 @@ import {
   EventActionTypes,
   EventState,
   RECEIVE_EVENTS_SUCCESS, CREATE_EVENT_SUCCESS,
-  SELECT_EVENT_SUCCESS
+  SELECT_EVENT_SUCCESS,
+  SUBSCRIBE_SUCCESS
 } from './types'
 
 const initialEventState: EventState = {
@@ -34,6 +35,12 @@ export default function eventReducer(
         ...state,
         selectedEvent: null,
         eventsList: events
+      }
+    case SUBSCRIBE_SUCCESS:
+      return {
+        ...state,
+        selectedEvent: action.payload,
+        eventsList: state.eventsList.concat(action.payload)
       }
     default:
       return state

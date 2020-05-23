@@ -1,4 +1,5 @@
 import * as subjectService from '../../services/subjectServices'
+import * as formService from '../../services/formServices'
 import { SubjectInfo, AppThunk, Subject } from '../types'
 import { CREATE_SUBJECT_SUCCESS, SubjectActionTypes, RECEIVE_SUBJECTS_SUCCESS, SubjectsFromServer, Subjects, CREATE_SUBJECT_REQUEST, CREATE_SUBJECT_ERROR, RECEIVE_SUBJECTS_REQUEST, RECEIVE_SUBJECTS_ERROR } from './types'
 
@@ -9,7 +10,7 @@ export const createSubjectRequest = (): SubjectActionTypes => {
   }
 }
 
-export const createSubjectAction = (subject: Subject): SubjectActionTypes => {
+export const createSubjectSuccess = (subject: Subject): SubjectActionTypes => {
   return {
     type: CREATE_SUBJECT_SUCCESS,
     payload: subject
@@ -31,7 +32,22 @@ export const handleCreateSubject = (
   try {
     const subjectId = await subjectService.createSubject(subjectInput)
     const subjectData: Subject = await subjectService.getSubject(subjectId)
-    dispatch(createSubjectAction(subjectData))
+
+    if (subjectInput.imagePreview) {
+      const saveImageLink = await subjectService.getSaveImageLink(subjectId)
+      
+      const imageBlob: Blob = formService.dataUrlToBlob(subjectInput.imagePreview)
+      
+      await subjectService.saveImage(saveImageLink, imageBlob)
+
+      const imageLink: string = await subjectService.getImageLink(subjectId)
+      
+      if (imageLink) {
+        subjectData.imageLink = imageLink
+      }
+    }
+      
+    dispatch(createSubjectSuccess(subjectData))
   } catch (err) {
     dispatch(createSubjectError(err.message))
   }
@@ -68,8 +84,16 @@ export const handleGetSubjects = (): AppThunk => async (dispatch, getState) => {
       userId = user.user.id
     }
     const subjects: SubjectsFromServer = await subjectService.getSubjects(userId)
+    const subjectsList: Subjects = subjects.items
 
-    dispatch(receiveSubjectsAction(subjects.items))
+    await subjectsList.forEach(async (subject: Subject) => {
+      if (subject.imageUrl) {
+        const imageLink: string = await subjectService.getImageLink(subject.id)
+       
+        subject.imageLink = imageLink
+      }
+    })
+    dispatch(receiveSubjectsAction(subjectsList))
   } catch (err) {
     dispatch(receiveSubjectsError(err.message))
   }

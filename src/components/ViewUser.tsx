@@ -26,7 +26,7 @@ const ViewUser: React.FC = () => {
       <MainHeader
         title={myEvents.headerTitle}
         subtitle={myEvents.headerSubtitle}
-        imageUrl={HeaderImg}
+        imageSrc={HeaderImg}
       />
       <ErrorNotification />
       <ShowEvents status="open" />

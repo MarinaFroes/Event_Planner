@@ -30,16 +30,16 @@ const Image = styled.img`
 interface Props {
   title: string;
   subtitle: string;
-  imageUrl: string;
+  imageSrc: string;
 }
 
-const MainHeader: React.FC<Props> = ({ title, subtitle, imageUrl }) => {
+const MainHeader: React.FC<Props> = ({ title, subtitle, imageSrc }) => {
   return (
     <StyledHeader>
       <Headings title={title} subtitle={subtitle}/>
         
       <Image
-        src={imageUrl}
+        src={imageSrc}
         alt={`image for ${title}`}
       />
     </StyledHeader>

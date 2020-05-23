@@ -57,7 +57,6 @@ export const formatEvent = (
 ) => {
 
   const date = formatServerDate(formData.date, formData.time)
-  
   const { title, additionalInfo, address, maxNumberGuest, totalCost, tasks } = formData
 
   const formattedForm = {
@@ -75,9 +74,9 @@ export const formatEvent = (
   return formattedForm
 }
 
-export const formatFormData = (eventOutput: EventOutput) => {
+export const formatFormData = (eventOutput: EventOutput, imageLink: string) => {
   const { title, additionalInfo, address, maxNumberGuest, tasks, date, totalCost, subject } = eventOutput
-  console.log(eventOutput)
+ 
   const formData: FormData = {
     title,
     additionalInfo,
@@ -87,8 +86,8 @@ export const formatFormData = (eventOutput: EventOutput) => {
     tasks,
     date: (date.split(' ')[0]).split('-').reverse().join('-'),
     time: date.split(' ')[1],
-    subjectName: subject.name,
-    imageUrl: subject.imageUrl || null
+    subjectName: subject.name, 
+    imagePreview: imageLink
   }
 
   return formData
@@ -106,4 +105,23 @@ export const populateForm = (init: FormData) => {
 
 export const clearForm = () => {
   localStorage.removeItem('formData')
+}
+
+export const dataUrlToBlob = (dataUrl: string) => {
+  // dataUrl format: data:image/jpeg;base64,data
+  const byteString = atob(dataUrl.split(',')[1]) // accessing the data
+
+  const mimeString = dataUrl.split(';')[0].split(':')[1] // accessing the MIME type and subtype
+
+  const arrayBuffer = new ArrayBuffer(byteString.length) // create new buffer
+
+  let bufferView = new Uint8Array(arrayBuffer) // create view into the buffer
+
+  for (let i = 0; i < byteString.length; i++){
+    bufferView[i] = byteString.charCodeAt(i)
+  }
+
+  const blob = new Blob([arrayBuffer], { type: mimeString })
+
+  return blob
 }

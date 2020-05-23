@@ -8,7 +8,7 @@ export const setLocalStorage = (name: string, data: any) => {
 
 export const getLocalStorage = (name: string) => {
   let data;
-  if (name === 'access_token' || name === 'id_token') {
+  if (name === 'access_token' || name === 'id_token' || name === 'lastUrl') {
     data = localStorage.getItem(name) || ''
   } else {
     data = JSON.parse(localStorage.getItem(name) || '{}')

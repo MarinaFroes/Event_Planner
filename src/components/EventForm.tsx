@@ -94,6 +94,13 @@ const TextArea = styled.textarea`
   width: 100%;
 `
 
+const ClearButton = styled.button`
+  background-color: transparent;
+  border: none;
+  color: var(--main-color-red, #bd0b2b);
+  margin-bottom: 20px;
+`
+
 const SmallerFieldsDiv = styled.div`
   display: flex;
   justify-content: space-between;
@@ -131,7 +138,7 @@ const init: FormData = {
   date: "",
   time: "00:00",
   subjectName: "",
-  imageUrl: null,
+  imagePreview: null,
 }
 
 // Custom hook 
@@ -154,6 +161,7 @@ const EventForm: React.FC<FormProps> = ({ btnText, primaryBtn, heading1, heading
   if (userState.isLoggedIn) {
     userId = userState.user.id
   }
+
 
   const error: ErrorState = useSelector((state: AppState) => state.error)
   
@@ -195,7 +203,7 @@ const EventForm: React.FC<FormProps> = ({ btnText, primaryBtn, heading1, heading
           setShowAlert(true)
           setForm({
             ...form,
-            imageUrl: null,
+            imagePreview: null,
           })
           return
         } else {
@@ -206,7 +214,7 @@ const EventForm: React.FC<FormProps> = ({ btnText, primaryBtn, heading1, heading
           if (e.target) {
             setForm({
               ...form,
-              imageUrl: e.target.result,
+              imagePreview: e.target.result,
             })
           }
         };
@@ -215,10 +223,15 @@ const EventForm: React.FC<FormProps> = ({ btnText, primaryBtn, heading1, heading
     } else {
       setForm({
         ...form,
-        imageUrl: null,
+        imagePreview: null,
       })
       setShowAlert(false)
     }
+  }
+
+  // TODO: fix type any
+  const addFallbackSrc = (event: any) => {
+    event.target.src = "https://dummyimage.com/400x400/c4c4c4/ffffff.jpg&text=Add+meal+photo"
   }
 
   if (userState.isLoggedIn && isCreated) {
@@ -235,18 +248,20 @@ const EventForm: React.FC<FormProps> = ({ btnText, primaryBtn, heading1, heading
         />
 
         {
-          form.imageUrl
-            ? <Image src={form.imageUrl} alt="meal photo" />
-            : <Image src="https://dummyimage.com/400x400/c4c4c4/ffffff.jpg&text=Add+meal+photo" alt="meal photo" />
+          form.imagePreview
+            && <Image
+              onError={(e) => addFallbackSrc(e)}
+              src={form.imagePreview}
+              alt="meal photo"
+            />
         }
-
         <Label>
           Add your meal photo
           <InputFile
             id="event-image"
             type="file"
             accept="image/png, image/jpeg"
-            name="imageUrl"
+            name="imagePreview"
             onChange={updateImage}
           />
         </Label>
@@ -370,12 +385,23 @@ const EventForm: React.FC<FormProps> = ({ btnText, primaryBtn, heading1, heading
         </SmallerFieldsDiv>
         {
           userState.isLoggedIn && (
-            <Btn
-              primaryBtn={primaryBtn}
-              btnText={btnText}
-              btnWidth={btnWidth}
-              btnType="submit"
-            />
+            <>
+              <Btn
+                primaryBtn={primaryBtn}
+                btnText={btnText}
+                btnWidth={btnWidth}
+                btnType="submit"
+              />
+              <ClearButton
+                type="button"
+                onClick={() => {
+                  clearForm()
+                  setForm(init)
+                }}
+              >
+                Clear form
+              </ClearButton>
+            </>
           )
         }
         {

@@ -41,15 +41,15 @@ const ImageContainer = styled.div`
 interface Props {
   title: string;
   subtitle: string;
-  imageUrl: string;
+  imageSrc: string;
 }
 
-const Header: React.FC<Props> = ({ title, subtitle, imageUrl }) => {
+const Header: React.FC<Props> = ({ title, subtitle, imageSrc }) => {
   return (
     <StyledHeader>
       <ImageContainer>
         <Image
-          src={imageUrl}
+          src={imageSrc}
           alt={`image for ${title}`}
         />
       </ImageContainer>
