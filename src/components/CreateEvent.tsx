@@ -20,10 +20,8 @@ const CreateEvent: React.FC = () => {
   
   useEffect(() => {
     let lastUrl = getLocalStorage('lastUrl')
-    console.log(lastUrl)
-    if (lastUrl) {
-      setLastUrl(lastUrl)
-    }
+    
+    lastUrl && setLastUrl(lastUrl)
   }, [])
 
   if (lastUrl) {
