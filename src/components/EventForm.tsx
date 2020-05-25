@@ -17,9 +17,10 @@ import { handleCreateEvent } from '../store/events/eventActions'
 
 // TYPES
 import { FormData } from '../services/formServicesTypes'
-import { AppState } from '../store/types'
+import { AppState, Subject } from '../store/types'
 import { UserState } from '../store/users/types'
 import { ErrorState } from '../store/error/types'
+import { SubjectState } from '../store/subjects/types'
 
 // STYLES
 const Form = styled.form`
@@ -158,11 +159,12 @@ const EventForm: React.FC<FormProps> = ({ btnText, primaryBtn, heading1, heading
   
   let userId: string = ''
   const userState: UserState = useSelector((state: AppState) => state.user)
+
   if (userState.isLoggedIn) {
     userId = userState.user.id
   }
 
-
+  const subjects: SubjectState = useSelector((state: AppState) => state.subject)
   const error: ErrorState = useSelector((state: AppState) => state.error)
   
   const [showAlert, setShowAlert] = useState<boolean>(false)
@@ -184,6 +186,9 @@ const EventForm: React.FC<FormProps> = ({ btnText, primaryBtn, heading1, heading
   }
 
   const updateFields = (event: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>) => {
+    if (event.target.name === 'subjectName') {
+      console.log(event.target)
+    } 
     setForm({
       ...form,
       [event.target.name]: event.target.value
@@ -278,10 +283,13 @@ const EventForm: React.FC<FormProps> = ({ btnText, primaryBtn, heading1, heading
           />
           {userState.isLoggedIn === true && (
             <datalist id="meal-names">
-              <option value="Chocolate cake"/>
-              <option value="Feijoada"/>
-              <option value="Caranguejo"/>
-              <option value="Cuxa rice"/>
+              {
+                subjects && (
+                  subjects.map((subject: Subject) => (
+                    <option value={subject.name} key={subject.id}/>
+                  ))
+                )
+              }
             </datalist>
           )}
         </Label>
