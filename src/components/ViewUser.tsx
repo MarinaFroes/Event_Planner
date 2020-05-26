@@ -8,6 +8,7 @@ import ErrorNotification from './core/ErrorNotification'
 import { useDispatch, useSelector } from 'react-redux'
 import { handleGetEvents } from '../store/events/eventActions'
 import { AppState } from '../store/types'
+import SuccessNotification from './core/SuccessNotification'
 
 const ViewUser: React.FC = () => {
   
@@ -29,6 +30,7 @@ const ViewUser: React.FC = () => {
         imageSrc={HeaderImg}
       />
       <ErrorNotification />
+      <SuccessNotification />
       <ShowEvents status="open" />
       <ShowEvents status="closed" />
       <ShowSubjects />

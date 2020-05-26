@@ -159,7 +159,8 @@ export const subscribeRequest = (): EventActionTypes => {
 export const subscribeSuccess = (eventData: EventData): EventActionTypes => {
   return {
     type: SUBSCRIBE_SUCCESS,
-    payload: eventData
+    payload: eventData,
+    success: 'Subscribed'
   }
 }
 
@@ -181,7 +182,7 @@ export const handleSubscribe = (eventId: string): AppThunk => async(dispatch, ge
     }
     await eventService.subscribeToEvent(eventId, userId)
     const eventData: EventData = await eventService.getEvent(eventId)
-    
+  
     dispatch(subscribeSuccess(eventData))
   } catch (err) {
     dispatch(subscribeError(err.message))

@@ -84,6 +84,7 @@ export interface SubscribeRequest {
 export interface SubscribeSuccess {
   type: typeof SUBSCRIBE_SUCCESS
   payload: EventData
+  success: string
 }
 
 export interface SubscribeError {

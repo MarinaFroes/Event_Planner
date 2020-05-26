@@ -5,6 +5,7 @@ import { SubjectState } from './subjects/types'
 import { ThunkAction } from 'redux-thunk'
 import { Action } from 'redux'
 import { ErrorState } from './error/types'
+import { SuccessState } from './success/types'
 
 export interface Tokens {
   access_token: string | '';
@@ -74,6 +75,7 @@ export interface AppState {
   task: TaskState;
   user: UserState;
   error: ErrorState;
+  success: SuccessState;
 }
 
 export type AppThunk<ReturnType = void> = ThunkAction<

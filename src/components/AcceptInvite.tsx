@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { RouteComponentProps } from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 
 import Header from './core/Header'
 import EventImg from '../assets/images/edgar-castrejon-bG5rhvRH0JM-unsplash.jpg'
@@ -14,6 +15,8 @@ import { handleSelectEvent, handleSubscribe } from '../store/events/eventActions
 import { loginUrl } from '../services/authServices'
 import { getLocalStorage, setLocalStorage } from '../utils/authDataRepository'
 import ErrorNotification from './core/ErrorNotification'
+import SuccessNotification from './core/SuccessNotification'
+import { UserState } from '../store/users/types'
 
 const AcceptInviteContainer = styled.div`
   background-color: var(--main-color-white, #fff);
@@ -56,13 +59,18 @@ type TParams = {
 }
 
 const AcceptInvite: React.FC<RouteComponentProps<TParams>> = ({ match }) => {
-  let isLoggedIn: boolean = useSelector((state: AppState) => state.user.isLoggedIn)
-
   const [subscribe, setSubscribe] = useState(false)
-
-  let selectedEvent: EventData | null = useSelector((state: AppState) => state.event.selectedEvent)
+  const [isSubscribed, setIsSubscribed] = useState(false)
   const [imagePreview, setImagePreview] = useState('')
-  
+
+  let userId: string = ""
+
+  const userState: UserState = useSelector((state: AppState) => state.user)
+  if (userState.isLoggedIn) {
+    userId = userState.user.id
+  }
+  let selectedEvent: EventData | null = useSelector((state: AppState) => state.event.selectedEvent)
+
   const dispatch = useDispatch()
   let eventId = match.params.eid 
   
@@ -78,6 +86,7 @@ const AcceptInvite: React.FC<RouteComponentProps<TParams>> = ({ match }) => {
   useEffect(() => {
     if (subscribe) {
       dispatch(handleSubscribe(eventId))
+      setIsSubscribed(true)
     }
   }, [dispatch, subscribe, eventId])
 
@@ -86,6 +95,10 @@ const AcceptInvite: React.FC<RouteComponentProps<TParams>> = ({ match }) => {
   }
 
   const { eventHeading1, eventHeading2, signUpHeading1, signUpHeading2, subscribeHeading1, subscribeHeading2 } = acceptInvite
+  
+  if (isSubscribed) {
+    return <Redirect to={`/users/${userId}`} />
+  }
 
   if (selectedEvent !== null) {
     const { title, host, subject, additionalInfo, maxNumberGuest, pricePerGuest, tasks, address, date } = selectedEvent
@@ -98,6 +111,7 @@ const AcceptInvite: React.FC<RouteComponentProps<TParams>> = ({ match }) => {
           imageSrc={EventImg}
         />
         <ErrorNotification />
+        <SuccessNotification />
         <EventInfoSection>
           <TextBox heading1={eventHeading1} heading2={eventHeading2} />
           {
@@ -120,7 +134,7 @@ const AcceptInvite: React.FC<RouteComponentProps<TParams>> = ({ match }) => {
           />
         </EventInfoSection>
           {
-            isLoggedIn ? (
+            userState.isLoggedIn ? (
               <SignUpSection>
                 <TextBox
                   heading1={subscribeHeading1}
@@ -152,6 +166,11 @@ const AcceptInvite: React.FC<RouteComponentProps<TParams>> = ({ match }) => {
                 />
               </SignUpSection>
             )
+        }
+        {
+          isSubscribed && (
+            <p>You subscribed for this event</p>
+          )
         }
       </AcceptInviteContainer>
     )
