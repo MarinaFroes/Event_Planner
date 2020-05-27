@@ -31,3 +31,8 @@ export const myEvents = {
   subjectTitle: "My Meal List",
   subjectSubtitle: "Here you can manage your meal list, adding new meals for future events or deleting old ones"
 }
+
+export const showGuests = {
+  heading1: "Approve the guests who registered for the event",
+  heading2: "The guest will be notified if you confirm the invitation or update the event info."
+}

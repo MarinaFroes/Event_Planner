@@ -8,7 +8,7 @@ import EventImg from '../assets/images/edgar-castrejon-bG5rhvRH0JM-unsplash.jpg'
 import ShowGuests from './ShowGuests'
 import { editEvent } from '../utils/text'
 import { useDispatch, useSelector } from 'react-redux'
-import { AppState, EventData } from '../store/types'
+import { AppState, EventData, Guest } from '../store/types'
 import { handleSelectEvent } from '../store/events/eventActions'
 import { RouteComponentProps, Link } from 'react-router-dom'
 
@@ -34,10 +34,15 @@ type TParams = {
 const EditEvent: React.FC<RouteComponentProps<TParams>> = ({ match }) => {
 
   const [showInviteLink, setShowInviteLink] = useState(false)
-
+  
   let isLoggedIn: boolean = useSelector((state: AppState) => state.user.isLoggedIn)
 
   let selectedEvent: EventData | null = useSelector((state: AppState) => state.event.selectedEvent)
+
+  let guests: Guest[] = []
+  if (selectedEvent) {
+    guests = selectedEvent.guestInEvents
+  }
   
   const dispatch = useDispatch()
   let eventId = match.params.eid //get id from param
@@ -47,52 +52,7 @@ const EditEvent: React.FC<RouteComponentProps<TParams>> = ({ match }) => {
       dispatch(handleSelectEvent(eventId))
     }
   }, [dispatch, isLoggedIn, eventId])
-
-  const guests = [
-    {
-      name: "Chandler Bing",
-      email: "chandler_bing@mail.com",
-      id: "123bing",
-      phone: "+00 000 000",
-      status: "approved"
-    },
-    {
-      name: "Monica Geller",
-      email: "monica_geller@mail.com",
-      id: "123geller",
-      phone: "+00 000 000",
-      status: "approved"
-    },
-    {
-      name: "Ross Geller",
-      email: "ross_geller@mail.com",
-      id: "321geller",
-      phone: "+00 000 000",
-      status: "pending"
-    },
-    {
-      name: "Rachel Green",
-      email: "ross_geller@mail.com",
-      id: "123green",
-      phone: "+00 000 000",
-      status: "approved"
-    },
-    {
-      name: "Joey Tribbiani",
-      email: "joey_tribbiani@mail.com",
-      id: "321tribbiani",
-      phone: "+00 000 000",
-      status: "approved"
-    },
-    {
-      name: "Phoebe Buffay",
-      email: "phoebe_buffay@mail.com",
-      id: "123buffay",
-      phone: "+00 000 000",
-      status: "pending"
-    },
-  ]
-
+  
   if (selectedEvent !== null) {
     
     return (
@@ -129,7 +89,10 @@ const EditEvent: React.FC<RouteComponentProps<TParams>> = ({ match }) => {
         }}>
           Cancel event
         </AlertButton>
-        <ShowGuests guests={guests} />
+        {
+          guests.length > 0 ? <ShowGuests guests={guests} /> : <p>You don't have any guests</p>
+        }
+        
       </EditEventContainer>
     )
   }

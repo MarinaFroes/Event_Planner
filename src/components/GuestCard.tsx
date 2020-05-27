@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
-import { FaPhone, FaAt } from 'react-icons/fa'
+import { FaAt, FaCircle } from 'react-icons/fa'
+import { Guest } from '../store/types'
 
 const StyledCard = styled.div`
   text-align: left;
@@ -43,14 +44,6 @@ const Checkbox = styled.input`
   background-color: var(--main-color-white, #fff);
 `
 
-interface Guest {
-  name: string;
-  id: string;
-  phone: string;
-  email: string;
-  status: string;
-}
-
 interface Props {
   guest: Guest;
 }
@@ -59,7 +52,7 @@ const GuestCard: React.FC<Props> = ({ guest }) => {
   return (
     <StyledCard id={guest.id}>
       <HeadingContainer>
-        <GuestHeading> {guest.name}</GuestHeading>
+        <GuestHeading>{guest.name}</GuestHeading>
         <Checkbox type="checkbox" />
       </HeadingContainer>
      
@@ -67,11 +60,15 @@ const GuestCard: React.FC<Props> = ({ guest }) => {
         <FaAt />
         <GuestContact>{guest.email}</GuestContact>
       </ContactDiv>
-      
+
       <ContactDiv>
-        <FaPhone />
-        <GuestContact>{guest.phone}</GuestContact>
-      </ContactDiv> 
+        {
+          guest.status === "Pending"
+            ? <FaCircle style={{ color: "var(--main-color-orange, #f07422)"}}/>
+            : <FaCircle style={{ color: "green" }}/>
+        }
+        <GuestContact>{guest.status === "Accept" ? "Approved" : guest.status}</GuestContact>
+      </ContactDiv>
     </StyledCard>
   )
 }

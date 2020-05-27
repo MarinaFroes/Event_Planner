@@ -18,8 +18,10 @@ export interface User {
   email: string;
 }
 
-interface Guest {
+export interface Guest {
   id: string;
+  name: string;
+  email: string;
   status: "Pending" | "Accept" | "Reject";
 }
 

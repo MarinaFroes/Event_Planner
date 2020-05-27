@@ -3,7 +3,8 @@ import styled from 'styled-components'
 
 import TextBox from './core/TextBox'
 import GuestCard from './GuestCard'
-
+import { showGuests } from '../utils/text'
+import { Guest } from '../store/types'
 
 const GuestsContainer = styled.div`
   display: flex;
@@ -43,37 +44,53 @@ const Cards = styled.div`
   }
 `
 
-interface Guest {
-  name: string;
-  id: string;
-  phone: string;
-  email: string;
-  status: string;
-}
+const NoGuestsMessage = styled.p`
+  padding: 2rem;
+`
 
 interface Props {
   guests: Guest[];
 }
 
 const ShowGuests: React.FC<Props> = ({ guests }) => {
-  const heading1 = "Approve the guests who registered for the event"
-  const heading2 = "The guest will be notified if you confirm the invitation or update the event info. "
-  
+  let approvedGuests: Guest[] = guests.filter(guest => guest.status === "Accept")
+  let pendingGuests: Guest[] = guests.filter(guest => guest.status === "Pending")
+  console.log(guests)
+  console.log(approvedGuests)
+  console.log(pendingGuests)
+
+
+
   return (
     <GuestsContainer>
-      <TextBox heading1={heading1} heading2={heading2} />
+      <TextBox
+        heading1={showGuests.heading1}
+        heading2={showGuests.heading2}
+      />
       <div style={{maxWidth: "700px"}}>
         <SectionHeadings>Approved guests</SectionHeadings>
         <Cards>
           {
-            guests.filter(guest => guest.status === "approved").map((guest, key) => <GuestCard key={key} guest={guest} />)
+            approvedGuests.length > 0 ? (
+              approvedGuests.map((guest, key) => <GuestCard key={key} guest={guest} />)
+            ) : (
+              <NoGuestsMessage>
+                No approved guests for now
+              </NoGuestsMessage>
+            )
           }
         </Cards>
       
         <SectionHeadings>Pending approvals</SectionHeadings>
         <Cards>
           {
-            guests.filter(guest => guest.status === "pending").map((guest, key) => <GuestCard key={key} guest={guest} />)
+            pendingGuests.length > 0 ? (
+              pendingGuests.map((guest, key) => <GuestCard key={key} guest={guest} />)
+            ) : (
+              <NoGuestsMessage>
+                No pending guests for now
+              </NoGuestsMessage>
+            )
           }
         </Cards>
       </div>
