@@ -55,11 +55,6 @@ interface Props {
 const ShowGuests: React.FC<Props> = ({ guests }) => {
   let approvedGuests: Guest[] = guests.filter(guest => guest.status === "Accept")
   let pendingGuests: Guest[] = guests.filter(guest => guest.status === "Pending")
-  console.log(guests)
-  console.log(approvedGuests)
-  console.log(pendingGuests)
-
-
 
   return (
     <GuestsContainer>

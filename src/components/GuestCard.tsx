@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { FaAt, FaCircle } from 'react-icons/fa'
 import { Guest } from '../store/types'
@@ -49,11 +49,25 @@ interface Props {
 }
 
 const GuestCard: React.FC<Props> = ({ guest }) => {
+
+  const [isChecked, setIsChecked] = useState(guest.status === "Accept")
+
+  const approveGuest = () => {
+    setIsChecked(!isChecked)
+    isChecked && window.confirm('Do you want to approve guest?')
+  }
+  
   return (
     <StyledCard id={guest.id}>
       <HeadingContainer>
         <GuestHeading>{guest.name}</GuestHeading>
-        <Checkbox type="checkbox" />
+        <Checkbox
+          type="checkbox"
+          checked={isChecked}
+          id="status"
+          name="status"
+          onChange={approveGuest}
+        />
       </HeadingContainer>
      
       <ContactDiv>
@@ -63,9 +77,9 @@ const GuestCard: React.FC<Props> = ({ guest }) => {
 
       <ContactDiv>
         {
-          guest.status === "Pending"
-            ? <FaCircle style={{ color: "var(--main-color-orange, #f07422)"}}/>
-            : <FaCircle style={{ color: "green" }}/>
+          guest.status === "Accept"
+            ? <FaCircle style={{ color: "green" }} />
+            : <FaCircle style={{ color: "var(--main-color-orange, #f07422)" }} />
         }
         <GuestContact>{guest.status === "Accept" ? "Approved" : guest.status}</GuestContact>
       </ContactDiv>
