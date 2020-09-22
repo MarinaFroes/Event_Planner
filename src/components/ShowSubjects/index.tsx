@@ -3,11 +3,11 @@ import styled from 'styled-components'
 import { TiDelete } from 'react-icons/ti'
 import { FaPlus, FaSave } from 'react-icons/fa'
 
-import TextBox from './core/TextBox'
-import { AppState } from '../store/types'
+import TextBox from '../TextBox'
+import { AppState } from '../../store/types'
 import { useSelector } from 'react-redux'
-import { SubjectState } from '../store/subjects/types'
-import { myEvents } from '../utils/text'
+import { SubjectState } from '../../store/subjects/types'
+import { myEvents } from '../../utils/text'
 
 const SubjectsContainer = styled.div`
   display: flex;

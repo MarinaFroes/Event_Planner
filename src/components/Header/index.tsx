@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import Headings from './Headings'
+import Headings from '../Headings'
 
 const StyledHeader = styled.header`
   display: flex;

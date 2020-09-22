@@ -4,23 +4,23 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 
 //  COMPONENTS
-import TextBox from './core/TextBox'
-import Btn from './core/Btn'
+import TextBox from '../TextBox'
+import Btn from '../Btn'
 
 // SERVICES
-import { formatDateForInput, getTodayDate, populateForm, clearForm } from '../services/formServices'
-import { setLocalStorage } from '../utils/authDataRepository'
-import { loginUrl } from '../services/authServices'
+import { formatDateForInput, getTodayDate, populateForm, clearForm } from '../../services/formServices'
+import { setLocalStorage } from '../../utils/authDataRepository'
+import { loginUrl } from '../../services/authServices'
 
 // ACTIONS
-import { handleCreateEvent } from '../store/events/eventActions'
+import { handleCreateEvent } from '../../store/events/eventActions'
 
 // TYPES
-import { FormData } from '../services/formServicesTypes'
-import { AppState, Subject } from '../store/types'
-import { UserState } from '../store/users/types'
-import { ErrorState } from '../store/error/types'
-import { SubjectState } from '../store/subjects/types'
+import { FormData } from '../../services/formServicesTypes'
+import { AppState, Subject } from '../../store/types'
+import { UserState } from '../../store/users/types'
+import { ErrorState } from '../../store/error/types'
+import { SubjectState } from '../../store/subjects/types'
 
 // STYLES
 const Form = styled.form`

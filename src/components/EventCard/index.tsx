@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Task } from '../store/types'
+import { Task } from '../../store/types'
 
 const Item = styled.span`
   font-size: 18px;

@@ -1,13 +1,13 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import TextBox from './core/TextBox'
-import EventPreview from './EventPreview'
-import { AppState, EventData } from '../store/types'
+import TextBox from '../core/TextBox'
+import EventPreview from '../EventPreview'
+import { AppState, EventData } from '../../store/types'
 import { useSelector } from 'react-redux'
-import { EventState } from '../store/events/types'
-import { myEvents } from '../utils/text'
-import { isBeforeToday } from '../services/formServices'
+import { EventState } from '../../store/events/types'
+import { myEvents } from '../../utils/text'
+import { isBeforeToday } from '../../services/formServices'
 
 const EventsContainer = styled.div<{ status: "open" | "closed"}>`
   display: flex;

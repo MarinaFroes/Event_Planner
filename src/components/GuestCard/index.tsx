@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { FaAt, FaCircle } from 'react-icons/fa'
-import { Guest } from '../store/types'
+import { Guest } from '../../store/types'
 
 const StyledCard = styled.div`
   text-align: left;
