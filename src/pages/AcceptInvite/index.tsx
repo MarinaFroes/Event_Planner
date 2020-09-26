@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import styled from 'styled-components'
 import { RouteComponentProps } from 'react-router-dom'
 import { Redirect } from 'react-router-dom'
 
@@ -17,42 +16,7 @@ import { getLocalStorage, setLocalStorage } from '../../utils/authDataRepository
 import ErrorNotification from '../../components/ErrorNotification'
 import SuccessNotification from '../../components/SuccessNotification'
 import { UserState } from '../../store/users/types'
-
-const AcceptInviteContainer = styled.div`
-  background-color: var(--main-color-white, #fff);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`
-
-const EventInfoSection = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 60px 0;
-  width: 100%;
- 
-  @media only screen and (min-width: 1080px){
-    flex-direction: row;
-    justify-content: space-evenly;
-  }
-`
-
-const Image = styled.img`
-  width: 300px;
-  height: 300px;
-  align-self: center;
-  object-fit: cover;
-`
-
-const SignUpSection = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: var(--main-color-grey, #eee);
-  padding: 60px 0;
-  width: 100%;
-`
+import { AcceptInviteContainer, EventInfoSection, Image, SignUpSection } from './styles'
 
 type TParams = {
   eid: string

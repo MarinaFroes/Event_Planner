@@ -1,31 +1,16 @@
 import React, { useEffect, useState } from 'react'
-import styled from 'styled-components'
 
 import Btn from '../../components/Btn'
+import { editEvent } from '../../utils/text'
 import Header from '../../components/Header'
 import EventForm from '../../components/EventForm'
-import EventImg from '../../assets/images/edgar-castrejon-bG5rhvRH0JM-unsplash.jpg'
 import ShowGuests from '../../components/ShowGuests'
-import { editEvent } from '../../utils/text'
 import { useDispatch, useSelector } from 'react-redux'
+import { EditEventContainer, AlertButton } from './styles'
+import { RouteComponentProps, Link } from 'react-router-dom'
 import { AppState, EventData, Guest } from '../../store/types'
 import { handleSelectEvent } from '../../store/events/eventActions'
-import { RouteComponentProps, Link } from 'react-router-dom'
-
-const EditEventContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: var(--main-color-white, #fff);
-  width: 100%;
-`
-
-const AlertButton = styled.button`
-  background-color: var(--main-color-white, #fff);
-  border: none;
-  color: var(--main-color-red, #bd0b2b);
-  margin-bottom: 20px;
-`
+import EventImg from '../../assets/images/edgar-castrejon-bG5rhvRH0JM-unsplash.jpg'
 
 type TParams = {
   eid: string
