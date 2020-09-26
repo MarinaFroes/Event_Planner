@@ -1,15 +1,13 @@
-import React, { useState, useEffect } from 'react'
-import styled from 'styled-components'
+import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 
 //  COMPONENTS
-import TextBox from '../TextBox'
 import Btn from '../Btn'
+import TextBox from '../TextBox'
 
 // SERVICES
-import { formatDateForInput, getTodayDate, populateForm, clearForm } from '../../services/formServices'
-import { setLocalStorage } from '../../utils/authDataRepository'
+import { formatDateForInput, getTodayDate, clearForm } from '../../services/formServices'
 import { loginUrl } from '../../services/authServices'
 
 // ACTIONS
@@ -22,101 +20,11 @@ import { UserState } from '../../store/users/types'
 import { ErrorState } from '../../store/error/types'
 import { SubjectState } from '../../store/subjects/types'
 
+// CUSTOM HOOK
+import { usePersistentState, init } from '../../hooks/usePersistentState'
+
 // STYLES
-const Form = styled.form`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  font-size: 16px;
-  color: var(--main-color-orange, #f07422);
-  width: 100%;
-  padding: 20px 0;
-
-  @media only screen and (min-width: 1024px){
-    flex-direction: row;
-    justify-content: space-evenly;
-    align-items: stretch;
-    flex: 1 1 auto;
-  }
-`
-
-const Label = styled.label`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  padding: 10px 0;
-  font-family: Poppins;
-  font-size: 14px;
-  color: var(--main-color-black, #000);
-  opacity: 70%;
-  width: 100%;
-`
-
-const Image = styled.img`
-  width: 300px;
-  height: 300px;
-  align-self: center;
-  object-fit: cover;
-`
-
-const Input = styled.input`
-  font-size: 16px;
-  color: var(--main-color-black, #000);
-  border: 1px solid #c4c4c4;
-  padding: 5px;
-  border-radius: 5px;
-  width: 100%;
-  height: 40px;
-`
-
-const InputFile = styled(Input)`
-  background-color: white;
-
-  &::-webkit-file-upload-button {
-    background-color: var(--main-color-orange, #f07422);
-    border: none;
-    height: 100%;
-    margin: 0;
-    color: white;
-    border-radius: 5px;
-  }
-`
-
-const SmallerInput = styled(Input)`
-  width: 100%;
-`
-
-const TextArea = styled.textarea`
-  font-size: 16px;
-  color: var(--main-color-black, #000);
-  border: 1px solid #c4c4c4;
-  padding: 5px;
-  border-radius: 5px;
-  width: 100%;
-`
-
-const ClearButton = styled.button`
-  background-color: transparent;
-  border: none;
-  color: var(--main-color-red, #bd0b2b);
-  margin-bottom: 20px;
-`
-
-const SmallerFieldsDiv = styled.div`
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-
-  > :nth-child(2) {
-    margin-left: 20px;
-  }
-`
-
-const Sec = styled.div`
-  width: 90%;
-  margin: 20px;
-  max-width: 500px;
-`
+import { Form, Label, Image, Input, InputFile, SmallerInput, TextArea, ClearButton, SmallerFieldsDiv, Sec } from './styles'
 
 interface FormProps {
   btnText: string;
@@ -126,31 +34,6 @@ interface FormProps {
   heading2?: string;
   heading3?: string;
   heading4?: string;
-}
-
-// Initial Form Data
-const init: FormData = {
-  title: "",
-  additionalInfo: "",
-  address: "",
-  maxNumberGuest: 0,
-  totalCost: 0,
-  tasks: [],
-  date: "",
-  time: "00:00",
-  subjectName: "",
-  imagePreview: null,
-}
-
-// Custom hook 
-const usePersistentState = (init: FormData) => {
-  const [value, setValue] = useState(populateForm(init))
-  
-  useEffect(() => {
-    setLocalStorage('formData', value)
-  }, [value])
-
-  return [value, setValue]
 }
 
 const EventForm: React.FC<FormProps> = ({ btnText, primaryBtn, heading1, heading2, heading3, heading4, btnWidth }) => {
