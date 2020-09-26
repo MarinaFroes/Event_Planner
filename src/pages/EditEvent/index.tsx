@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 
-import Btn from '../components/Btn'
-import Header from '../components/Header'
-import EventForm from '../components/EventForm'
-import EventImg from '../assets/images/edgar-castrejon-bG5rhvRH0JM-unsplash.jpg'
-import ShowGuests from '../components/ShowGuests'
-import { editEvent } from '../utils/text'
+import Btn from '../../components/Btn'
+import Header from '../../components/Header'
+import EventForm from '../../components/EventForm'
+import EventImg from '../../assets/images/edgar-castrejon-bG5rhvRH0JM-unsplash.jpg'
+import ShowGuests from '../../components/ShowGuests'
+import { editEvent } from '../../utils/text'
 import { useDispatch, useSelector } from 'react-redux'
-import { AppState, EventData, Guest } from '../store/types'
-import { handleSelectEvent } from '../store/events/eventActions'
+import { AppState, EventData, Guest } from '../../store/types'
+import { handleSelectEvent } from '../../store/events/eventActions'
 import { RouteComponentProps, Link } from 'react-router-dom'
 
 const EditEventContainer = styled.div`
