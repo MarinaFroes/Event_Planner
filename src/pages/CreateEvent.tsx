@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { Redirect } from 'react-router-dom'
 
-import MainHeader from './core/MainHeader'
-import EventForm from './EventForm'
+import MainHeader from '../components/MainHeader'
+import EventForm from '../components/EventForm'
 import MainImg from '../assets/images/spencer-davis-vJsj-hgOEG0-unsplash.jpg'
 import { createEvent } from '../utils/text'
-import ErrorNotification from './core/ErrorNotification'
+import ErrorNotification from '../components/ErrorNotification'
 import { getLocalStorage } from '../utils/authDataRepository'
 
 const CreateEventContainer = styled.div`

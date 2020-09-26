@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-import '../styles/App.css'
+import './styles/App.css'
 
 import * as authService from './services/authServices'
 import CreateEvent from './pages/CreateEvent'

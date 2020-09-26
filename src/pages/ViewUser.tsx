@@ -1,14 +1,14 @@
 import React, { useEffect } from 'react'
-import ShowEvents from './ShowEvents'
-import MainHeader from './core/MainHeader'
+import ShowEvents from '../components/ShowEvents'
+import MainHeader from '../components/MainHeader'
 import HeaderImg from '../assets/images/kelsey-chance-ZrhtQyGFG6s-unsplash.jpg'
-import ShowSubjects from './ShowSubjects'
+import ShowSubjects from '../components/ShowSubjects'
 import { myEvents } from '../utils/text'
-import ErrorNotification from './core/ErrorNotification'
+import ErrorNotification from '../components/ErrorNotification'
 import { useDispatch, useSelector } from 'react-redux'
 import { handleGetEvents } from '../store/events/eventActions'
 import { AppState } from '../store/types'
-import SuccessNotification from './core/SuccessNotification'
+import SuccessNotification from '../components/SuccessNotification'
 
 const ViewUser: React.FC = () => {
   

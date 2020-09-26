@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import TextBox from '../core/TextBox'
+import TextBox from '../TextBox'
 import GuestCard from '../GuestCard'
 import { showGuests } from '../../utils/text'
 import { Guest } from '../../store/types'
