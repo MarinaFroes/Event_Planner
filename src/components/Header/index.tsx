@@ -1,15 +1,14 @@
 import React from 'react'
 
 import Headings from '../Headings'
+import { HeaderProps } from '../../types/props'
 import { StyledHeader, Image, HeadingContainer, ImageContainer } from './styles'
 
-interface Props {
-  title: string;
-  subtitle: string;
-  imageSrc: string;
-}
-
-const Header: React.FC<Props> = ({ title, subtitle, imageSrc }) => {
+const Header: React.FC<HeaderProps> = ({
+  title,
+  subtitle,
+  imageSrc
+}) => {
   return (
     <StyledHeader>
       <ImageContainer>

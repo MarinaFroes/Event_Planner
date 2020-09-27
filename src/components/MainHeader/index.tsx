@@ -1,15 +1,10 @@
 import React from 'react'
 
 import Headings from '../Headings'
+import { MainHeaderProps } from '../../types/props'
 import { StyledHeader, Image } from './styles'
 
-interface Props {
-  title: string;
-  subtitle: string;
-  imageSrc: string;
-}
-
-const MainHeader: React.FC<Props> = ({ title, subtitle, imageSrc }) => {
+const MainHeader: React.FC<MainHeaderProps> = ({ title, subtitle, imageSrc }) => {
   return (
     <StyledHeader>
       <Headings title={title} subtitle={subtitle}/>

@@ -1,20 +1,19 @@
 import React from 'react'
 
 import { Task } from '../../store/types'
+import { EventCardProps } from '../../types/props'
 import { Item, StyledP, StyledEventCard, StyledSelect, StyledOption } from './styles'
 
-interface EventCardProps {
-  subjectName: string;
-  additionalInfo?: string;
-  address: string;
-  tasks?: Task[];
-  date: string;
-  time: string;
-  participants: number;
-  cost: number;
-}
-
-const EventCard: React.FC<EventCardProps> = ({ subjectName, additionalInfo, address, tasks, date, time, participants, cost }) => {
+const EventCard: React.FC<EventCardProps> = ({
+  subjectName,
+  additionalInfo,
+  address,
+  tasks,
+  date,
+  time,
+  participants,
+  cost
+}) => {
   return (
     <StyledEventCard>
       <StyledP>

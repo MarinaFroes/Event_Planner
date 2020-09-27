@@ -14,11 +14,12 @@ import { loginUrl } from '../../services/authServices'
 import { handleCreateEvent } from '../../store/events/eventActions'
 
 // TYPES
-import { FormData } from '../../services/formServicesTypes'
+import { FormProps } from '../../types/props'
 import { AppState, Subject } from '../../store/types'
 import { UserState } from '../../store/users/types'
 import { ErrorState } from '../../store/error/types'
 import { SubjectState } from '../../store/subjects/types'
+import { FormData } from '../../services/formServicesTypes'
 
 // CUSTOM HOOK
 import { usePersistentState, init } from '../../hooks/usePersistentState'
@@ -26,15 +27,6 @@ import { usePersistentState, init } from '../../hooks/usePersistentState'
 // STYLES
 import { Form, Label, Image, Input, InputFile, SmallerInput, TextArea, ClearButton, SmallerFieldsDiv, Sec } from './styles'
 
-interface FormProps {
-  btnText: string;
-  primaryBtn: boolean;
-  btnWidth?: string;
-  heading1: string;
-  heading2?: string;
-  heading3?: string;
-  heading4?: string;
-}
 
 const EventForm: React.FC<FormProps> = ({ btnText, primaryBtn, heading1, heading2, heading3, heading4, btnWidth }) => {
 

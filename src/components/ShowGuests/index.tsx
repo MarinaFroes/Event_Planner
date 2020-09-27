@@ -4,13 +4,10 @@ import TextBox from '../TextBox'
 import GuestCard from '../GuestCard'
 import { showGuests } from '../../utils/text'
 import { Guest } from '../../store/types'
+import { ShowGuestsProps } from '../../types/props'
 import { GuestsContainer, SectionHeadings, Cards, NoGuestsMessage} from './styles'
 
-interface Props {
-  guests: Guest[];
-}
-
-const ShowGuests: React.FC<Props> = ({ guests }) => {
+const ShowGuests: React.FC<ShowGuestsProps> = ({ guests }) => {
   let approvedGuests: Guest[] = guests.filter(guest => guest.status === "Accept")
   let pendingGuests: Guest[] = guests.filter(guest => guest.status === "Pending")
 

@@ -1,14 +1,10 @@
 import React, { useState } from 'react'
 import { FaAt, FaCircle } from 'react-icons/fa'
 
-import { Guest } from '../../store/types'
+import { GuestCardProps } from '../../types/props'
 import { StyledCard, GuestHeading, HeadingContainer, GuestContact, ContactDiv, Checkbox } from './styles'
 
-interface Props {
-  guest: Guest;
-}
-
-const GuestCard: React.FC<Props> = ({ guest }) => {
+const GuestCard: React.FC<GuestCardProps> = ({ guest }) => {
 
   const [isChecked, setIsChecked] = useState(guest.status === "Accept")
 

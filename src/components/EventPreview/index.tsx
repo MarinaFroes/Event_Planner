@@ -2,18 +2,10 @@ import React from 'react'
 import { FaRegCalendar } from 'react-icons/fa'
 import { GiHotMeal } from 'react-icons/gi'
 
+import { EventPreviewProps } from '../../types/props'
 import { StyledLink, StyledCard, EventHeading, HeadingContainer, InfoDiv, EventInfo } from './styles'
 
-interface Props {
-  title: string;
-  subjectName: string;
-  date: string;
-  time: string;
-  eventId: string;
-  status: "open" | "closed";
-}
-
-const EventPreview: React.FC<Props> = ({ eventId, title, subjectName, date, time, status }) => {
+const EventPreview: React.FC<EventPreviewProps> = ({ eventId, title, subjectName, date, time, status }) => {
   return (
     <StyledLink to={`/events/${eventId}`}>
       <StyledCard id={eventId} status={status}>

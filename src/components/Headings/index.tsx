@@ -1,11 +1,7 @@
 import React from 'react'
 
+import { HeadingsProps } from '../../types/props'
 import { Heading1, Heading2 } from './styles'
-
-interface HeadingsProps {
-  title: string;
-  subtitle: string;
-}
 
 const Headings: React.FC<HeadingsProps> = ({title, subtitle}) => {
   return (

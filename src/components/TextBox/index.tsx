@@ -1,13 +1,9 @@
 import React from 'react'
 
+import { TextBoxProps } from '../../types/props'
 import { Heading1, Heading2 } from './styles'
 
-interface Props {
-  heading1?: string;
-  heading2?: string;
-}
-
-const TextBox: React.FC<Props> = ({heading1, heading2}) => {
+const TextBox: React.FC<TextBoxProps> = ({heading1, heading2}) => {
   return (
     <div>
       <Heading1>{heading1}</Heading1>

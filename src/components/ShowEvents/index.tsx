@@ -1,20 +1,16 @@
 import React from 'react'
 
 import TextBox from '../TextBox'
-import EventPreview from '../EventPreview'
-import { AppState, EventData } from '../../store/types'
 import { useSelector } from 'react-redux'
-import { EventState } from '../../store/events/types'
+import EventPreview from '../EventPreview'
 import { myEvents } from '../../utils/text'
+import { ShowEventsProps } from '../../types/props'
+import { EventState } from '../../store/events/types'
+import { AppState, EventData } from '../../store/types'
 import { isBeforeToday } from '../../services/formServices'
 import { EventsContainer, Cards } from './styles'
 
-interface Props {
-  status: "open" | "closed"
-}
-
-const ShowEvents: React.FC<Props> = ({ status }) => {
-
+const ShowEvents: React.FC<ShowEventsProps> = ({ status }) => {
   const eventState: EventState = useSelector((state: AppState) => state.event)
   const eventsList = eventState.eventsList
 
