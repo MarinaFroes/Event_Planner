@@ -1,5 +1,5 @@
 import { endpoint } from './api'
-import { UserData } from './userServicesTypes'
+import { UserData } from '../types/userServicesTypes'
 
 export const getUsers = async () => {
   let response = await fetch(`${endpoint}/users`)

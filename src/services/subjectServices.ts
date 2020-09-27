@@ -1,6 +1,6 @@
 import { endpoint } from './api'
 import { getTokensFromLocalStorage } from './authServices'
-import { SubjectInput, SubjectOutput } from './subjectServicesTypes'
+import { SubjectInput, SubjectOutput } from '../types/subjectServicesTypes'
 import { SubjectsFromServer } from '../store/subjects/types'
 
 export const getSubject = async (subjectId: string) => {

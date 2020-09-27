@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { FormData } from '../services/formServicesTypes'
+import { FormData } from '../types/formServicesTypes'
 import { populateForm } from '../services/formServices'
 import { setLocalStorage } from '../utils/authDataRepository'
 

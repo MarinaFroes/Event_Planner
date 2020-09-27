@@ -19,7 +19,7 @@ import { AppState, Subject } from '../../store/types'
 import { UserState } from '../../store/users/types'
 import { ErrorState } from '../../store/error/types'
 import { SubjectState } from '../../store/subjects/types'
-import { FormData } from '../../services/formServicesTypes'
+import { FormData } from '../../types/formServicesTypes'
 
 // CUSTOM HOOK
 import { usePersistentState, init } from '../../hooks/usePersistentState'

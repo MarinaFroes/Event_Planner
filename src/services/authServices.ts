@@ -2,7 +2,7 @@ import queryString from 'query-string'
 import jwt_decode from 'jwt-decode'
 
 import { getLocalStorage, setLocalStorage } from '../utils/authDataRepository'
-import { TokensData, UserData } from './authServicesTypes'
+import { TokensData, UserData } from '../types/authServicesTypes'
 import { DecodedUser } from '../store/users/types'
 
 

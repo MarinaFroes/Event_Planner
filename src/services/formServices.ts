@@ -1,7 +1,7 @@
 import { getLocalStorage } from '../utils/authDataRepository'
 
-import { FormData } from './formServicesTypes'
-import { EventOutput } from './eventServicesTypes'
+import { FormData } from '../types/formServicesTypes'
+import { EventOutput } from '../types/eventServicesTypes'
 
 export const getTodayDate = (): string => {
   const today = new Date()

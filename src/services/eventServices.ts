@@ -1,6 +1,6 @@
 import { endpoint } from './api'
 import { getTokensFromLocalStorage } from './authServices'
-import { EventInput, EventOutput } from './eventServicesTypes'
+import { EventInput, EventOutput } from '../types/eventServicesTypes'
 import { EventsFromServer } from '../store/events/types'
 
 export const getEvent = async (eventId: string) => {

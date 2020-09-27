@@ -17,9 +17,9 @@ import {
   EventActionTypes,
   EventsFromServer
 } from './types'
-import { EventInput } from '../../services/eventServicesTypes'
+import { EventInput } from '../../types/eventServicesTypes'
 import { formatEvent, formatFormData } from '../../services/formServices'
-import { FormData } from '../../services/formServicesTypes'
+import { FormData } from '../../types/formServicesTypes'
 import { EventData, AppThunk } from '../types'
 import { handleCreateSubject } from '../subjects/subjectActions'
 import { setLocalStorage } from '../../utils/authDataRepository'
