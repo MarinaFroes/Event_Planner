@@ -1,7 +1,7 @@
 import { endpoint } from './api'
 import { getTokensFromLocalStorage } from './authServices'
 import { SubjectInput, SubjectOutput } from '../types/subjectServicesTypes'
-import { SubjectsFromServer } from '../store/subjects/types'
+import { SubjectsFromServer } from '../types/reduxTypes'
 
 export const getSubject = async (subjectId: string) => {
   const response = await fetch(`${endpoint}/subjects/${subjectId}`)
@@ -15,7 +15,9 @@ export const getSubject = async (subjectId: string) => {
 }
 
 export const getSubjects = async (userId: string) => {
-  const response = await fetch(`${endpoint}/subjects?userId=${userId}&pageSize=100&page=1`)
+  const response = await fetch(
+    `${endpoint}/subjects?userId=${userId}&pageSize=100&page=1`
+  )
   if (response.status === 200) {
     let subjects: SubjectsFromServer = await response.json()
     return subjects
@@ -33,7 +35,7 @@ export const createSubject = async (subject: SubjectInput) => {
     access_token = tokens.access_token
     id_token = tokens.id_token
   }
- 
+
   const response = await fetch(`${endpoint}/subjects`, {
     method: 'POST',
     mode: 'cors',
@@ -41,10 +43,10 @@ export const createSubject = async (subject: SubjectInput) => {
     // credentials: 'same-origin',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + access_token,
+      Authorization: 'Bearer ' + access_token,
       'X-Id-Token': id_token,
     },
-    body: JSON.stringify(subject)
+    body: JSON.stringify(subject),
   })
 
   if (response.ok) {
@@ -65,16 +67,19 @@ export const getSaveImageLink = async (subjectId: string) => {
     id_token = tokens.id_token
   }
 
-  const response = await fetch(`${endpoint}/signed-url/put-image/${subjectId}`, {
-    method: 'GET',
-    mode: 'cors',
-    cache: 'no-cache',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + access_token,
-      'X-Id-Token': id_token,
+  const response = await fetch(
+    `${endpoint}/signed-url/put-image/${subjectId}`,
+    {
+      method: 'GET',
+      mode: 'cors',
+      cache: 'no-cache',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + access_token,
+        'X-Id-Token': id_token,
+      },
     }
-  })
+  )
 
   if (response.ok) {
     let saveLink: string = await response.json()
@@ -89,7 +94,7 @@ export const saveImage = async (saveLink: string, imageBlob: Blob) => {
     method: 'PUT',
     mode: 'cors',
     cache: 'no-cache',
-    body: imageBlob
+    body: imageBlob,
   })
 
   if (response.status === 200) {

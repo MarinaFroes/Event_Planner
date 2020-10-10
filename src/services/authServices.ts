@@ -3,10 +3,10 @@ import jwt_decode from 'jwt-decode'
 
 import { getLocalStorage, setLocalStorage } from '../utils/authDataRepository'
 import { TokensData, UserData } from '../types/authServicesTypes'
-import { DecodedUser } from '../store/users/types'
+import { DecodedUser } from '../types/reduxTypes'
 
-
-export const loginUrl = "https://cheetos-eventplanner.auth.eu-central-1.amazoncognito.com/login?client_id=up5tc3aetd1skggbojedfjrqh&response_type=code&scope=email+openid+profile&redirect_uri=http://localhost:8080/v1/auth"
+export const loginUrl =
+  'https://cheetos-eventplanner.auth.eu-central-1.amazoncognito.com/login?client_id=up5tc3aetd1skggbojedfjrqh&response_type=code&scope=email+openid+profile&redirect_uri=http://localhost:8080/v1/auth'
 
 export const isTokenProvided = (location: Location): boolean => {
   const values = getTokensFromURL(location)
@@ -28,7 +28,7 @@ export const getTokensFromURL = (location: Location): TokensData | null => {
   }
   return {
     access_token: values.access_token as string,
-    id_token: values.id_token as string
+    id_token: values.id_token as string,
   }
 }
 
@@ -42,7 +42,7 @@ export const getTokensFromLocalStorage = (): TokensData | null => {
 
   return {
     access_token,
-    id_token
+    id_token,
   }
 }
 
@@ -64,8 +64,7 @@ export const saveUserData = (data: UserData): void => {
   setLocalStorage('authedUserData', data.authedUserData)
 }
 
-export const saveAuthedUser = (location: Location): void  => {
-
+export const saveAuthedUser = (location: Location): void => {
   const values = getTokensFromURL(location)
   if (values === null) {
     return
@@ -81,4 +80,3 @@ export const getUserName = () => {
 
   return authedUserName
 }
-

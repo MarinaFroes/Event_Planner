@@ -1,14 +1,14 @@
-import { EventData } from '../store/types'
+import { EventData } from './reduxTypes'
 
 export interface EventInput {
-  title: string;
-  host: string;
-  subject: string;
-  additionalInfo?: string;
-  date: string;
-  address: string;
-  maxNumberGuest: number;
-  totalCost: number;
+  title: string
+  host: string
+  subject: string
+  additionalInfo?: string
+  date: string
+  address: string
+  maxNumberGuest: number
+  totalCost: number
 }
 
 export type EventOutput = EventData

@@ -1,3 +1,3 @@
 import { User } from './reduxTypes'
 
-export type UserData = User
+export type FetchedUser = User
