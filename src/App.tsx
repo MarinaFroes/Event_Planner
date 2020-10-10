@@ -10,12 +10,11 @@ import AcceptInvite from './pages/AcceptInvite'
 import NavBar from './components/NavBar'
 import Footer from './components/Footer'
 import ViewUser from './pages/ViewUser'
-import { setAuthedUserAction } from './store/users/userActions'
-import { handleGetSubjects } from './store/subjects/subjectActions'
+import { setAuthedUserAction } from './redux/actions/userActions'
+import { handleGetSubjects } from './redux/actions/subjectActions'
 
 const App: React.FC = () => {
-  
-  const dispatch = useDispatch() 
+  const dispatch = useDispatch()
 
   useEffect(() => {
     const tokens = authService.getTokens(window.location)
@@ -26,19 +25,19 @@ const App: React.FC = () => {
   }, [dispatch])
 
   return (
-    <div className="App">
+    <div className='App'>
       <Router>
-        <NavBar/>
+        <NavBar />
         <Switch>
-          <Route exact path="/" component={CreateEvent} />
-          <Route exact path="/users/:uid" component={ViewUser} />
-          <Route exact path="/events/:eid" component={EditEvent} />
-          <Route exact path="/invite/:eid" component={AcceptInvite} />
+          <Route exact path='/' component={CreateEvent} />
+          <Route exact path='/users/:uid' component={ViewUser} />
+          <Route exact path='/events/:eid' component={EditEvent} />
+          <Route exact path='/invite/:eid' component={AcceptInvite} />
         </Switch>
         <Footer />
-      </Router>  
+      </Router>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App

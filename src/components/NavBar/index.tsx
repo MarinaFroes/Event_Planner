@@ -3,11 +3,17 @@ import { FaRegUser } from 'react-icons/fa'
 import { useSelector } from 'react-redux'
 
 import Btn from '../Btn'
-import { AppState } from '../../store/types'
+import { AppState, UserState } from '../../types/reduxTypes'
 import Logo from '../../assets/icons/logo.svg'
-import { UserState } from '../../store/users/types'
 import { loginUrl } from '../../services/authServices'
-import { StyledNav, StyledLogo, Title, LogoLink, UserConfig, Greeting } from './styles'
+import {
+  StyledNav,
+  StyledLogo,
+  Title,
+  LogoLink,
+  UserConfig,
+  Greeting,
+} from './styles'
 
 const NavBar: React.FC = () => {
   let userName: string = ''
@@ -20,31 +26,26 @@ const NavBar: React.FC = () => {
 
   return (
     <StyledNav>
-      <LogoLink href="/">
-        <StyledLogo src={Logo} alt="" />
+      <LogoLink href='/'>
+        <StyledLogo src={Logo} alt='' />
         <Title>Event Planner</Title>
       </LogoLink>
-        {
-          userState.isLoggedIn
-          ? (
-            <UserConfig to={`/users/${userId}`}>
-              <Greeting>
-                Hello, {userName || 'there'}
-              </Greeting>
-              <FaRegUser />
-            </UserConfig>
-          ) : (
-            <Btn
-              btnText="Login"
-              primaryBtn={false}
-              btnWidth="100px"
-              btnType="button"
-              onClick={() => {
-                window.location.assign(loginUrl)
-              }}
-            />
-          )
-        }
+      {userState.isLoggedIn ? (
+        <UserConfig to={`/users/${userId}`}>
+          <Greeting>Hello, {userName || 'there'}</Greeting>
+          <FaRegUser />
+        </UserConfig>
+      ) : (
+        <Btn
+          btnText='Login'
+          primaryBtn={false}
+          btnWidth='100px'
+          btnType='button'
+          onClick={() => {
+            window.location.assign(loginUrl)
+          }}
+        />
+      )}
     </StyledNav>
   )
 }

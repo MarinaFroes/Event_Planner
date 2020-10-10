@@ -8,15 +8,25 @@ import TextBox from '../../components/TextBox'
 import Btn from '../../components/Btn'
 import EventCard from '../../components/EventCard'
 import { acceptInvite } from '../../utils/text'
-import { EventData, AppState } from '../../store/types'
+import { EventData, AppState, UserState } from '../../types/reduxTypes'
 import { useSelector, useDispatch } from 'react-redux'
-import { handleSelectEvent, handleSubscribe } from '../../store/events/eventActions'
+import {
+  handleSelectEvent,
+  handleSubscribe,
+} from '../../redux/actions/eventActions'
 import { loginUrl } from '../../services/authServices'
-import { getLocalStorage, setLocalStorage } from '../../utils/authDataRepository'
+import {
+  getLocalStorage,
+  setLocalStorage,
+} from '../../utils/authDataRepository'
 import ErrorNotification from '../../components/ErrorNotification'
 import SuccessNotification from '../../components/SuccessNotification'
-import { UserState } from '../../store/users/types'
-import { AcceptInviteContainer, EventInfoSection, Image, SignUpSection } from './styles'
+import {
+  AcceptInviteContainer,
+  EventInfoSection,
+  Image,
+  SignUpSection,
+} from './styles'
 
 type TParams = {
   eid: string
@@ -27,20 +37,22 @@ const AcceptInvite: React.FC<RouteComponentProps<TParams>> = ({ match }) => {
   const [isSubscribed, setIsSubscribed] = useState(false)
   const [imagePreview, setImagePreview] = useState('')
 
-  let userId: string = ""
+  let userId: string = ''
 
   const userState: UserState = useSelector((state: AppState) => state.user)
   if (userState.isLoggedIn) {
     userId = userState.user.id
   }
-  let selectedEvent: EventData | null = useSelector((state: AppState) => state.event.selectedEvent)
+  let selectedEvent: EventData | null = useSelector(
+    (state: AppState) => state.event.selectedEvent
+  )
 
   const dispatch = useDispatch()
-  let eventId = match.params.eid 
-  
+  let eventId = match.params.eid
+
   useEffect(() => {
     dispatch(handleSelectEvent(eventId))
-    
+
     let data = getLocalStorage('formData')
     data.imagePreview && setImagePreview(data.imagePreview)
 
@@ -55,22 +67,40 @@ const AcceptInvite: React.FC<RouteComponentProps<TParams>> = ({ match }) => {
   }, [dispatch, subscribe, eventId])
 
   const addFallbackSrc = (event: any) => {
-    event.target.src = "https://dummyimage.com/400x400/c4c4c4/ffffff.jpg&text=Add+meal+photo"
+    event.target.src =
+      'https://dummyimage.com/400x400/c4c4c4/ffffff.jpg&text=Add+meal+photo'
   }
 
-  const { eventHeading1, eventHeading2, signUpHeading1, signUpHeading2, subscribeHeading1, subscribeHeading2 } = acceptInvite
-  
+  const {
+    eventHeading1,
+    eventHeading2,
+    signUpHeading1,
+    signUpHeading2,
+    subscribeHeading1,
+    subscribeHeading2,
+  } = acceptInvite
+
   if (isSubscribed) {
     return <Redirect to={`/users/${userId}`} />
   }
 
   if (selectedEvent !== null) {
-    const { title, host, subject, additionalInfo, maxNumberGuest, pricePerGuest, tasks, address, date } = selectedEvent
-    
+    const {
+      title,
+      host,
+      subject,
+      additionalInfo,
+      maxNumberGuest,
+      pricePerGuest,
+      tasks,
+      address,
+      date,
+    } = selectedEvent
+
     return (
       <AcceptInviteContainer>
         <Header
-          title={`${title[0].toUpperCase() + title.slice(1)} Details` }
+          title={`${title[0].toUpperCase() + title.slice(1)} Details`}
           subtitle={`${host.name} invited you to take part on ${title}. Check the event info bellow.`}
           imageSrc={EventImg}
         />
@@ -78,15 +108,14 @@ const AcceptInvite: React.FC<RouteComponentProps<TParams>> = ({ match }) => {
         <SuccessNotification />
         <EventInfoSection>
           <TextBox heading1={eventHeading1} heading2={eventHeading2} />
-          {
-            imagePreview
-            && <Image
+          {imagePreview && (
+            <Image
               onError={(e) => addFallbackSrc(e)}
               src={imagePreview}
-              alt="meal photo"
+              alt='meal photo'
             />
-          }
-          <EventCard 
+          )}
+          <EventCard
             address={address}
             cost={pricePerGuest}
             participants={maxNumberGuest}
@@ -97,52 +126,41 @@ const AcceptInvite: React.FC<RouteComponentProps<TParams>> = ({ match }) => {
             additionalInfo={additionalInfo}
           />
         </EventInfoSection>
-          {
-            userState.isLoggedIn ? (
-              <SignUpSection>
-                <TextBox
-                  heading1={subscribeHeading1}
-                  heading2={subscribeHeading2}
-                />
-                <Btn
-                  primaryBtn={true}
-                  btnText="Subscribe to event"
-                  btnWidth="90%"
-                  btnType="button"
-                  onClick={() => setSubscribe(true)}
-                />
-              </SignUpSection>
-            ): (
-              <SignUpSection>
-                <TextBox 
-                  heading1={signUpHeading1} 
-                  heading2={signUpHeading2} 
-                />
-                <Btn
-                  primaryBtn={true}
-                  btnText="Sign up"
-                  btnWidth="90%"
-                  btnType="button"
-                  onClick={() => {
-                    setLocalStorage('lastUrl', `/invite/${eventId}`)
-                    window.location.assign(loginUrl)
-                  }}
-                />
-              </SignUpSection>
-            )
-        }
-        {
-          isSubscribed && (
-            <p>You subscribed for this event</p>
-          )
-        }
+        {userState.isLoggedIn ? (
+          <SignUpSection>
+            <TextBox
+              heading1={subscribeHeading1}
+              heading2={subscribeHeading2}
+            />
+            <Btn
+              primaryBtn={true}
+              btnText='Subscribe to event'
+              btnWidth='90%'
+              btnType='button'
+              onClick={() => setSubscribe(true)}
+            />
+          </SignUpSection>
+        ) : (
+          <SignUpSection>
+            <TextBox heading1={signUpHeading1} heading2={signUpHeading2} />
+            <Btn
+              primaryBtn={true}
+              btnText='Sign up'
+              btnWidth='90%'
+              btnType='button'
+              onClick={() => {
+                setLocalStorage('lastUrl', `/invite/${eventId}`)
+                window.location.assign(loginUrl)
+              }}
+            />
+          </SignUpSection>
+        )}
+        {isSubscribed && <p>You subscribed for this event</p>}
       </AcceptInviteContainer>
     )
   }
 
   return <p>Event not found</p>
-  
 }
 
 export default AcceptInvite
-

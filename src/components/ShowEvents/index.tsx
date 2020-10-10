@@ -1,12 +1,11 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
 
 import TextBox from '../TextBox'
-import { useSelector } from 'react-redux'
 import EventPreview from '../EventPreview'
 import { myEvents } from '../../utils/text'
-import { ShowEventsProps } from '../../types/props'
-import { EventState } from '../../store/events/types'
-import { AppState, EventData } from '../../store/types'
+import { ShowEventsProps } from '../../types/propsTypes'
+import { EventState, AppState, EventData } from '../../types/reduxTypes'
 import { isBeforeToday } from '../../services/formServices'
 import { EventsContainer, Cards } from './styles'
 
@@ -28,28 +27,27 @@ const ShowEvents: React.FC<ShowEventsProps> = ({ status }) => {
   return (
     <EventsContainer status={status}>
       <TextBox heading1={title} heading2={subtitle} />
-      <div style={{ maxWidth: "700px" }}>
+      <div style={{ maxWidth: '700px' }}>
         <Cards>
-          { 
-            eventsList.length > 0 &&
-            eventsList.filter((eventInfo: EventData): boolean => {
-              if (status === 'closed') {
-                return isBeforeToday(eventInfo.date.split(' ')[0])
-              }
-              return !isBeforeToday(eventInfo.date.split(' ')[0])
-
-            }).map(eventInfo => (
-              <EventPreview
-                key={eventInfo.id}
-                eventId={eventInfo.id}
-                title={eventInfo.title}
-                subjectName={eventInfo.subject.name}
-                date={eventInfo.date.split(' ')[0]}
-                time={eventInfo.date.split(' ')[1]}
-                status={status}
-              />
-            ))
-          }
+          {eventsList.length > 0 &&
+            eventsList
+              .filter((eventInfo: EventData): boolean => {
+                if (status === 'closed') {
+                  return isBeforeToday(eventInfo.date.split(' ')[0])
+                }
+                return !isBeforeToday(eventInfo.date.split(' ')[0])
+              })
+              .map((eventInfo) => (
+                <EventPreview
+                  key={eventInfo.id}
+                  eventId={eventInfo.id}
+                  title={eventInfo.title}
+                  subjectName={eventInfo.subject.name}
+                  date={eventInfo.date.split(' ')[0]}
+                  time={eventInfo.date.split(' ')[1]}
+                  status={status}
+                />
+              ))}
         </Cards>
       </div>
     </EventsContainer>

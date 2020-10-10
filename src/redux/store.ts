@@ -2,12 +2,12 @@ import { createStore, combineReducers, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
 import { composeWithDevTools } from 'redux-devtools-extension'
 
-import eventReducer from './events/eventReducer'
-import subjectReducer from './subjects/subjectReducer'
-import taskReducer from './tasks/taskReducer'
-import userReducer from './users/userReducer'
-import errorReducer from './error/errorReducer'
-import successReducer from './success/successReducer'
+import eventReducer from './reducers/eventReducer'
+import subjectReducer from './reducers/subjectReducer'
+import taskReducer from './reducers/taskReducer'
+import userReducer from './reducers/userReducer'
+import errorReducer from './reducers/errorReducer'
+import successReducer from './reducers/successReducer'
 import logger from './middleware/logger'
 
 const rootReducer = combineReducers({
@@ -21,15 +21,15 @@ const rootReducer = combineReducers({
 
 export type RootState = ReturnType<typeof rootReducer>
 
-const composeEnhancers = composeWithDevTools({});
+const composeEnhancers = composeWithDevTools({})
 
 const configureStore = () => {
   const store = createStore(
     rootReducer,
     composeEnhancers(applyMiddleware(thunk, logger))
-  );
+  )
 
-  return store;
+  return store
 }
 
 export default configureStore

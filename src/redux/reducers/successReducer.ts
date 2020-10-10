@@ -1,9 +1,12 @@
-import { SuccessState, SuccessActionTypes, HIDE_SUCCESS } from './types'
-
+import {
+  SuccessState,
+  SuccessActionTypes,
+  HIDE_SUCCESS,
+} from '../../types/reduxTypes'
 
 const initialSuccessState: SuccessState = {
   success: null,
-  isOpen: false
+  isOpen: false,
 }
 
 export default function successReducer(
@@ -15,12 +18,12 @@ export default function successReducer(
   if (action.success) {
     return {
       success: success,
-      isOpen: true
+      isOpen: true,
     }
   } else if (action.type === HIDE_SUCCESS) {
     return {
       success: null,
-      isOpen: false
+      isOpen: false,
     }
   }
 

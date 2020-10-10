@@ -1,9 +1,12 @@
-import { ErrorState, ErrorActionTypes, HIDE_ERROR } from './types'
-
+import {
+  ErrorState,
+  ErrorActionTypes,
+  HIDE_ERROR,
+} from '../../types/reduxTypes'
 
 const initialErrorState: ErrorState = {
   error: null,
-  isOpen: false
+  isOpen: false,
 }
 
 export default function errorReducer(
@@ -15,14 +18,14 @@ export default function errorReducer(
   if (action.error) {
     return {
       error: error,
-      isOpen: true
+      isOpen: true,
     }
   } else if (action.type === HIDE_ERROR) {
     return {
       error: null,
-      isOpen: false
+      isOpen: false,
     }
   }
-   
+
   return state
 }

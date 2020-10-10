@@ -1,14 +1,14 @@
 import React from 'react'
 
 import { StyledButton } from './styles'
-import { BtnProps } from '../../types/props'
+import { BtnProps } from '../../types/propsTypes'
 
 const Btn: React.FC<BtnProps> = ({
   primaryBtn,
   btnText,
   btnWidth,
-  btnType = "button",
-  onClick
+  btnType = 'button',
+  onClick,
 }) => {
   return (
     <StyledButton

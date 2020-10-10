@@ -1,14 +1,15 @@
 import {
   EventActionTypes,
   EventState,
-  RECEIVE_EVENTS_SUCCESS, CREATE_EVENT_SUCCESS,
+  RECEIVE_EVENTS_SUCCESS,
+  CREATE_EVENT_SUCCESS,
   SELECT_EVENT_SUCCESS,
-  SUBSCRIBE_SUCCESS
-} from './types'
+  SUBSCRIBE_SUCCESS,
+} from '../../types/reduxTypes'
 
 const initialEventState: EventState = {
   selectedEvent: null,
-  eventsList: []
+  eventsList: [],
 }
 
 export default function eventReducer(
@@ -21,7 +22,7 @@ export default function eventReducer(
       return {
         ...state,
         selectedEvent: eventData,
-        eventsList: state.eventsList.concat(eventData)
+        eventsList: state.eventsList.concat(eventData),
       }
     case SELECT_EVENT_SUCCESS:
       let selectedEvent = action.payload
@@ -34,13 +35,13 @@ export default function eventReducer(
       return {
         ...state,
         selectedEvent: null,
-        eventsList: events
+        eventsList: events,
       }
     case SUBSCRIBE_SUCCESS:
       return {
         ...state,
         selectedEvent: action.payload,
-        eventsList: state.eventsList.concat(action.payload)
+        eventsList: state.eventsList.concat(action.payload),
       }
     default:
       return state

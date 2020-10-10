@@ -1,4 +1,4 @@
-import { CREATE_TASK, TaskActionTypes, TaskState } from './types'
+import { CREATE_TASK, TaskActionTypes, TaskState } from '../../types/reduxTypes'
 
 const initialTaskState: TaskState = []
 
@@ -8,10 +8,7 @@ export default function taskReducer(
 ): TaskState {
   switch (action.type) {
     case CREATE_TASK:
-      return [
-        ...state,
-        action.taskId
-      ]
+      return [...state, action.taskId]
     default:
       return state
   }

@@ -15,43 +15,48 @@ import {
   SUBSCRIBE_ERROR,
   Events,
   EventActionTypes,
-  EventsFromServer
-} from './types'
+  EventsFromServer,
+  EventData,
+  AppThunk,
+} from '../../types/reduxTypes'
 import { EventInput } from '../../types/eventServicesTypes'
 import { formatEvent, formatFormData } from '../../services/formServices'
 import { FormData } from '../../types/formServicesTypes'
-import { EventData, AppThunk } from '../types'
-import { handleCreateSubject } from '../subjects/subjectActions'
+import { handleCreateSubject } from './subjectActions'
 import { setLocalStorage } from '../../utils/authDataRepository'
 
 // CREATE EVENT ACTION CREATORS
 export const createEventRequest = (): EventActionTypes => {
   return {
-    type: CREATE_EVENT_REQUEST
+    type: CREATE_EVENT_REQUEST,
   }
 }
 
 export const createEventSuccess = (eventData: EventData): EventActionTypes => {
   return {
     type: CREATE_EVENT_SUCCESS,
-    payload: eventData
+    payload: eventData,
   }
 }
 
 export const createEventError = (error: string): EventActionTypes => {
   return {
     type: CREATE_EVENT_ERROR,
-    error
+    error,
   }
 }
 
-export const handleCreateEvent = (formData: FormData): AppThunk => async (dispatch, getState) => {
+export const handleCreateEvent = (formData: FormData): AppThunk => async (
+  dispatch,
+  getState
+) => {
   dispatch(createEventRequest())
 
   try {
-    await dispatch(handleCreateSubject({
-      name: formData.subjectName,
-      imagePreview: formData.imagePreview
+    await dispatch(
+      handleCreateSubject({
+        name: formData.subjectName,
+        imagePreview: formData.imagePreview,
       })
     )
 
@@ -61,14 +66,13 @@ export const handleCreateEvent = (formData: FormData): AppThunk => async (dispat
     if (user.isLoggedIn) {
       hostEmail = user.user.email
     }
-    
+
     const eventInput: EventInput = formatEvent(formData, subjectId, hostEmail)
 
     const eventId: string = await eventService.createEvent(eventInput)
     const eventData: EventData = await eventService.getEvent(eventId)
 
     dispatch(createEventSuccess(eventData))
-
   } catch (err) {
     dispatch(createEventError(err.message))
   }
@@ -77,35 +81,38 @@ export const handleCreateEvent = (formData: FormData): AppThunk => async (dispat
 // SELECT EVENT ACTION CREATORS
 export const selectEventRequest = (): EventActionTypes => {
   return {
-    type: SELECT_EVENT_REQUEST
+    type: SELECT_EVENT_REQUEST,
   }
 }
 
 export const selectEventSuccess = (event: EventData): EventActionTypes => {
   return {
     type: SELECT_EVENT_SUCCESS,
-    payload: event
+    payload: event,
   }
 }
 
 export const selectEventError = (error: string): EventActionTypes => {
   return {
     type: SELECT_EVENT_ERROR,
-    error
+    error,
   }
 }
 
-export const handleSelectEvent = (eventId: string): AppThunk => async (dispatch) => {
+export const handleSelectEvent = (eventId: string): AppThunk => async (
+  dispatch
+) => {
   dispatch(selectEventRequest())
 
   try {
     const eventData: EventData = await eventService.getEvent(eventId)
-    const imageLink: string = await subjectService.getImageLink(eventData.subject.id)
+    const imageLink: string = await subjectService.getImageLink(
+      eventData.subject.id
+    )
 
     setLocalStorage('formData', formatFormData(eventData, imageLink))
 
     dispatch(selectEventSuccess(eventData))
-
   } catch (err) {
     dispatch(selectEventError(err.message))
   }
@@ -114,21 +121,21 @@ export const handleSelectEvent = (eventId: string): AppThunk => async (dispatch)
 // RECEIVE EVENTS ACTION CREATORS
 export const receiveEventsRequest = (): EventActionTypes => {
   return {
-    type: RECEIVE_EVENTS_REQUEST
+    type: RECEIVE_EVENTS_REQUEST,
   }
 }
 
 export const receiveEventsAction = (events: Events): EventActionTypes => {
   return {
     type: RECEIVE_EVENTS_SUCCESS,
-    payload: events
+    payload: events,
   }
 }
 
 export const receiveEventsError = (error: string): EventActionTypes => {
   return {
     type: RECEIVE_EVENTS_ERROR,
-    error
+    error,
   }
 }
 
@@ -143,7 +150,6 @@ export const handleGetEvents = (): AppThunk => async (dispatch, getState) => {
     }
     const events: EventsFromServer = await eventService.getEvents(userId)
     dispatch(receiveEventsAction(events.items))
-
   } catch (err) {
     dispatch(receiveEventsError(err.message))
   }
@@ -152,7 +158,7 @@ export const handleGetEvents = (): AppThunk => async (dispatch, getState) => {
 // SUBSCRIBE TO EVENT ACTION CREATORS
 export const subscribeRequest = (): EventActionTypes => {
   return {
-    type: SUBSCRIBE_REQUEST
+    type: SUBSCRIBE_REQUEST,
   }
 }
 
@@ -160,18 +166,21 @@ export const subscribeSuccess = (eventData: EventData): EventActionTypes => {
   return {
     type: SUBSCRIBE_SUCCESS,
     payload: eventData,
-    success: 'Subscribed'
+    success: 'Subscribed',
   }
 }
 
 export const subscribeError = (error: string): EventActionTypes => {
   return {
     type: SUBSCRIBE_ERROR,
-    error
+    error,
   }
 }
 
-export const handleSubscribe = (eventId: string): AppThunk => async(dispatch, getState) => {
+export const handleSubscribe = (eventId: string): AppThunk => async (
+  dispatch,
+  getState
+) => {
   dispatch(subscribeRequest())
 
   try {
@@ -182,7 +191,7 @@ export const handleSubscribe = (eventId: string): AppThunk => async(dispatch, ge
     }
     await eventService.subscribeToEvent(eventId, userId)
     const eventData: EventData = await eventService.getEvent(eventId)
-  
+
     dispatch(subscribeSuccess(eventData))
   } catch (err) {
     dispatch(subscribeError(err.message))

@@ -1,3 +1,3 @@
-import { User } from '../store/types'
+import { User } from './reduxTypes'
 
-export type UserData = User 
+export type UserData = User
