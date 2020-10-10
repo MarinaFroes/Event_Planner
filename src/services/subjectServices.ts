@@ -1,7 +1,7 @@
 import { endpoint } from './api'
 import { getTokensFromLocalStorage } from './authServices'
 import { SubjectInput, SubjectOutput } from '../types/subjectServicesTypes'
-import { SubjectsFromServer } from '../types/reduxTypes'
+import { SubjectsFromServer } from '../types/index'
 
 export const getSubject = async (subjectId: string) => {
   const response = await fetch(`${endpoint}/subjects/${subjectId}`)

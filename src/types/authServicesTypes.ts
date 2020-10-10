@@ -1,5 +1,5 @@
-import { Tokens } from '../types/reduxTypes'
-import { DecodedUser } from '../types/reduxTypes'
+import { Tokens } from '../types'
+import { DecodedUser } from '../types'
 
 export type TokensData = Tokens
 

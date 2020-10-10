@@ -1,4 +1,4 @@
-import { Task, Guest } from './reduxTypes'
+import { Task, Guest } from './index'
 
 export interface BtnProps {
   primaryBtn: boolean

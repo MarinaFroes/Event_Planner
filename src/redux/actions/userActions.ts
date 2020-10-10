@@ -4,10 +4,9 @@ import * as authService from '../../services/authServices'
 import {
   SET_AUTHED_USER,
   LOG_OUT,
-  DecodedUser,
-  TokensData,
   UserActionTypes,
 } from '../../types/reduxTypes'
+import { DecodedUser, TokensData } from '../../types'
 
 export const setAuthedUserAction = (tokens: TokensData): UserActionTypes => {
   const { access_token, id_token } = tokens

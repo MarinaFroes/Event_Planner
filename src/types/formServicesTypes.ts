@@ -1,4 +1,4 @@
-import { Task } from './reduxTypes'
+import { Task } from './index'
 
 export interface FormData {
   title: string

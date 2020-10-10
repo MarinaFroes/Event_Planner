@@ -24,8 +24,8 @@ import {
   SubjectState,
   UserState,
   AppState,
-  Subject,
 } from '../../types/reduxTypes'
+import { Subject } from '../../types'
 import { FormData } from '../../types/formServicesTypes'
 
 // CUSTOM HOOK

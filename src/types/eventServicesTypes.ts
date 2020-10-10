@@ -1,4 +1,4 @@
-import { EventData } from './reduxTypes'
+import { EventData } from './index'
 
 export interface EventInput {
   title: string

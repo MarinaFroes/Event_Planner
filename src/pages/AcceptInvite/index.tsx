@@ -8,7 +8,8 @@ import TextBox from '../../components/TextBox'
 import Btn from '../../components/Btn'
 import EventCard from '../../components/EventCard'
 import { acceptInvite } from '../../utils/text'
-import { EventData, AppState, UserState } from '../../types/reduxTypes'
+import { AppState, UserState } from '../../types/reduxTypes'
+import { EventData } from '../../types'
 import { useSelector, useDispatch } from 'react-redux'
 import {
   handleSelectEvent,

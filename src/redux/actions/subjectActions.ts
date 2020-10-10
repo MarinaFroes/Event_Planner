@@ -4,16 +4,18 @@ import {
   CREATE_SUBJECT_SUCCESS,
   SubjectActionTypes,
   RECEIVE_SUBJECTS_SUCCESS,
-  SubjectsFromServer,
-  Subjects,
   CREATE_SUBJECT_REQUEST,
   CREATE_SUBJECT_ERROR,
   RECEIVE_SUBJECTS_REQUEST,
   RECEIVE_SUBJECTS_ERROR,
-  SubjectInfo,
   AsyncAction,
-  Subject,
 } from '../../types/reduxTypes'
+import {
+  SubjectsFromServer,
+  Subjects,
+  SubjectInfo,
+  Subject,
+} from '../../types/index'
 
 //  Create Subject Action Creators
 export const createSubjectRequest = (): SubjectActionTypes => {

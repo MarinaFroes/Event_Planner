@@ -1,4 +1,4 @@
-import { SubjectInfo, Subject } from './reduxTypes'
+import { SubjectInfo, Subject } from './index'
 
 export type SubjectInput = SubjectInfo
 

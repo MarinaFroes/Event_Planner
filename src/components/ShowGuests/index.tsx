@@ -3,7 +3,7 @@ import React from 'react'
 import TextBox from '../TextBox'
 import GuestCard from '../GuestCard'
 import { showGuests } from '../../utils/text'
-import { Guest } from '../../types/reduxTypes'
+import { Guest } from '../../types'
 import { ShowGuestsProps } from '../../types/propsTypes'
 import {
   GuestsContainer,

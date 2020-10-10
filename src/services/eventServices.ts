@@ -1,7 +1,7 @@
 import { endpoint } from './api'
 import { getTokensFromLocalStorage } from './authServices'
 import { EventInput, EventOutput } from '../types/eventServicesTypes'
-import { EventsFromServer } from '../types/reduxTypes'
+import { EventsFromServer } from '../types'
 
 export const getEvent = async (eventId: string) => {
   const response = await fetch(`${endpoint}/events/${eventId}`)

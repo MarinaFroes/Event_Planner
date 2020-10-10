@@ -13,12 +13,10 @@ import {
   SUBSCRIBE_REQUEST,
   SUBSCRIBE_SUCCESS,
   SUBSCRIBE_ERROR,
-  Events,
   EventActionTypes,
-  EventsFromServer,
-  EventData,
   AsyncAction,
 } from '../../types/reduxTypes'
+import { Events, EventsFromServer, EventData } from '../../types'
 import { EventInput } from '../../types/eventServicesTypes'
 import { formatEvent, formatFormData } from '../../services/formServices'
 import { FormData } from '../../types/formServicesTypes'

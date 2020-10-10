@@ -1,94 +1,18 @@
 import { ThunkAction } from 'redux-thunk'
 import { Action } from 'redux'
+import { User, Subject, EventData, Subjects, Events } from './index'
 
-export interface Tokens {
-  access_token: string | ''
-  id_token: string | ''
-}
-
-export interface User {
-  id: string
-  name: string
-  email: string
-}
-
-export interface Guest {
-  id: string
-  name: string
-  email: string
-  status: 'Pending' | 'Accept' | 'Reject'
-}
-
-interface Host {
-  id: string
-  name: string
-  email: string
-}
-
-export interface Task {
-  id: string
-  details?: string
-  owner?: string
-  eventId: string
-}
-
-export interface SubjectInfo {
-  name: string
-  imagePreview?: string | null
-  detail?: string
-}
-
-export interface Subject {
-  id: string
-  name: string
-  detail?: string
-  createdBy: string
-  imageUrl?: string
-  imageLink?: string
-}
-
-export interface EventData {
-  id: string
-  title: string
-  host: Host
-  subject: Subject
-  date: string
-  createDate: string
-  address: string
-  maxNumberGuest: number
-  tasks: Task[]
-  guestInEvents: Guest[]
-  totalCost: number
-  additionalInfo: string
-  eventStatus: 'Open' | 'Close'
-  pricePerGuest: number
-}
-
-export interface AppState {
-  event: EventState
-  subject: SubjectState
-  task: TaskState
-  user: UserState
-  error: ErrorState
-  success: SuccessState
-}
-
-export type AsyncAction<ReturnType = void> = ThunkAction<
-  ReturnType,
-  AppState,
-  unknown,
-  Action<string>
->
-
-// ERROR TYPES
+// ERROR ACTION TYPES
 export const HIDE_ERROR = 'HIDE_ERROR'
 export const SET_ERROR = 'SET_ERROR'
-// STATE TYPE
+
+// ERROR STATE TYPE
 export interface ErrorState {
   error: string | null
   isOpen: boolean
 }
 
+// ERROR ACTION CREATOR TYPES
 export interface setError {
   type: typeof SET_ERROR
   error: string
@@ -101,6 +25,7 @@ export interface hideError {
 
 export type ErrorActionTypes = CreateEventError | hideError | setError
 
+// EVENT ACTION TYPES
 export const CREATE_EVENT_REQUEST = 'CREATE_EVENT_REQUEST'
 export const CREATE_EVENT_SUCCESS = 'CREATE_EVENT_SUCCESS'
 export const CREATE_EVENT_ERROR = 'CREATE_EVENT_ERROR'
@@ -117,16 +42,9 @@ export const SUBSCRIBE_REQUEST = 'SUBSCRIBE_REQUEST'
 export const SUBSCRIBE_SUCCESS = 'SUBSCRIBE_SUCCESS'
 export const SUBSCRIBE_ERROR = 'SUBSCRIBE_ERROR'
 
-// OTHER TYPES
-export type Events = EventData[]
+// EVENT ACTION CREATOR TYPES
 
-export interface EventsFromServer {
-  items: Events
-  [propName: string]: any
-}
-
-// ACTION TYPES
-// CREATE EVENT ACTION TYPES
+// CREATE EVENT ACTION CREATOR TYPES
 export interface CreateEventRequest {
   type: typeof CREATE_EVENT_REQUEST
 }
@@ -146,7 +64,7 @@ type CreateEventActions =
   | CreateEventSuccess
   | CreateEventError
 
-// GET SINGLE EVENT ACTION TYPES
+// GET SINGLE EVENT ACTION CREATOR TYPES
 export interface SelectEventRequest {
   type: typeof SELECT_EVENT_REQUEST
 }
@@ -166,7 +84,7 @@ type SelectEventActions =
   | SelectEventSuccess
   | SelectEventError
 
-// RECEIVE EVENT ACTION TYPES
+// RECEIVE EVENT ACTION CREATOR TYPES
 export interface ReceiveEventsRequest {
   type: typeof RECEIVE_EVENTS_REQUEST
 }
@@ -186,7 +104,7 @@ type ReceiveEventsActions =
   | ReceiveEventsSuccess
   | ReceiveEventsError
 
-// SUBSCRIBE TO EVENT ACTION TYPES
+// SUBSCRIBE TO EVENT ACTION CREATOR TYPES
 export interface SubscribeRequest {
   type: typeof SUBSCRIBE_REQUEST
 }
@@ -204,20 +122,20 @@ export interface SubscribeError {
 
 type SubscribeActionTypes = SubscribeRequest | SubscribeSuccess | SubscribeError
 
-// ALL EVENT ACTION TYPES
+// ALL EVENT ACTION CREATOR TYPES
 export type EventActionTypes =
   | CreateEventActions
   | SelectEventActions
   | ReceiveEventsActions
   | SubscribeActionTypes
 
-//  STATE TYPE
+//  EVENT STATE TYPE
 export type EventState = {
   selectedEvent: null | EventData
   eventsList: Events
 }
 
-// SUBJECT TYPES
+// SUBJECT ACTION TYPES
 export const CREATE_SUBJECT_REQUEST = 'CREATE_SUBJECT_REQUEST'
 export const CREATE_SUBJECT_SUCCESS = 'CREATE_SUBJECT_SUCCESS'
 export const CREATE_SUBJECT_ERROR = 'CREATE_SUBJECT_ERROR'
@@ -226,16 +144,9 @@ export const RECEIVE_SUBJECTS_REQUEST = 'RECEIVE_SUBJECTS_REQUEST'
 export const RECEIVE_SUBJECTS_SUCCESS = 'RECEIVE_SUBJECTS_SUCCESS'
 export const RECEIVE_SUBJECTS_ERROR = 'RECEIVE_SUBJECTS_ERROR'
 
-// OTHER TYPES
-export type Subjects = Subject[]
+// SUBJECT ACTION CREATOR  TYPES
 
-export interface SubjectsFromServer {
-  items: Subjects
-  [propName: string]: any
-}
-
-// ACTION TYPES
-// Create subject action types
+// CREATE SUBJECT ACTION CREATOR TYPES
 interface CreateSubjectRequest {
   type: typeof CREATE_SUBJECT_REQUEST
 }
@@ -255,7 +166,7 @@ type CreateSubject =
   | CreateSubjectSuccess
   | CreateSubjectError
 
-// Receive Subjects action types
+// RECEIVE SUBJECT ACTION CREATOR TYPES
 interface ReceiveSubjectsRequest {
   type: typeof RECEIVE_SUBJECTS_REQUEST
 }
@@ -277,18 +188,20 @@ type ReceiveSubjects =
 
 export type SubjectActionTypes = CreateSubject | ReceiveSubjects
 
-// STATE TYPE
+// SUBJECT STATE TYPE
 export type SubjectState = Subjects
 
-// SUCCESS TYPES
+// SUCCESS ACTION TYPES
 export const HIDE_SUCCESS = 'HIDE_SUCCESS'
 export const SET_SUCCESS = 'SET_SUCCESS'
-// STATE TYPE
+
+// SUCCESS STATE TYPE
 export interface SuccessState {
   success: string | null
   isOpen: boolean
 }
 
+// SUCCESS ACTION CREATOR TYPES
 export interface setSuccess {
   type: typeof SET_SUCCESS
   success: string
@@ -301,10 +214,10 @@ export interface hideSuccess {
 
 export type SuccessActionTypes = hideSuccess | setSuccess
 
-// TASKS TYPES
+// TASKS ACTION TYPES
 export const CREATE_TASK: string = 'CREATE_TASK'
 
-// ACTION TYPES
+// TASKS ACTION CREATOR TYPES
 interface CreateTaskAction {
   type: typeof CREATE_TASK
   taskId: string
@@ -312,25 +225,14 @@ interface CreateTaskAction {
 
 export type TaskActionTypes = CreateTaskAction
 
-// STATE TYPE
+// TASKS STATE TYPE
 export type TaskState = string[] | []
 
-// USER TYPES
-
+// USER ACTION TYPES
 export const SET_AUTHED_USER: string = 'SET_AUTHED_USER'
 export const LOG_OUT: string = 'LOG_OUT'
 
-export type TokensData = Tokens
-
-export interface DecodedUser extends User {
-  [propName: string]: any
-}
-
-export interface UserData extends Tokens {
-  authedUserData: DecodedUser
-}
-
-// ACTIONS TYPES
+// USER ACTION CREATOR TYPES
 interface SetAuthedUserAction {
   type: typeof SET_AUTHED_USER
   payload: User
@@ -343,7 +245,7 @@ interface LogOutAction {
 
 export type UserActionTypes = SetAuthedUserAction | LogOutAction
 
-// STATE TYPE
+// USER STATE TYPE
 export interface NotLoggedUser {
   isLoggedIn: false
   user: null
@@ -355,3 +257,21 @@ export interface LoggedUser {
 }
 
 export type UserState = NotLoggedUser | LoggedUser
+
+// APP STATE TYPE
+export interface AppState {
+  event: EventState
+  subject: SubjectState
+  task: TaskState
+  user: UserState
+  error: ErrorState
+  success: SuccessState
+}
+
+// ASYNC ACTION TYPE
+export type AsyncAction<ReturnType = void> = ThunkAction<
+  ReturnType,
+  AppState,
+  unknown,
+  Action<string>
+>

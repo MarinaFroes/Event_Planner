@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Task } from '../../types/reduxTypes'
+import { Task } from '../../types'
 import { EventCardProps } from '../../types/propsTypes'
 import {
   Item,
