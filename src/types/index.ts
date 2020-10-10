@@ -84,3 +84,7 @@ export interface DecodedUser extends User {
 export interface UserData extends Tokens {
   authedUserData: DecodedUser
 }
+
+export type TParams = {
+  eid: string
+}

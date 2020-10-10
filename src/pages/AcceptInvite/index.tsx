@@ -9,7 +9,7 @@ import Btn from '../../components/Btn'
 import EventCard from '../../components/EventCard'
 import { acceptInvite } from '../../utils/text'
 import { AppState, UserState } from '../../types/reduxTypes'
-import { EventData } from '../../types'
+import { EventData, TParams } from '../../types'
 import { useSelector, useDispatch } from 'react-redux'
 import {
   handleSelectEvent,
@@ -28,10 +28,6 @@ import {
   Image,
   SignUpSection,
 } from './styles'
-
-type TParams = {
-  eid: string
-}
 
 const AcceptInvite: React.FC<RouteComponentProps<TParams>> = ({ match }) => {
   const [subscribe, setSubscribe] = useState(false)

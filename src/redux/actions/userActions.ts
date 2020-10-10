@@ -8,6 +8,7 @@ import {
 } from '../../types/reduxTypes'
 import { DecodedUser, TokensData } from '../../types'
 
+// AUTHENTICATE USER ACTION CREATORS
 export const setAuthedUserAction = (tokens: TokensData): UserActionTypes => {
   const { access_token, id_token } = tokens
   const authedUserData: DecodedUser = jwt_decode(JSON.stringify(id_token))

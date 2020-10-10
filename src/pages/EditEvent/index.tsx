@@ -9,13 +9,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import { EditEventContainer, AlertButton } from './styles'
 import { RouteComponentProps, Link } from 'react-router-dom'
 import { AppState } from '../../types/reduxTypes'
-import { EventData, Guest } from '../../types'
+import { EventData, Guest, TParams } from '../../types'
 import { handleSelectEvent } from '../../redux/actions/eventActions'
 import EventImg from '../../assets/images/edgar-castrejon-bG5rhvRH0JM-unsplash.jpg'
-
-type TParams = {
-  eid: string
-}
 
 const EditEvent: React.FC<RouteComponentProps<TParams>> = ({ match }) => {
   const [showInviteLink, setShowInviteLink] = useState(false)

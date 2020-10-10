@@ -17,7 +17,7 @@ import {
   Subject,
 } from '../../types/index'
 
-//  Create Subject Action Creators
+//  CREATE SUBJECT ACTION CREATORS
 export const createSubjectRequest = (): SubjectActionTypes => {
   return {
     type: CREATE_SUBJECT_REQUEST,
@@ -69,7 +69,7 @@ export const handleCreateSubject = (
   }
 }
 
-// Receive Subjects Action Creators
+// RECEIVE SUBJECTS ACTION CREATORS
 export const receiveSubjectsRequest = (): SubjectActionTypes => {
   return {
     type: RECEIVE_SUBJECTS_REQUEST,

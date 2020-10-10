@@ -1,5 +1,6 @@
 import { ErrorActionTypes, HIDE_ERROR, SET_ERROR } from '../../types/reduxTypes'
 
+// ERROR ACTION CREATORS
 export const setErrorAction = (error: string): ErrorActionTypes => {
   return {
     type: SET_ERROR,
