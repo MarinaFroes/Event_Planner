@@ -73,7 +73,7 @@ export interface AppState {
   success: SuccessState
 }
 
-export type AppThunk<ReturnType = void> = ThunkAction<
+export type AsyncAction<ReturnType = void> = ThunkAction<
   ReturnType,
   AppState,
   unknown,

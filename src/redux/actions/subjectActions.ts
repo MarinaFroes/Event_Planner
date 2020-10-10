@@ -11,7 +11,7 @@ import {
   RECEIVE_SUBJECTS_REQUEST,
   RECEIVE_SUBJECTS_ERROR,
   SubjectInfo,
-  AppThunk,
+  AsyncAction,
   Subject,
 } from '../../types/reduxTypes'
 
@@ -38,7 +38,7 @@ export const createSubjectError = (error: string): SubjectActionTypes => {
 
 export const handleCreateSubject = (
   subjectInput: SubjectInfo
-): AppThunk => async (dispatch) => {
+): AsyncAction => async (dispatch) => {
   dispatch(createSubjectRequest())
 
   try {
@@ -90,7 +90,10 @@ export const receiveSubjectsError = (error: string): SubjectActionTypes => {
   }
 }
 
-export const handleGetSubjects = (): AppThunk => async (dispatch, getState) => {
+export const handleGetSubjects = (): AsyncAction => async (
+  dispatch,
+  getState
+) => {
   dispatch(receiveSubjectsRequest())
 
   try {

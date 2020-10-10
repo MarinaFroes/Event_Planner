@@ -17,7 +17,7 @@ import {
   EventActionTypes,
   EventsFromServer,
   EventData,
-  AppThunk,
+  AsyncAction,
 } from '../../types/reduxTypes'
 import { EventInput } from '../../types/eventServicesTypes'
 import { formatEvent, formatFormData } from '../../services/formServices'
@@ -46,7 +46,7 @@ export const createEventError = (error: string): EventActionTypes => {
   }
 }
 
-export const handleCreateEvent = (formData: FormData): AppThunk => async (
+export const handleCreateEvent = (formData: FormData): AsyncAction => async (
   dispatch,
   getState
 ) => {
@@ -99,7 +99,7 @@ export const selectEventError = (error: string): EventActionTypes => {
   }
 }
 
-export const handleSelectEvent = (eventId: string): AppThunk => async (
+export const handleSelectEvent = (eventId: string): AsyncAction => async (
   dispatch
 ) => {
   dispatch(selectEventRequest())
@@ -139,7 +139,10 @@ export const receiveEventsError = (error: string): EventActionTypes => {
   }
 }
 
-export const handleGetEvents = (): AppThunk => async (dispatch, getState) => {
+export const handleGetEvents = (): AsyncAction => async (
+  dispatch,
+  getState
+) => {
   dispatch(receiveEventsRequest())
 
   try {
@@ -177,7 +180,7 @@ export const subscribeError = (error: string): EventActionTypes => {
   }
 }
 
-export const handleSubscribe = (eventId: string): AppThunk => async (
+export const handleSubscribe = (eventId: string): AsyncAction => async (
   dispatch,
   getState
 ) => {
